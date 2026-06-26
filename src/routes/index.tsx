@@ -17,9 +17,86 @@ export const Route = createFileRoute("/")({
 });
 
 const FLAVORS = [
-  { name: "Vanilla Cloud", color: "var(--cream)", text: "var(--cocoa)", img: bottle1, note: "Soft, mellow, lightly sweet." },
-  { name: "Deep Cocoa", color: "var(--cocoa)", text: "var(--cream)", img: bottle2, note: "Rich, roasted, unapologetic." },
-  { name: "Wild Berry", color: "var(--blush)", text: "var(--coral-deep)", img: bottle3, note: "Bright, tart, a little wild." },
+  {
+    name: "Vanilla Cloud",
+    tag: "Smooth · Mellow",
+    bg: "var(--cream)",
+    text: "var(--cocoa)",
+    accent: "var(--coral-deep)",
+    img: bottle1,
+    note: "Soft, mellow, lightly sweet — like a quiet morning.",
+    facts: [
+      { k: "Calories", v: "120" },
+      { k: "Protein", v: "20g" },
+      { k: "Sugar", v: "2g" },
+      { k: "Caffeine", v: "0mg" },
+    ],
+    ingredients: ["Madagascar vanilla", "Oat milk", "Whey isolate", "Sea salt"],
+  },
+  {
+    name: "Deep Cocoa",
+    tag: "Rich · Roasted",
+    bg: "var(--cocoa)",
+    text: "var(--cream)",
+    accent: "var(--coral)",
+    img: bottle2,
+    note: "Rich, roasted, unapologetic. The dessert that isn't one.",
+    facts: [
+      { k: "Calories", v: "140" },
+      { k: "Protein", v: "22g" },
+      { k: "Sugar", v: "3g" },
+      { k: "Caffeine", v: "45mg" },
+    ],
+    ingredients: ["Dutch cocoa", "Cold-brew espresso", "Whey isolate", "Cane sugar"],
+  },
+  {
+    name: "Wild Berry",
+    tag: "Bright · Tart",
+    bg: "var(--blush)",
+    text: "var(--coral-deep)",
+    accent: "var(--cocoa)",
+    img: bottle3,
+    note: "Bright, tart, a little wild — picked at the right time.",
+    facts: [
+      { k: "Calories", v: "110" },
+      { k: "Protein", v: "18g" },
+      { k: "Sugar", v: "4g" },
+      { k: "Caffeine", v: "0mg" },
+    ],
+    ingredients: ["Wild blueberry", "Raspberry", "Whey isolate", "Lemon zest"],
+  },
+  {
+    name: "Golden Spice",
+    tag: "Warm · Toasted",
+    bg: "var(--coral)",
+    text: "var(--cocoa)",
+    accent: "var(--cream)",
+    img: bottle1,
+    note: "Toasted turmeric and a whisper of cardamom. Warm without the heat.",
+    facts: [
+      { k: "Calories", v: "130" },
+      { k: "Protein", v: "20g" },
+      { k: "Sugar", v: "3g" },
+      { k: "Caffeine", v: "0mg" },
+    ],
+    ingredients: ["Turmeric", "Cardamom", "Coconut cream", "Whey isolate"],
+  },
+  {
+    name: "Mint Grove",
+    tag: "Crisp · Cool",
+    bg: "var(--sage)",
+    text: "var(--cocoa)",
+    accent: "var(--coral-deep)",
+    img: bottle2,
+    note: "Fresh-cut mint and a clean finish. The reset button.",
+    facts: [
+      { k: "Calories", v: "115" },
+      { k: "Protein", v: "19g" },
+      { k: "Sugar", v: "2g" },
+      { k: "Caffeine", v: "30mg" },
+    ],
+    ingredients: ["Peppermint leaf", "Spearmint", "Whey isolate", "Matcha"],
+  },
 ];
 
 function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boolean }) {
@@ -98,19 +175,6 @@ function Hero() {
           ))}
         </div>
       </div>
-
-      {/* spinning play badge */}
-      <div className="absolute bottom-8 left-8 hidden md:block">
-        <div className="relative h-24 w-24">
-          <svg viewBox="0 0 100 100" className="absolute inset-0 animate-spin-slow">
-            <defs><path id="circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
-            <text className="fill-cocoa text-[10px] tracking-[0.3em] font-medium">
-              <textPath href="#circ">• WATCH • TASTE • REPEAT </textPath>
-            </text>
-          </svg>
-          <div className="absolute inset-3 grid place-items-center rounded-full bg-cream text-cocoa">▶</div>
-        </div>
-      </div>
     </section>
   );
 }
@@ -131,50 +195,148 @@ function Marquee() {
   );
 }
 
-function PinnedFlavors() {
+function HorizontalFlavors() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  // Move horizontally: travel = (n-1)/n of total width since each panel = 100vw
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${(FLAVORS.length - 1) * (100 / FLAVORS.length)}%`]);
   const [active, setActive] = useState(0);
 
   useEffect(() => {
     return scrollYProgress.on("change", (v) => {
-      const idx = Math.min(FLAVORS.length - 1, Math.floor(v * FLAVORS.length));
+      const idx = Math.min(FLAVORS.length - 1, Math.floor(v * FLAVORS.length + 0.0001));
       setActive(idx);
     });
   }, [scrollYProgress]);
 
   return (
-    <section ref={ref} id="flavors" className="relative" style={{ height: `${FLAVORS.length * 100}vh` }}>
-      <div className="sticky top-0 h-screen overflow-hidden transition-colors duration-700" style={{ background: FLAVORS[active].color, color: FLAVORS[active].text }}>
-        <div className="mx-auto grid h-full max-w-7xl grid-cols-1 items-center gap-8 px-6 md:grid-cols-2">
-          <div>
-            <div className="mb-4 text-sm uppercase tracking-[0.3em] opacity-60">Flavor {active + 1} / {FLAVORS.length}</div>
-            <h2 className="font-display text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.95]">{FLAVORS[active].name}</h2>
-            <p className="mt-6 max-w-md text-xl opacity-80">{FLAVORS[active].note}</p>
-            <div className="mt-10 flex gap-2">
-              {FLAVORS.map((_, i) => (
-                <div key={i} className="h-1 w-12 rounded-full" style={{ background: "currentColor", opacity: i === active ? 1 : 0.25 }} />
-              ))}
-            </div>
+    <section
+      id="flavors"
+      ref={ref}
+      className="relative"
+      style={{ height: `${FLAVORS.length * 100}vh` }}
+    >
+      <div
+        className="sticky top-0 h-screen w-screen overflow-hidden transition-colors duration-700"
+        style={{ background: FLAVORS[active].bg, color: FLAVORS[active].text }}
+      >
+        {/* progress strip */}
+        <div className="absolute top-24 left-0 right-0 z-20 mx-auto flex max-w-7xl items-center gap-3 px-6">
+          <div className="text-xs uppercase tracking-[0.3em] opacity-70">
+            {String(active + 1).padStart(2, "0")} / {String(FLAVORS.length).padStart(2, "0")}
           </div>
-          <div className="relative h-[70vh]">
-            {FLAVORS.map((f, i) => (
-              <motion.img
-                key={i}
-                src={f.img}
-                alt={f.name}
-                initial={false}
-                animate={{
-                  opacity: i === active ? 1 : 0,
-                  scale: i === active ? 1 : 0.85,
-                  rotate: i === active ? -6 : 12,
-                  y: i === active ? 0 : 60,
-                }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-0 m-auto h-full w-auto object-contain drop-shadow-[0_40px_50px_rgba(0,0,0,0.3)]"
-              />
+          <div className="flex flex-1 gap-2">
+            {FLAVORS.map((_, i) => (
+              <div key={i} className="h-[2px] flex-1 overflow-hidden" style={{ background: "currentColor", opacity: 0.2 }}>
+                <div
+                  className="h-full transition-all duration-500"
+                  style={{ background: "currentColor", width: i < active ? "100%" : i === active ? "100%" : "0%", opacity: i <= active ? 1 : 0 }}
+                />
+              </div>
             ))}
           </div>
+        </div>
+
+        <motion.div style={{ x, width: `${FLAVORS.length * 100}vw` }} className="flex h-full">
+          {FLAVORS.map((f, i) => (
+            <div key={f.name} className="flex h-full w-screen shrink-0 items-center px-6 md:px-16">
+              <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 md:grid-cols-2">
+                <div className="space-y-6">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: active === i ? 1 : 0.3, y: active === i ? 0 : 30 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-xs uppercase tracking-[0.3em] opacity-70"
+                  >
+                    {f.tag}
+                  </motion.div>
+                  <motion.h2
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: active === i ? 1 : 0.2, y: active === i ? 0 : 40 }}
+                    transition={{ duration: 0.7, delay: 0.05 }}
+                    className="font-display text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.95]"
+                  >
+                    {f.name}
+                  </motion.h2>
+                  <motion.p
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: active === i ? 0.85 : 0.2, y: active === i ? 0 : 30 }}
+                    transition={{ duration: 0.7, delay: 0.1 }}
+                    className="max-w-md text-lg"
+                  >
+                    {f.note}
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: active === i ? 1 : 0.2, y: active === i ? 0 : 30 }}
+                    transition={{ duration: 0.7, delay: 0.15 }}
+                    className="grid grid-cols-4 gap-3 pt-2"
+                  >
+                    {f.facts.map((fact) => (
+                      <div key={fact.k} className="rounded-2xl border px-3 py-3" style={{ borderColor: "currentColor", opacity: 0.95 }}>
+                        <div className="font-display text-xl font-bold leading-none">{fact.v}</div>
+                        <div className="mt-1 text-[10px] uppercase tracking-[0.2em] opacity-60">{fact.k}</div>
+                      </div>
+                    ))}
+                  </motion.div>
+
+                  <motion.ul
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: active === i ? 1 : 0.2, y: active === i ? 0 : 30 }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    className="flex flex-wrap gap-2 pt-2"
+                  >
+                    {f.ingredients.map((ing) => (
+                      <li key={ing} className="rounded-full px-3 py-1 text-xs" style={{ background: f.accent, color: f.bg }}>
+                        {ing}
+                      </li>
+                    ))}
+                  </motion.ul>
+
+                  <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: active === i ? 1 : 0, y: active === i ? 0 : 20 }}
+                    transition={{ duration: 0.6, delay: 0.25 }}
+                    className="mt-4 inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-medium"
+                    style={{ background: f.accent, color: f.bg }}
+                  >
+                    Add to box →
+                  </motion.button>
+                </div>
+
+                <div className="relative h-[60vh]">
+                  <motion.img
+                    src={f.img}
+                    alt={f.name}
+                    initial={false}
+                    animate={{
+                      scale: active === i ? 1 : 0.85,
+                      rotate: active === i ? -6 : 8,
+                      opacity: active === i ? 1 : 0.5,
+                    }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute inset-0 m-auto h-full w-auto object-contain drop-shadow-[0_40px_50px_rgba(0,0,0,0.3)]"
+                  />
+                  <motion.div
+                    initial={false}
+                    animate={{ rotate: active === i ? 360 : 0 }}
+                    transition={{ duration: 18, ease: "linear", repeat: Infinity }}
+                    className="absolute -right-4 -top-4 hidden h-28 w-28 rounded-full border-2 md:block"
+                    style={{ borderColor: "currentColor", opacity: 0.4 }}
+                  />
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 font-display text-[10rem] font-bold leading-none opacity-10">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* hint */}
+        <div className="absolute bottom-8 right-8 z-20 flex items-center gap-2 text-xs uppercase tracking-[0.3em] opacity-60">
+          Scroll <span className="inline-block">→</span>
         </div>
       </div>
     </section>
@@ -207,8 +369,8 @@ function CTA() {
     <section className="relative overflow-hidden py-32" style={{ background: "var(--coral-deep)" }}>
       <div className="mx-auto max-w-5xl px-6 text-center text-cream">
         <h2 className="font-display text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] italic">Ready?</h2>
-        <p className="mx-auto mt-6 max-w-lg text-lg opacity-80">Three flavors. One smooth ride. Free shipping over $40.</p>
-        <button className="mt-10 rounded-full bg-cream px-8 py-4 text-cocoa font-medium hover:scale-105 transition-transform">Shop the trio →</button>
+        <p className="mx-auto mt-6 max-w-lg text-lg opacity-80">Five flavors. One smooth ride. Free shipping over $40.</p>
+        <button className="mt-10 rounded-full bg-cream px-8 py-4 text-cocoa font-medium hover:scale-105 transition-transform">Shop the set →</button>
       </div>
     </section>
   );
@@ -241,8 +403,8 @@ function Home() {
       <Wave from="var(--coral)" to="var(--cocoa)" />
       <Marquee />
       <Wave from="var(--cocoa)" to="var(--cream)" />
-      <PinnedFlavors />
-      <Wave from="var(--blush)" to="var(--cream)" />
+      <HorizontalFlavors />
+      <Wave from="var(--sage)" to="var(--cream)" />
       <Story />
       <Wave from="var(--cream)" to="var(--coral-deep)" />
       <CTA />
