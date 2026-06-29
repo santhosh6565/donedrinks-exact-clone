@@ -13,6 +13,7 @@
   --color-cocoa: var(--cocoa);
   --color-blush: var(--blush);
   --color-sage: var(--sage);
+  --color-makhana-cream: var(--makhana-cream);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --animate-marquee: marquee 30s linear infinite;
@@ -25,14 +26,25 @@
 }
 
 :root {
-  --background: oklch(0.97 0.02 60);
-  --foreground: oklch(0.22 0.05 30);
-  --cream: oklch(0.96 0.03 75);
-  --coral: oklch(0.78 0.14 25);
-  --coral-deep: oklch(0.55 0.18 30);
-  --cocoa: oklch(0.28 0.06 40);
-  --blush: oklch(0.88 0.07 20);
-  --sage: oklch(0.82 0.06 140);
+  --background: oklch(0.12 0.01 250);
+  --foreground: oklch(0.96 0.01 90);
+
+  /* Premium Black Theme */
+  --cream: #0D0D0D;
+  --makhana-cream: #0D0D0D;
+
+  /* Gold Accent */
+  --coral: #D4AF37;
+  --coral-deep: #B8860B;
+
+  /* Text */
+  --cocoa: #F5F2EA;
+
+  /* Secondary Colors */
+  --blush: #1B1B1B;
+  --sage: #4E6B42;
+
+  /* Fonts */
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", system-ui, sans-serif;
 }

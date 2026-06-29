@@ -65,32 +65,32 @@ export const flavors: Flavor[] = [
   {
     name: "Chocolate",
     description:
-      "Rich Belgian-style cocoa folded into crisp lotus pops. Dessert energy, no guilt.",
+      "Rich Belgian-style cocoa blended with perfectly roasted Makhana for an indulgent yet guilt-free crunch.",
     image: flavorChocolate,
-    bg: "oklch(0.94 0.03 60)",
-    text: "var(--cocoa)",
-    accent: "var(--cocoa)",
-    ingredients: ["Cocoa", "Vanilla", "Sea salt"],
+    bg: "linear-gradient(135deg,#1A1A1A 0%,#262626 100%)",
+    text: "#F8F5EE",
+    accent: "#A67C52",
+    ingredients: ["Belgian Cocoa", "Vanilla", "Sea Salt"],
   },
   {
     name: "Salted Caramel",
     description:
-      "Slow-cooked caramel meets flaky sea salt — buttery, golden, and impossibly crunchy.",
+      "Golden caramel balanced with delicate sea salt creates a rich buttery flavour in every bite.",
     image: flavorCaramel,
-    bg: "oklch(0.92 0.07 75)",
-    text: "var(--cocoa)",
-    accent: "var(--coral-deep)",
-    ingredients: ["Caramel", "Butter", "Sea salt"],
+    bg: "linear-gradient(135deg,#181818 0%,#2B2217 100%)",
+    text: "#F8F5EE",
+    accent: "#D4AF37",
+    ingredients: ["Caramel", "Butter", "Sea Salt"],
   },
   {
     name: "Strawberry",
     description:
-      "Sun-ripened strawberry dusted onto airy makhana. Bright, tart, and a little playful.",
+      "Sweet sun-ripened strawberries meet light, crunchy Makhana for a refreshing fruity snack.",
     image: flavorStrawberry,
-    bg: "oklch(0.92 0.05 20)",
-    text: "var(--coral-deep)",
-    accent: "var(--coral-deep)",
-    ingredients: ["Strawberry", "Beet", "Vanilla"],
+    bg: "linear-gradient(135deg,#181818 0%,#2A1A22 100%)",
+    text: "#F8F5EE",
+    accent: "#E46A8A",
+    ingredients: ["Strawberry", "Beetroot", "Vanilla"],
   },
 ];
 

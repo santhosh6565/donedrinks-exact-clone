@@ -34,7 +34,7 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
           loading="lazy"
           width={768}
           height={1024}
-          className="relative z-10 h-full w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.25)]"
+          className="relative z-10 max-h-[340px] w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.25)]"
           animate={{ y: [0, -10, 0] }}
           transition={{
             duration: 5 + index * 0.5,
@@ -42,8 +42,9 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
             ease: "easeInOut",
           }}
         />
+
         <div
-          className="absolute inset-x-8 bottom-6 h-32 rounded-full opacity-30 blur-2xl"
+          className="absolute bottom-6 left-1/2 h-24 w-40 -translate-x-1/2 rounded-full opacity-30 blur-2xl"
           style={{ background: flavor.accent }}
           aria-hidden
         />

@@ -104,8 +104,8 @@ export function ProcessSection() {
         style={{ background: "var(--cream)", color: "var(--cocoa)" }}
       >
         {/* Header */}
-        <div className="shrink-0 pt-24 md:pt-28 pb-6">
-          <div className="mx-auto max-w-6xl px-6">
+        <div className="shrink-0 pt-16 md:pt-16">
+          <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Product Making"
               title={
