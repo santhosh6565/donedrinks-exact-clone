@@ -55,7 +55,7 @@ export function BenefitsSection() {
   return (
     <section
       id="benefits"
-      className="relative py-28 md:py-40"
+      className="relative py-20 md:py-28"
       style={{ background: "var(--cream)" }}
     >
       <div className="mx-auto max-w-7xl px-6 text-cocoa">
