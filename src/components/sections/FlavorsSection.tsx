@@ -78,7 +78,7 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
 
 export function FlavorsSection() {
   return (
-    <section id="flavors" className="relative py-28 md:py-40" style={{ background: "var(--cream)" }}>
+    <section id="flavors" className="relative py-20 md:py-28" style={{ background: "var(--cream)" }}>
       <div className="mx-auto max-w-7xl px-6 text-cocoa">
         <div className="flex justify-center">
           <SectionHeading

@@ -190,7 +190,7 @@ function Story() {
     <section
       id="story"
       ref={ref}
-      className="relative overflow-hidden py-32"
+      className="relative overflow-hidden py-20 md:py-28"
       style={{ background: "var(--cream)" }}
     >
       <motion.div style={{ y }} className="absolute -right-20 top-10 h-64 w-64 rounded-full opacity-30" />
@@ -214,7 +214,7 @@ function Story() {
 
 function CTA() {
   return (
-    <section className="relative overflow-hidden py-32" style={{ background: "var(--coral-deep)" }}>
+    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: "var(--coral-deep)" }}>
       <div className="mx-auto max-w-5xl px-6 text-center text-cream">
         <h2 className="font-display text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] italic">
           Ready?
@@ -274,7 +274,6 @@ function Home() {
       <ProcessSection />
       <FlavorsSection />
       <BenefitsSection />
-      <Wave from="var(--cream)" to="var(--cream)" />
       <Story />
       <Wave from="var(--cream)" to="var(--coral-deep)" />
       <CTA />
