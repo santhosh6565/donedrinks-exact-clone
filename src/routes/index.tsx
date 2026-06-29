@@ -274,7 +274,6 @@ function Home() {
       <ProcessSection />
       <FlavorsSection />
       <BenefitsSection />
-      <Wave from="var(--cream)" to="var(--cream)" />
       <Story />
       <Wave from="var(--cream)" to="var(--coral-deep)" />
       <CTA />
