@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import type { RefObject } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
-import bottle1 from "@/assets/bottle-1.png";
-import bottle2 from "@/assets/bottle-2.png";
-import bottle3 from "@/assets/bottle-3.png";
+import heroBowl from "@/assets/hero-section-image.png";
+import makhanaImg from "@/assets/Makhana-img1.png";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   ProcessSection,
   FlavorsSection,
@@ -57,21 +58,21 @@ function StickyNav() {
   ];
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-6"}`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-6"}`}
     >
       <div className="relative mx-auto flex max-w-7xl items-center justify-center px-6 md:justify-between">
         <div className="absolute left-6 hidden gap-2 md:static md:flex">
           {["✦", "◐", "✿"].map((s) => (
             <span
               key={s}
-              className={`grid h-10 w-10 place-items-center rounded-full bg-cream text-cocoa transition-all ${scrolled ? "scale-90" : ""}`}
+              className={`grid h-10 w-10 place-items-center rounded-full border border-[#f3c943]/15 bg-black/55 text-[#d2b48c] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all hover:border-[#f3c943]/35 hover:text-[#f3c943] ${scrolled ? "scale-90" : ""}`}
             >
               {s}
             </span>
           ))}
         </div>
         <div
-          className={`rounded-full bg-cream px-6 py-3 font-display text-xl font-bold tracking-tight text-cocoa transition-all ${scrolled ? "scale-90" : ""}`}
+          className={`rounded-full border border-[#f3c943]/18 bg-black/65 px-7 py-3 font-display text-xl font-black tracking-tight text-[#f8ead1] shadow-[0_16px_45px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all ${scrolled ? "scale-90" : ""}`}
         >
           MAKHANA
         </div>
@@ -80,7 +81,7 @@ function StickyNav() {
             <a
               key={n.label}
               href={n.href}
-              className="rounded-full bg-cream px-5 py-3 text-sm font-medium text-cocoa hover:bg-blush transition-colors"
+              className="rounded-full border border-[#f3c943]/12 bg-black/55 px-5 py-3 text-sm font-medium text-[#f8ead1] shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#f3c943]/35 hover:bg-[#f3c943] hover:text-black"
             >
               {n.label}
             </a>
@@ -94,122 +95,92 @@ function StickyNav() {
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const seedsY = useTransform(scrollYProgress, [0, 1], [0, -180]);
-  const pouchY = useTransform(scrollYProgress, [0, 1], [0, -260]);
-  const rot1 = useTransform(scrollYProgress, [0, 1], [-14, -26]);
-  const rot2 = useTransform(scrollYProgress, [0, 1], [11, 24]);
-  const rot3 = useTransform(scrollYProgress, [0, 1], [7, 18]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -90]);
+  const glowY = useTransform(scrollYProgress, [0, 1], [0, -70]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
-  const pouches = [
-    { img: bottle1, rot: rot1, className: "left-[3%] top-[31%] h-[30vh] md:left-[9%] md:top-[28%] md:h-[44vh]" },
-    { img: bottle2, rot: rot2, className: "right-[4%] top-[26%] h-[32vh] md:right-[11%] md:top-[22%] md:h-[48vh]" },
-    { img: bottle3, rot: rot3, className: "left-1/2 top-[62%] h-[26vh] -translate-x-1/2 md:top-[58%] md:h-[38vh]" },
-  ];
-
-  const seeds = [
-    { left: "8%", top: "19%", size: 32, delay: 0, duration: 8 },
-    { left: "21%", top: "68%", size: 21, delay: 1.2, duration: 9 },
-    { left: "34%", top: "18%", size: 17, delay: 0.4, duration: 7 },
-    { left: "48%", top: "78%", size: 27, delay: 2.1, duration: 10 },
-    { left: "63%", top: "16%", size: 24, delay: 1.7, duration: 8.5 },
-    { left: "76%", top: "65%", size: 18, delay: 0.8, duration: 7.5 },
-    { left: "89%", top: "28%", size: 30, delay: 2.5, duration: 9.5 },
-    { left: "12%", top: "47%", size: 15, delay: 3.1, duration: 8.8 },
-    { left: "84%", top: "48%", size: 16, delay: 1.4, duration: 7.8 },
-  ];
+  const wordRows = ["MAKHANA", "MAKHANA", "MAKHANA", "MAKHANA", "MAKHANA"];
 
   return (
     <section
-  ref={ref}
-  className="relative min-h-screen overflow-hidden bg-[#050505] pt-28 pb-20"
->
-<div
-  className="absolute inset-0"
-  style={{
-    background: `
-      radial-gradient(circle at 20% 20%, rgba(255,215,0,.15), transparent 30%),
-      radial-gradient(circle at 80% 70%, rgba(255,255,255,.05), transparent 35%),
-      radial-gradient(circle at center, rgba(255,255,255,.02), transparent 60%)
-    `,
-  }}
-/>
-
-<div className="absolute inset-0 opacity-20 [background-image:linear-gradient(120deg,transparent_0%,rgba(255,255,255,.08)_50%,transparent_100%)]" />
-
-<div className="absolute inset-0 opacity-10 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,.4)_1px,transparent_1px)] [background-size:18px_18px]" />
-      <motion.div style={{ y: seedsY }} className="pointer-events-none absolute inset-0">
-        {seeds.map((seed, i) => (
-          <motion.span
-            key={i}
-            className="absolute block rounded-[52%_48%_47%_53%] border border-[#B67A35]/35 bg-[#FCF8F3] shadow-[inset_-6px_-7px_10px_rgba(182,122,53,0.18),0_14px_30px_rgba(107,80,53,0.13)]"
-            style={{
-              left: seed.left,
-              top: seed.top,
-              width: seed.size,
-              height: seed.size * 0.82,
-            }}
-            animate={{
-              y: [-12, 16, -12],
-              x: [-4, 6, -4],
-              rotate: [-8, 12, -8],
-              scale: [1, 1.08, 1],
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: seed.duration,
-              delay: seed.delay,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
+      ref={ref}
+      className="relative min-h-screen overflow-hidden bg-[var(--cream)] pt-24 pb-16 text-[#f3c943] md:pt-28"
+    >
+      <motion.div
+        style={{ y: glowY }}
+        className="absolute inset-0 opacity-95"
+        aria-hidden
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_78%,rgba(122,74,38,0.48),transparent_34%),radial-gradient(circle_at_50%_92%,rgba(243,201,67,0.2),transparent_34%),linear-gradient(180deg,#050505_0%,#050505_54%,#110905_100%)]" />
+        <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,rgba(255,255,255,.85)_1px,transparent_1px)] [background-size:3px_3px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.62),transparent_24%,transparent_76%,rgba(0,0,0,0.62))]" />
       </motion.div>
 
-      <motion.div style={{ opacity, y: pouchY }} className="pointer-events-none absolute inset-0 z-[1]">
-        {pouches.map((pouch, i) => (
-          <motion.img
-            key={i}
-            src={pouch.img}
-            alt=""
-            style={{ rotate: pouch.rot }}
-            animate={{ y: [-12, 14, -12] }}
-            transition={{ repeat: Infinity, duration: 7 + i, ease: "easeInOut" }}
-            className={`absolute hidden w-auto object-contain drop-shadow-[0_32px_45px_rgba(80,42,20,0.2)] md:block ${pouch.className}`}
-          />
-        ))}
-      </motion.div>
-
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-12rem)] max-w-6xl items-center justify-center px-6 text-center">
-        <motion.div style={{ opacity, y: titleY }} className="mx-auto max-w-5xl">
-          <div className="mx-auto mb-6 inline-flex items-center gap-3 rounded-full border border-[#708238]/25 bg-[#FCF8F3]/70 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-[#445126] backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-[#708238]" />
-            Premium Fox Nuts
+      <motion.div
+        style={{ opacity, y: titleY }}
+        className="absolute inset-x-0 top-[8vh] z-0 select-none overflow-hidden text-center font-display text-[clamp(5.4rem,16vw,17.5rem)] font-black uppercase leading-[0.72]"
+        aria-hidden
+      >
+        {wordRows.map((word, index) => (
+          <div
+            key={`${word}-${index}`}
+            className="bg-gradient-to-b from-[#7a4a26] via-[#4a2c17] to-[#d2b48c]/10 bg-clip-text text-transparent opacity-[0.48]"
+            style={{ opacity: Math.max(0.13, 0.48 - index * 0.08) }}
+          >
+            {word}
           </div>
-          <h1 className="font-display text-[clamp(4rem,15vw,12rem)] font-black uppercase leading-[0.78] tracking-normal text-[#445126]">
-            Makhana
-          </h1>
-          <p className="mx-auto mt-8 max-w-2xl text-balance text-lg leading-8 text-[#6B5035] md:text-xl">
-            Air-popped lotus seeds, roasted for a feather-light crunch and finished with layered
-            flavours that feel quietly indulgent.
+        ))}
+      </motion.div>
+
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-10rem)] max-w-7xl flex-col items-center justify-center px-5 text-center">
+      <motion.img
+          src={heroBowl}
+          alt="Bowl filled with roasted makhana"
+          width={500}
+          height={500}
+          animate={{
+            y: [0, -12, 0],
+            rotate: [0, 1, 0, -1, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="mt-10 w-[min(84vw,700px)] object-contain drop-shadow-[0_48px_58px_rgba(0,0,0,0.72)] md:mt-16"
+        />
+        <motion.div style={{ opacity, y: titleY }} className="-mt-8 max-w-3xl md:-mt-12">
+          <p className="text-balance text-base font-semibold uppercase tracking-[0.42em] text-[#f3c943]/82 md:text-lg">
+            Premium Roasted Fox Nuts
           </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <button className="inline-flex items-center gap-3 rounded-full bg-[#445126] px-7 py-4 font-medium text-[#FFF9F1] transition-transform hover:scale-105">
-              Shop now <span>→</span>
-            </button>
+          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a
+              href="#flavors"
+              className="rounded-full bg-[#f3c943] px-8 py-4 text-sm font-black uppercase tracking-[0.16em] text-black shadow-[0_18px_58px_rgba(243,201,67,0.28)] transition-all hover:-translate-y-1 hover:scale-105 hover:bg-[#ffe17a]"
+            >
+              Explore flavours
+            </a>
             <a
               href="#process"
-              className="inline-flex items-center gap-3 rounded-full border border-[#708238]/35 bg-[#FCF8F3]/65 px-7 py-4 font-medium text-[#445126] backdrop-blur transition-colors hover:bg-[#F7EAD7]"
+              className="rounded-full border border-[#f3c943]/38 bg-white/[0.035] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#f3c943] shadow-[inset_0_1px_0_rgba(255,255,255,0.09)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:bg-[#f3c943]/12"
             >
-              See the journey
+              See process
             </a>
           </div>
         </motion.div>
       </div>
 
-      <div className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-center text-[11px] uppercase tracking-[0.32em] text-[#445126]/60">
-        Float into flavour
+      <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-center text-[10px] uppercase tracking-[0.34em] text-[#d2b48c]/70">
+        <span>Scroll into flavour</span>
+        <motion.span
+          className="block h-9 w-px bg-gradient-to-b from-[#f3c943] to-transparent"
+          animate={{ scaleY: [0.35, 1, 0.35], opacity: [0.35, 1, 0.35] }}
+          transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
+        />
       </div>
+
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-b from-transparent via-[#050505]/80 to-[var(--cream)]"
+      />
     </section>
   );
 }
@@ -217,29 +188,164 @@ function Hero() {
 function Marquee() {
   const items = [
     "No added sugar",
-    "✦",
     "Real ingredients",
-    "◐",
     "Gluten free",
-    "✿",
     "20g protein",
-    "✦",
     "High fiber",
-    "◐",
+    "Slow roasted",
   ];
   return (
-    <div className="overflow-hidden bg-cocoa py-6 text-cream">
-      <div className="flex w-max animate-marquee gap-12 font-display text-3xl md:text-5xl whitespace-nowrap">
-        {Array.from({ length: 2 }).map((_, k) => (
-          <div key={k} className="flex gap-12">
-            {items.map((t, i) => (
-              <span key={i} className="italic">
-                {t}
-              </span>
-            ))}
-          </div>
-        ))}
+    <div className="relative overflow-hidden bg-[var(--cream)] text-black">
+      {/* Top wave */}
+      <svg
+        viewBox="0 0 1440 92"
+        preserveAspectRatio="none"
+        className="-mb-px block h-12 w-full md:h-20"
+        aria-hidden
+      >
+        <path
+          d="M0,58 C180,12 360,92 540,48 C720,4 900,88 1080,48 C1260,8 1360,42 1440,18 L1440,92 L0,92 Z"
+          fill="#f7f7f2"
+        />
+      </svg>
+
+      {/* Marquee section */}
+      <div className="relative overflow-hidden bg-[#f7f7f2] py-7">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#f7f7f2] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#f7f7f2] to-transparent" />
+
+        <div className="flex w-max animate-marquee gap-12 whitespace-nowrap font-display text-3xl font-black uppercase leading-none md:text-5xl">
+          {Array.from({ length: 2 }).map((_, k) => (
+            <div key={k} className="flex items-center gap-12">
+              {items.map((t, i) => (
+                <span
+                  key={`${t}-${k}-${i}`}
+                  className="marquee-wave inline-block italic"
+                  style={{
+                    animationDelay: `${(i + k * items.length) * -0.22}s`,
+                  }}
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Bottom wave */}
+      <svg
+        viewBox="0 0 1440 92"
+        preserveAspectRatio="none"
+        className="-mt-px block h-12 w-full bg-[var(--cream)] md:h-20"
+        aria-hidden
+      >
+        <path
+          d="M0,34 C190,76 360,-2 540,42 C720,86 900,10 1080,46 C1260,82 1360,50 1440,72 L1440,0 L0,0 Z"
+          fill="#f7f7f2"
+        />
+      </svg>
+    </div>
+  );
+}
+
+function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement | null> }) {
+  const isMobile = useIsMobile();
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end end"],
+  });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 22, mass: 0.45 });
+  const topDrop = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? ["0vh", "19vh", "19vh", "30vh"] : ["0vh", "25vh", "25vh", "48vh"],
+  );
+  const topLeftDrop = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? ["2vh", "21vh", "21vh", "24vh"] : ["2vh", "28vh", "28vh", "30vh"],
+  );
+  const bottomLift = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? ["0vh", "-4vh", "-4vh", "0vh"] : ["0vh", "-8vh", "-8vh", "0vh"],
+  );
+  const topLeftX = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? ["-10vw", "-38vw", "-38vw", "-30vw"] : ["-7vw", "-46vw", "-46vw", "-35vw"],
+  );
+  const topRightX = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? ["4vw", "28vw", "28vw", "24vw"] : ["2vw", "37vw", "37vw", "40vw"],
+  );
+  const pull = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? ["0vw", "2vw", "2vw", "0vw"] : ["0vw", "4vw", "4vw", "0vw"],
+  );
+  const pullReverse = useTransform(pull, (value) => `-${value}`);
+  const bottomRightDrop = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? ["0vh", "6vh", "6vh", "12vh"] : ["0vh", "10vh", "10vh", "20vh"],
+  );
+  const scale = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? [0.68, 0.88, 0.88, 0.72] : [0.78, 1.08, 1.08, 0.82],
+  );
+  const topLeftScale = useTransform(
+    smoothProgress,
+    [0, 0.52, 0.8, 1],
+    isMobile ? [0.78, 1.02, 1.02, 0.95] : [1.1, 1.4, 1.4, 1.25],
+  );
+
+  const items = [
+    { className: "img1 left-1/2 top-28 md:top-28", x: topLeftX, y: topLeftDrop, scale: topLeftScale, rotate: [-10, 9, -10] },
+    { className: "img2 left-1/2 top-28 md:top-28", x: topRightX, y: topDrop, scale, rotate: [11, -8, 11] },
+    { className: "img3 left-3 bottom-10 md:left-10 md:bottom-14", x: pull, y: bottomLift, scale, rotate: [10, -10, 10] },
+    { className: "img4 right-3 bottom-10 md:right-10 md:bottom-14", x: pullReverse, y: bottomRightDrop, scale, rotate: [-11, 8, -11] },
+  ];
+
+  return (
+    <div className="pointer-events-none sticky top-0 z-30 -mb-[100vh] h-screen overflow-hidden" aria-hidden>
+      {items.map((item, index) => (
+        <motion.div
+          key={item.className}
+          className={`absolute ${item.className}`}
+          style={{ y: item.y, x: item.x, scale: item.scale }}
+        >
+          <motion.img
+            src={makhanaImg}
+            alt=""
+            width={250}
+            height={250}
+            className="relative h-12 w-12 object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.45)] sm:h-14 sm:w-14 md:h-24 md:w-24 lg:h-28 lg:w-28"
+            animate={{ y: [10, -22, 10], rotate: item.rotate, scale: [1, 1.06, 1] }}
+            transition={{
+              duration: 2.9 + index * 0.32,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+function HeroFlavorsShowcase() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  return (
+    <div ref={ref} className="relative bg-[#050505]">
+      <ScrollMakhanaLayer targetRef={ref} />
+      <Hero />
+      <Marquee />
+      <FlavorsSection />
     </div>
   );
 }
@@ -333,11 +439,7 @@ function Home() {
   return (
     <div className="relative">
       <StickyNav />
-      <Hero />
-      <Wave from="var(--makhana-cream)" to="var(--cocoa)" />
-      <Marquee />
-      <Wave from="var(--cocoa)" to="var(--cream)" />
-      <FlavorsSection />
+      <HeroFlavorsShowcase />
       <BenefitsSection />
       <ProcessSection />
       <Story />
