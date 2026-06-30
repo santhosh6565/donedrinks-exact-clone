@@ -35,9 +35,6 @@
 }
 
 :root {
-  --background: oklch(0.12 0.01 250);
-  --foreground: oklch(0.96 0.01 90);
-
   /* Premium Black Theme */
   --cream: #0D0D0D;
   --makhana-cream: #0D0D0D;
@@ -53,10 +50,31 @@
   --blush: #1B1B1B;
   --sage: #4E6B42;
 
+  /* App Surface */
+  --background: var(--cream);
+  --foreground: var(--cocoa);
+
   /* Fonts */
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", system-ui, sans-serif;
 }
+
+/*
+  Light Theme Reference
+  Uncomment this block when the site needs the lighter cream/card style.
+
+:root {
+  --cream: #F7E8D6;
+  --makhana-cream: #FFF4E6;
+  --coral: #D13A2F;
+  --coral-deep: #A92B22;
+  --cocoa: #3B1C12;
+  --blush: #FFD2D7;
+  --sage: #6F7F4A;
+  --background: var(--cream);
+  --foreground: var(--cocoa);
+}
+*/
 
 @layer base {
   * { border-color: oklch(0.85 0.04 50 / 0.4); }

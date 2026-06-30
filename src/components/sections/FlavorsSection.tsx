@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { ArrowRight } from "lucide-react";
 import { flavors, type Flavor } from "./data";
 import { SectionHeading } from "./SectionHeading";
 
@@ -68,10 +69,15 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.97 }}
-        className="mt-2 inline-flex items-center gap-3 rounded-full px-7 py-3 text-sm font-medium shadow-md"
-        style={{ background: flavor.accent, color: flavor.bg }}
+        className="group mt-2 inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/20 bg-black/55 py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.12em] text-[#fff2c4] shadow-[0_16px_36px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.14)] backdrop-blur-xl transition-all hover:border-white/35 hover:text-white hover:shadow-[0_20px_42px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#181818]"
       >
-        Shop now <span aria-hidden>→</span>
+        <span>Shop now</span>
+        <span
+          className="grid h-8 w-8 place-items-center rounded-full text-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] transition-transform group-hover:translate-x-0.5"
+          style={{ background: flavor.accent }}
+        >
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </span>
       </motion.button>
     </motion.article>
   );
@@ -79,7 +85,11 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
 
 export function FlavorsSection() {
   return (
-    <section id="flavors" className="relative py-20 md:py-28" style={{ background: "var(--cream)" }}>
+    <section
+      id="flavors"
+      className="relative py-20 md:py-28"
+      style={{ background: "var(--cream)" }}
+    >
       <div className="mx-auto max-w-7xl px-6 text-cocoa">
         <div className="flex justify-center">
           <SectionHeading

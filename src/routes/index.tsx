@@ -3,14 +3,17 @@ import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
+import { ArrowRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import heroBowl from "@/assets/hero-section-image.png";
 import makhanaImg from "@/assets/Makhana-img1.png";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  ProcessSection,
-  FlavorsSection,
-  BenefitsSection,
-} from "@/components/sections";
+import { ProcessSection, FlavorsSection, BenefitsSection } from "@/components/sections";
+
+//TODO: Add WhatsApp number and message
+const WHATSAPP_NUMBER = "919884471751";
+const WHATSAPP_MESSAGE =
+  "Hi Makhana, I would like to order your signature makhana flavours. Please share the available boxes, prices, and delivery details.";
+const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -46,11 +49,37 @@ function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boo
 
 function StickyNav() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const upwardScrollDistance = useRef(0);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY.current;
+
+      if (Math.abs(delta) < 4) return;
+
+      setScrolled(currentY > 40);
+
+      if (delta > 0) {
+        upwardScrollDistance.current = 0;
+        setHidden(currentY > 120);
+      } else {
+        upwardScrollDistance.current += Math.abs(delta);
+        if (upwardScrollDistance.current > 90 || currentY < 80) {
+          setHidden(false);
+        }
+      }
+
+      lastScrollY.current = currentY;
+    };
+
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   const links = [
     { label: "Process", href: "#process" },
     { label: "Flavours", href: "#flavors" },
@@ -58,21 +87,29 @@ function StickyNav() {
   ];
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-6"}`}
+      className={`fixed inset-x-0 top-0 z-50 transition-[padding,transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        scrolled ? "py-3" : "py-6"
+      } ${hidden ? "pointer-events-none -translate-y-full opacity-0 blur-sm" : "translate-y-0 opacity-100 blur-0"}`}
     >
-      <div className="relative mx-auto flex max-w-7xl items-center justify-center px-6 md:justify-between">
+      <div
+        className={`relative mx-auto flex max-w-7xl items-center justify-center px-6 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:justify-between ${
+          scrolled ? "scale-[0.98]" : "scale-100"
+        }`}
+      >
         <div className="absolute left-6 hidden gap-2 md:static md:flex">
           {["✦", "◐", "✿"].map((s) => (
             <span
               key={s}
-              className={`grid h-10 w-10 place-items-center rounded-full border border-[#f3c943]/15 bg-black/55 text-[#d2b48c] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all hover:border-[#f3c943]/35 hover:text-[#f3c943] ${scrolled ? "scale-90" : ""}`}
+              className={`grid h-10 w-10 place-items-center rounded-full border border-[#f3c943]/15 bg-black/55 text-[#d2b48c] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:text-[#f3c943] ${scrolled ? "scale-90" : ""}`}
             >
               {s}
             </span>
           ))}
         </div>
         <div
-          className={`rounded-full border border-[#f3c943]/18 bg-black/65 px-7 py-3 font-display text-xl font-black tracking-tight text-[#f8ead1] shadow-[0_16px_45px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all ${scrolled ? "scale-90" : ""}`}
+          className={`rounded-full border border-[#f3c943]/18 bg-black/65 px-7 py-3 font-display text-xl font-black tracking-tight text-[#f8ead1] shadow-[0_16px_45px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-500 ${
+            scrolled ? "scale-90 bg-black/78 shadow-[0_14px_38px_rgba(0,0,0,0.4)]" : "scale-100"
+          }`}
         >
           MAKHANA
         </div>
@@ -81,7 +118,7 @@ function StickyNav() {
             <a
               key={n.label}
               href={n.href}
-              className="rounded-full border border-[#f3c943]/12 bg-black/55 px-5 py-3 text-sm font-medium text-[#f8ead1] shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#f3c943]/35 hover:bg-[#f3c943] hover:text-black"
+              className="rounded-full border border-[#f3c943]/12 bg-black/55 px-5 py-3 text-sm font-medium text-[#f8ead1] shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:bg-[#f3c943] hover:text-black hover:shadow-[0_18px_42px_rgba(243,201,67,0.18)]"
             >
               {n.label}
             </a>
@@ -105,11 +142,7 @@ function Hero() {
       ref={ref}
       className="relative min-h-screen overflow-hidden bg-[var(--cream)] pt-24 pb-16 text-[#f3c943] md:pt-28"
     >
-      <motion.div
-        style={{ y: glowY }}
-        className="absolute inset-0 opacity-95"
-        aria-hidden
-      >
+      <motion.div style={{ y: glowY }} className="absolute inset-0 opacity-95" aria-hidden>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_78%,rgba(122,74,38,0.48),transparent_34%),radial-gradient(circle_at_50%_92%,rgba(243,201,67,0.2),transparent_34%),linear-gradient(180deg,#050505_0%,#050505_54%,#110905_100%)]" />
         <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,rgba(255,255,255,.85)_1px,transparent_1px)] [background-size:3px_3px]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.62),transparent_24%,transparent_76%,rgba(0,0,0,0.62))]" />
@@ -132,11 +165,11 @@ function Hero() {
       </motion.div>
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-10rem)] max-w-7xl flex-col items-center justify-center px-5 text-center">
-      <motion.img
+        <motion.img
           src={heroBowl}
           alt="Bowl filled with roasted makhana"
-          width={500}
-          height={500}
+          width={400}
+          height={400}
           animate={{
             y: [0, -12, 0],
             rotate: [0, 1, 0, -1, 0],
@@ -148,20 +181,26 @@ function Hero() {
           }}
           className="mt-10 w-[min(84vw,700px)] object-contain drop-shadow-[0_48px_58px_rgba(0,0,0,0.72)] md:mt-16"
         />
-        <motion.div style={{ opacity, y: titleY }} className="-mt-8 max-w-3xl md:-mt-12">
+        <motion.div
+          style={{ opacity, y: titleY }}
+          className="-mt-8 mb-8 md:mb-8 max-w-3xl md:-mt-12"
+        >
           <p className="text-balance text-base font-semibold uppercase tracking-[0.42em] text-[#f3c943]/82 md:text-lg">
             Premium Roasted Fox Nuts
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href="#flavors"
-              className="rounded-full bg-[#f3c943] px-8 py-4 text-sm font-black uppercase tracking-[0.16em] text-black shadow-[0_18px_58px_rgba(243,201,67,0.28)] transition-all hover:-translate-y-1 hover:scale-105 hover:bg-[#ffe17a]"
+              className="group inline-flex min-h-14 items-center justify-center gap-4 rounded-full border border-[#f3c943]/70 bg-[linear-gradient(180deg,rgba(35,24,8,0.96),rgba(5,5,5,0.96))] py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.13em] text-[#fff2c4] shadow-[0_18px_50px_rgba(0,0,0,0.42),0_0_0_1px_rgba(255,255,255,0.08),inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[#ffe17a] hover:text-white hover:shadow-[0_22px_62px_rgba(243,201,67,0.24),0_0_0_1px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f3c943] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
-              Explore flavours
+              <span>Explore flavours</span>
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-[#f3c943] text-[#0b0b0b] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-transform group-hover:translate-x-0.5 group-hover:bg-[#ffe17a]">
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </span>
             </a>
             <a
               href="#process"
-              className="rounded-full border border-[#f3c943]/38 bg-white/[0.035] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#f3c943] shadow-[inset_0_1px_0_rgba(255,255,255,0.09)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:bg-[#f3c943]/12"
+              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#f3c943]/45 bg-[#f3c943]/10 px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[#ffe6a3] shadow-[0_14px_38px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[#f3c943]/85 hover:bg-[#f3c943]/18 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f3c943] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
               See process
             </a>
@@ -170,17 +209,14 @@ function Hero() {
       </div>
 
       <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-center text-[10px] uppercase tracking-[0.34em] text-[#d2b48c]/70">
-        <span>Scroll into flavour</span>
         <motion.span
-          className="block h-9 w-px bg-gradient-to-b from-[#f3c943] to-transparent"
+          className="block h-9 w-px bg-[linear-gradient(to_bottom,transparent,#f3c943,transparent)]"
           animate={{ scaleY: [0.35, 1, 0.35], opacity: [0.35, 1, 0.35] }}
           transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-b from-transparent via-[#050505]/80 to-[var(--cream)]"
-      />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-b from-transparent via-[#050505]/90 to-[var(--cream)]" />
     </section>
   );
 }
@@ -304,14 +340,41 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
   );
 
   const items = [
-    { className: "img1 left-1/2 top-28 md:top-28", x: topLeftX, y: topLeftDrop, scale: topLeftScale, rotate: [-10, 9, -10] },
-    { className: "img2 left-1/2 top-28 md:top-28", x: topRightX, y: topDrop, scale, rotate: [11, -8, 11] },
-    { className: "img3 left-3 bottom-10 md:left-10 md:bottom-14", x: pull, y: bottomLift, scale, rotate: [10, -10, 10] },
-    { className: "img4 right-3 bottom-10 md:right-10 md:bottom-14", x: pullReverse, y: bottomRightDrop, scale, rotate: [-11, 8, -11] },
+    {
+      className: "img1 left-1/2 top-28 md:top-28",
+      x: topLeftX,
+      y: topLeftDrop,
+      scale: topLeftScale,
+      rotate: [-10, 9, -10],
+    },
+    {
+      className: "img2 left-1/2 top-28 md:top-28",
+      x: topRightX,
+      y: topDrop,
+      scale,
+      rotate: [11, -8, 11],
+    },
+    {
+      className: "img3 left-3 bottom-10 md:left-10 md:bottom-14",
+      x: pull,
+      y: bottomLift,
+      scale,
+      rotate: [10, -10, 10],
+    },
+    {
+      className: "img4 right-3 bottom-10 md:right-10 md:bottom-14",
+      x: pullReverse,
+      y: bottomRightDrop,
+      scale,
+      rotate: [-11, 8, -11],
+    },
   ];
 
   return (
-    <div className="pointer-events-none sticky top-0 z-30 -mb-[100vh] h-screen overflow-hidden" aria-hidden>
+    <div
+      className="pointer-events-none sticky top-0 z-30 -mb-[100vh] h-screen overflow-hidden"
+      aria-hidden
+    >
       {items.map((item, index) => (
         <motion.div
           key={item.className}
@@ -341,7 +404,7 @@ function HeroFlavorsShowcase() {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={ref} className="relative bg-[#050505]">
+    <div ref={ref} className="relative bg-var(--cream)">
       <ScrollMakhanaLayer targetRef={ref} />
       <Hero />
       <Marquee />
@@ -365,7 +428,10 @@ function Story() {
       className="relative overflow-hidden py-20 md:py-28"
       style={{ background: "var(--cream)" }}
     >
-      <motion.div style={{ y }} className="absolute -right-20 top-10 h-64 w-64 rounded-full opacity-30" />
+      <motion.div
+        style={{ y }}
+        className="absolute -right-20 top-10 h-64 w-64 rounded-full opacity-30"
+      />
       <div className="mx-auto max-w-5xl px-6 text-center">
         <span className="inline-block rounded-full bg-coral/20 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-coral-deep">
           Our story
@@ -386,39 +452,127 @@ function Story() {
 
 function CTA() {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28" style={{ background: "var(--coral-deep)" }}>
+    <section
+      className="relative overflow-hidden py-20 md:py-28"
+      style={{ background: "var(--coral-deep)" }}
+    >
       <div className="mx-auto max-w-5xl px-6 text-center text-cream">
         <h2 className="font-display text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] italic">
           Ready?
         </h2>
         <p className="mx-auto mt-6 max-w-lg text-lg opacity-80">
-          Three signature flavours. One crunchy obsession. Free shipping over $40.
+          Want the freshest crunch? Message us on WhatsApp and we'll help you pick the perfect
+          flavour box.
         </p>
-        <button className="mt-10 rounded-full bg-cream px-8 py-4 text-cocoa font-medium hover:scale-105 transition-transform">
-          Shop the set →
-        </button>
+        <a
+          href={WHATSAPP_HREF}
+          target="_blank"
+          rel="noreferrer"
+          className="group mt-10 inline-flex min-h-14 items-center justify-center gap-4 rounded-full border border-[#fff2a8]/60 bg-[linear-gradient(180deg,#fff0a6,#d4af37)] py-2 pl-7 pr-2 text-sm font-black uppercase tracking-[0.13em] text-[#170f02] shadow-[0_20px_50px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.72)] transition-all hover:-translate-y-1 hover:scale-105 hover:border-white hover:bg-[#ffe17a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffe17a] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--coral-deep)]"
+        >
+          <span>Order on WhatsApp</span>
+          <span className="grid h-10 w-10 place-items-center rounded-full bg-[#130d03] text-[#ffe17a] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform group-hover:translate-x-0.5">
+            <MessageCircle className="h-4 w-4" aria-hidden />
+          </span>
+        </a>
       </div>
     </section>
   );
 }
 
 function Footer() {
+  const footerLinks = [
+    { label: "Process", href: "#process" },
+    { label: "Flavours", href: "#flavors" },
+    { label: "Benefits", href: "#benefits" },
+    { label: "Story", href: "#story" },
+  ];
+
   return (
-    <footer className="bg-cocoa py-16 text-cream/70">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
-        <div className="font-display text-2xl font-bold text-cream">MAKHANA</div>
-        <div className="text-sm">
-          © {new Date().getFullYear()} — Crafted with crunch.
+    <footer
+      className="relative overflow-hidden py-14 text-cream"
+      style={{ background: "var(--coral-deep)" }}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(255,225,122,0.18),transparent_32%),linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.22))]" />
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.2fr_0.8fr_1fr]">
+        <div>
+          <div className="font-display text-3xl font-black text-cream">MAKHANA</div>
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/75">
+            Premium roasted fox nuts made for clean crunch, bold flavours, and easy everyday
+            snacking.
+          </p>
+          <div className="mt-6 flex gap-3">
+            {["TT", "IG", "FB"].map((s) => (
+              <span
+                key={s}
+                className="grid h-10 w-10 place-items-center rounded-full border border-[#fff2a8]/20 bg-black/20 text-xs font-black text-[#ffe17a] backdrop-blur-xl"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
         </div>
-        <div className="flex gap-4">
-          {["TT", "IG", "FB"].map((s) => (
-            <span key={s} className="grid h-9 w-9 place-items-center rounded-full bg-cream/10">
-              {s}
-            </span>
+
+        <nav className="grid content-start gap-3">
+          <div className="text-xs font-black uppercase tracking-[0.24em] text-[#ffe17a]">
+            Explore
+          </div>
+          {footerLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="text-sm font-semibold text-cream/75 transition-colors hover:text-[#ffe17a]"
+            >
+              {link.label}
+            </a>
           ))}
+        </nav>
+
+        <div className="grid content-start gap-4 text-sm text-cream/75">
+          <div className="text-xs font-black uppercase tracking-[0.24em] text-[#ffe17a]">
+            Contact
+          </div>
+          <a href={WHATSAPP_HREF} target="_blank" rel="noreferrer" className="flex gap-3">
+            <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+            WhatsApp orders
+          </a>
+          <a href="mailto:hello@makhana.example" className="flex gap-3">
+            <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+            hello@makhana.example
+          </a>
+          <div className="flex gap-3">
+            <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+            Mon-Sat, 10 AM - 7 PM
+          </div>
+          <div className="flex gap-3">
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+            Fresh batches delivered across your city.
+          </div>
         </div>
       </div>
+      <div className="relative mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-3 border-t border-[#fff2a8]/16 px-6 pt-6 text-xs text-cream/55 md:flex-row">
+        <span>© {new Date().getFullYear()} Makhana. Crafted with crunch.</span>
+        <span>No added sugar · Gluten free · Slow roasted</span>
+      </div>
     </footer>
+  );
+}
+
+function FloatingWhatsApp() {
+  return (
+    <a
+      href={WHATSAPP_HREF}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Order Makhana on WhatsApp"
+      className="group fixed bottom-5 right-5 z-[60] grid h-14 w-14 place-items-center rounded-full border border-white/25 bg-[#25D366] text-white shadow-[0_18px_44px_rgba(0,0,0,0.34),0_0_0_8px_rgba(37,211,102,0.12)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_22px_54px_rgba(37,211,102,0.36),0_0_0_10px_rgba(37,211,102,0.16)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-black md:bottom-7 md:right-7 md:h-16 md:w-16"
+    >
+      <span className="absolute inset-0 rounded-full bg-white/20 opacity-0 transition-opacity group-hover:opacity-100" />
+      <MessageCircle className="relative h-7 w-7 md:h-8 md:w-8" aria-hidden />
+      <span className="absolute -left-2 top-1/2 hidden -translate-x-full -translate-y-1/2 rounded-full border border-[#25D366]/35 bg-black/78 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.32)] backdrop-blur-xl opacity-0 transition-all duration-300 group-hover:-translate-x-[calc(100%+0.25rem)] group-hover:opacity-100 lg:block">
+        WhatsApp
+      </span>
+    </a>
   );
 }
 
@@ -446,6 +600,8 @@ function Home() {
       <Wave from="var(--cream)" to="var(--coral-deep)" />
       <CTA />
       <Footer />
+      {/* TODO: Add WhatsApp button */}
+      {/* <FloatingWhatsApp /> */}
     </div>
   );
 }
