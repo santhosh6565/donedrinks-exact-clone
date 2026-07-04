@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
-import { ArrowRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import heroBowl from "@/assets/hero-section-image.png";
 import makhanaImg from "@/assets/Makhana-img1.png";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -14,6 +14,8 @@ const WHATSAPP_NUMBER = "919884471751";
 const WHATSAPP_MESSAGE =
   "Hi Makhana, I would like to order your signature makhana flavours. Please share the available boxes, prices, and delivery details.";
 const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+const FACEBOOK_HREF = "https://www.facebook.com/";
+const INSTAGRAM_HREF = "https://www.instagram.com/";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -85,6 +87,11 @@ function StickyNav() {
     { label: "Flavours", href: "#flavors" },
     { label: "Benefits", href: "#benefits" },
   ];
+  const socialLinks = [
+    { label: "Facebook", href: FACEBOOK_HREF, icon: Facebook },
+    { label: "WhatsApp", href: WHATSAPP_HREF, icon: MessageCircle },
+    { label: "Instagram", href: INSTAGRAM_HREF, icon: Instagram },
+  ];
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[padding,transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
@@ -97,13 +104,17 @@ function StickyNav() {
         }`}
       >
         <div className="absolute left-6 hidden gap-2 md:static md:flex">
-          {["✦", "◐", "✿"].map((s) => (
-            <span
-              key={s}
+          {socialLinks.map(({ label, href, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={label}
               className={`grid h-10 w-10 place-items-center rounded-full border border-[#f3c943]/15 bg-black/55 text-[#d2b48c] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:text-[#f3c943] ${scrolled ? "scale-90" : ""}`}
             >
-              {s}
-            </span>
+              <Icon className="h-4 w-4" aria-hidden />
+            </a>
           ))}
         </div>
         <div
