@@ -16,7 +16,7 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
       whileHover={{ y: -12 }}
-      className="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] p-8 pb-10 shadow-[0_30px_60px_-30px_rgba(60,20,10,0.35)] transition-shadow hover:shadow-[0_40px_70px_-30px_rgba(60,20,10,0.45)]"
+      className="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] p-8 pb-10 shadow-[var(--flavor-card-shadow)] transition-shadow hover:shadow-[var(--flavor-card-shadow-hover)]"
       style={{ background: flavor.bg, color: flavor.text }}
     >
       <div className="flex w-full items-center justify-between text-[11px] uppercase tracking-[0.3em] opacity-70">
@@ -69,11 +69,11 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.97 }}
-        className="group mt-2 inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/20 bg-black/55 py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.12em] text-[#fff2c4] shadow-[0_16px_36px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.14)] backdrop-blur-xl transition-all hover:border-white/35 hover:text-white hover:shadow-[0_20px_42px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.18)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#181818]"
+        className="group mt-2 inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-[color:var(--flavor-button-border)] bg-[var(--flavor-button-bg)] py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.12em] text-[color:var(--flavor-button-text)] shadow-[var(--flavor-button-shadow)] backdrop-blur-xl transition-all hover:border-[color:var(--flavor-button-border-hover)] hover:text-[color:var(--flavor-button-text-hover)] hover:shadow-[var(--flavor-button-shadow-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--flavor-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--flavor-ring-offset)]"
       >
         <span>Shop now</span>
         <span
-          className="grid h-8 w-8 place-items-center rounded-full text-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] transition-transform group-hover:translate-x-0.5"
+          className="grid h-8 w-8 place-items-center rounded-full text-[color:var(--flavor-button-icon-text)] shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] transition-transform group-hover:translate-x-0.5"
           style={{ background: flavor.accent }}
         >
           <ArrowRight className="h-4 w-4" aria-hidden />

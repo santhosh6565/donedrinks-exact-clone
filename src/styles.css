@@ -35,46 +35,347 @@
 }
 
 :root {
-  /* Premium Black Theme */
   --cream: #0D0D0D;
   --makhana-cream: #0D0D0D;
 
-  /* Gold Accent */
   --coral: #D4AF37;
   --coral-deep: #B8860B;
 
-  /* Text */
   --cocoa: #F5F2EA;
 
-  /* Secondary Colors */
   --blush: #1B1B1B;
   --sage: #4E6B42;
 
-  /* App Surface */
   --background: var(--cream);
   --foreground: var(--cocoa);
 
-  /* Fonts */
+  --hero-accent: #F3C943;
+  --hero-accent-hover: #FFE17A;
+  --hero-gold-soft: #D2B48C;
+  --hero-backdrop: radial-gradient(circle at 50% 78%, rgba(122, 74, 38, 0.48), transparent 34%), radial-gradient(circle at 50% 92%, rgba(243, 201, 67, 0.2), transparent 34%), linear-gradient(180deg, #050505 0%, #050505 54%, #110905 100%);
+  --hero-speckle: rgba(255, 255, 255, 0.85);
+  --hero-vignette: linear-gradient(90deg, rgba(0, 0, 0, 0.62), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.62));
+  --hero-word-gradient: linear-gradient(to bottom, #7A4A26, #4A2C17, rgba(210, 180, 140, 0.1));
+  --hero-image-shadow: 0 48px 58px rgba(0, 0, 0, 0.72);
+  --hero-kicker: rgba(243, 201, 67, 0.82);
+  --hero-primary-bg: linear-gradient(180deg, rgba(35, 24, 8, 0.96), rgba(5, 5, 5, 0.96));
+  --hero-primary-border: rgba(243, 201, 67, 0.7);
+  --hero-primary-border-hover: #FFE17A;
+  --hero-primary-text: #FFF2C4;
+  --hero-primary-text-hover: #FFFFFF;
+  --hero-primary-shadow: 0 18px 50px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  --hero-primary-shadow-hover: 0 22px 62px rgba(243, 201, 67, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --hero-icon-text: #0B0B0B;
+  --hero-secondary-bg: rgba(243, 201, 67, 0.1);
+  --hero-secondary-bg-hover: rgba(243, 201, 67, 0.18);
+  --hero-secondary-border: rgba(243, 201, 67, 0.45);
+  --hero-secondary-border-hover: rgba(243, 201, 67, 0.85);
+  --hero-secondary-text: #FFE6A3;
+  --hero-secondary-text-hover: #FFFFFF;
+  --hero-secondary-shadow: 0 14px 38px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --hero-scroll-text: rgba(210, 180, 140, 0.7);
+  --hero-scroll-line: linear-gradient(to bottom, transparent, #F3C943, transparent);
+  --hero-bottom-fade: linear-gradient(to bottom, transparent, rgba(5, 5, 5, 0.9), var(--cream));
+  --hero-ring: var(--hero-accent);
+  --hero-ring-offset: #000000;
+
+  --process-bg: #050505;
+  --process-text: #F8EAD1;
+  --process-text-muted: rgba(248, 234, 209, 0.78);
+  --process-accent: #F3C943;
+  --process-accent-soft: #FFE6A3;
+  --process-accent-muted: rgba(243, 201, 67, 0.22);
+  --process-surface: rgba(0, 0, 0, 0.35);
+  --process-surface-strong: rgba(0, 0, 0, 0.55);
+  --process-border: rgba(255, 255, 255, 0.12);
+  --process-accent-border: rgba(243, 201, 67, 0.22);
+  --process-icon-text: #120D05;
+  --process-chip-bg: #F8EAD1;
+  --process-chip-text: #161006;
+  --process-glow: radial-gradient(circle at 20% 20%, rgba(243, 201, 67, 0.14), transparent 28%), radial-gradient(circle at 80% 88%, rgba(184, 134, 11, 0.2), transparent 32%);
+  --process-speckle: rgba(255, 255, 255, 0.85);
+  --process-progress-track: rgba(255, 255, 255, 0.12);
+  --process-image-overlay: linear-gradient(180deg, rgba(5, 5, 5, 0.04), rgba(5, 5, 5, 0.74));
+  --process-panel-shadow: 0 24px 55px rgba(0, 0, 0, 0.32);
+  --process-card-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+
+  --flavor-chocolate-bg: linear-gradient(135deg, #1A1A1A 0%, #262626 100%);
+  --flavor-chocolate-text: #F8F5EE;
+  --flavor-chocolate-accent: #A67C52;
+  --flavor-caramel-bg: linear-gradient(135deg, #181818 0%, #2B2217 100%);
+  --flavor-caramel-text: #F8F5EE;
+  --flavor-caramel-accent: #D4AF37;
+  --flavor-strawberry-bg: linear-gradient(135deg, #181818 0%, #2A1A22 100%);
+  --flavor-strawberry-text: #F8F5EE;
+  --flavor-strawberry-accent: #E46A8A;
+  --flavor-card-shadow: 0 30px 60px -30px rgba(60, 20, 10, 0.35);
+  --flavor-card-shadow-hover: 0 40px 70px -30px rgba(60, 20, 10, 0.45);
+  --flavor-button-bg: rgba(0, 0, 0, 0.55);
+  --flavor-button-border: rgba(255, 255, 255, 0.2);
+  --flavor-button-border-hover: rgba(255, 255, 255, 0.35);
+  --flavor-button-text: #FFF2C4;
+  --flavor-button-text-hover: #FFFFFF;
+  --flavor-button-icon-text: #111111;
+  --flavor-button-shadow: 0 16px 36px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --flavor-button-shadow-hover: 0 20px 42px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --flavor-ring: rgba(255, 255, 255, 0.8);
+  --flavor-ring-offset: #181818;
+
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", system-ui, sans-serif;
 }
 
-/*
-  Light Theme Reference
-  Uncomment this block when the site needs the lighter cream/card style.
 
+/*
+  Dark Brown Theme
+*/
+/* 
 :root {
-  --cream: #F7E8D6;
-  --makhana-cream: #FFF4E6;
-  --coral: #D13A2F;
-  --coral-deep: #A92B22;
-  --cocoa: #3B1C12;
-  --blush: #FFD2D7;
-  --sage: #6F7F4A;
+  --cream: #D8C7B0;
+  --makhana-cream: #E5D7C4;
+  --coral: #8A5F3D;
+  --coral-deep: #6D4A31;
+  --cocoa: #2B211B;
+  --blush: #B9A18A;
+  --sage: #6E775A;
+
   --background: var(--cream);
   --foreground: var(--cocoa);
-}
-*/
+
+  --hero-accent: #8A5F3D;
+  --hero-accent-hover: #6D4A31;
+  --hero-gold-soft: #A58D76;
+
+  --hero-backdrop:
+    radial-gradient(circle at 50% 78%, rgba(200,180,154,0.35), transparent 34%),
+    radial-gradient(circle at 50% 92%, rgba(138,95,61,0.18), transparent 34%),
+    linear-gradient(
+      180deg,
+      #E5D7C4 0%,
+      #D8C7B0 54%,
+      #C4AE95 100%
+    );
+
+  --hero-speckle: rgba(43, 33, 27, 0.28);
+
+  --hero-vignette:
+    linear-gradient(
+      90deg,
+      rgba(43, 33, 27, 0.12),
+      transparent 24%,
+      transparent 76%,
+      rgba(43, 33, 27, 0.12)
+    );
+
+  --hero-word-gradient:
+    linear-gradient(
+      to bottom,
+      rgba(109,74,49,0.45),
+      rgba(74,58,48,0.25),
+      rgba(229,215,196,0.08)
+    );
+
+  --hero-image-shadow:
+    0 42px 55px rgba(43, 33, 27, 0.25);
+
+  --hero-kicker:
+    rgba(43, 33, 27, 0.72);
+
+  --hero-primary-bg:
+    linear-gradient(
+      180deg,
+      #8A5F3D,
+      #6D4A31
+    );
+
+  --hero-primary-border:
+    rgba(109,74,49,0.45);
+
+  --hero-primary-border-hover:
+    #5A3B27;
+
+  --hero-primary-text:
+    #F8F1E6;
+
+  --hero-primary-text-hover:
+    #FFFFFF;
+
+  --hero-primary-shadow:
+    0 18px 44px rgba(109,74,49,0.22),
+    0 0 0 1px rgba(255,255,255,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+
+  --hero-primary-shadow-hover:
+    0 22px 56px rgba(109,74,49,0.28),
+    0 0 0 1px rgba(43,33,27,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+
+  --hero-icon-text: #2B211B;
+
+  --hero-secondary-bg:
+    rgba(245,236,224,0.72);
+
+  --hero-secondary-bg-hover:
+    rgba(229,215,196,0.8);
+
+  --hero-secondary-border:
+    rgba(109,74,49,0.22);
+
+  --hero-secondary-border-hover:
+    rgba(109,74,49,0.5);
+
+  --hero-secondary-text:
+    #2B211B;
+
+  --hero-secondary-text-hover:
+    #6D4A31;
+
+  --hero-secondary-shadow:
+    0 14px 34px rgba(43,33,27,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+
+  --hero-scroll-text:
+    rgba(43,33,27,0.56);
+
+  --hero-scroll-line:
+    linear-gradient(
+      to bottom,
+      transparent,
+      #8A5F3D,
+      transparent
+    );
+
+  --hero-bottom-fade:
+    linear-gradient(
+      to bottom,
+      transparent,
+      rgba(216,199,176,0.9),
+      var(--cream)
+    );
+
+  --hero-ring: var(--hero-accent);
+  --hero-ring-offset: var(--cream);
+
+  --process-bg: #D8C7B0;
+  --process-text: #2B211B;
+  --process-text-muted: rgba(43,33,27,0.72);
+
+  --process-accent: #8A5F3D;
+  --process-accent-soft: #6D4A31;
+  --process-accent-muted: rgba(109,74,49,0.18);
+
+  --process-surface:
+    rgba(245,236,224,0.52);
+
+  --process-surface-strong:
+    rgba(245,236,224,0.72);
+
+  --process-border:
+    rgba(43,33,27,0.1);
+
+  --process-accent-border:
+    rgba(109,74,49,0.18);
+
+  --process-icon-text:
+    #F8F1E6;
+
+  --process-chip-bg:
+    #E5D7C4;
+
+  --process-chip-text:
+    #2B211B;
+
+  --process-glow:
+    radial-gradient(circle at 20% 20%, rgba(200,180,154,0.4), transparent 28%),
+    radial-gradient(circle at 80% 88%, rgba(138,95,61,0.12), transparent 32%);
+
+  --process-speckle:
+    rgba(43,33,27,0.24);
+
+  --process-progress-track:
+    rgba(43,33,27,0.12);
+
+  --process-image-overlay:
+    linear-gradient(
+      180deg,
+      rgba(245,236,224,0.04),
+      rgba(43,33,27,0.42)
+    );
+
+  --process-panel-shadow:
+    0 24px 55px rgba(43,33,27,0.12);
+
+  --process-card-shadow:
+    0 16px 36px rgba(43,33,27,0.1);
+
+  --flavor-chocolate-bg:
+    linear-gradient(
+      135deg,
+      #E5D7C4 0%,
+      #C4AE95 100%
+    );
+
+  --flavor-chocolate-text: #2B211B;
+  --flavor-chocolate-accent: #6D4A31;
+
+  --flavor-caramel-bg:
+    linear-gradient(
+      135deg,
+      #E5D7C4 0%,
+      #B89B7A 100%
+    );
+
+  --flavor-caramel-text: #2B211B;
+  --flavor-caramel-accent: #8A5F3D;
+
+  --flavor-strawberry-bg:
+    linear-gradient(
+      135deg,
+      #E5D7C4 0%,
+      #C8B49A 100%
+    );
+
+  --flavor-strawberry-text: #2B211B;
+  --flavor-strawberry-accent: #7A6554;
+
+  --flavor-card-shadow:
+    0 30px 60px -30px rgba(43,33,27,0.18);
+
+  --flavor-card-shadow-hover:
+    0 40px 70px -30px rgba(43,33,27,0.24);
+
+  --flavor-button-bg:
+    rgba(43,33,27,0.82);
+
+  --flavor-button-border:
+    rgba(43,33,27,0.14);
+
+  --flavor-button-border-hover:
+    rgba(43,33,27,0.3);
+
+  --flavor-button-text:
+    #F8F1E6;
+
+  --flavor-button-text-hover:
+    #FFFFFF;
+
+  --flavor-button-icon-text:
+    #2B211B;
+
+  --flavor-button-shadow:
+    0 16px 36px rgba(43,33,27,0.16),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+
+  --flavor-button-shadow-hover:
+    0 20px 42px rgba(43,33,27,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.24);
+
+  --flavor-ring:
+    rgba(138,95,61,0.6);
+
+  --flavor-ring-offset:
+    var(--cream);
+} */
 
 @layer base {
   * { border-color: oklch(0.85 0.04 50 / 0.4); }

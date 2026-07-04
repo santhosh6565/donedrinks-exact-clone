@@ -67,9 +67,9 @@ export const flavors: Flavor[] = [
     description:
       "Rich Belgian-style cocoa blended with perfectly roasted Makhana for an indulgent yet guilt-free crunch.",
     image: flavorChocolate,
-    bg: "linear-gradient(135deg,#1A1A1A 0%,#262626 100%)",
-    text: "#F8F5EE",
-    accent: "#A67C52",
+    bg: "var(--flavor-chocolate-bg)",
+    text: "var(--flavor-chocolate-text)",
+    accent: "var(--flavor-chocolate-accent)",
     ingredients: ["Belgian Cocoa", "Vanilla", "Sea Salt"],
   },
   {
@@ -77,9 +77,9 @@ export const flavors: Flavor[] = [
     description:
       "Golden caramel balanced with delicate sea salt creates a rich buttery flavour in every bite.",
     image: flavorCaramel,
-    bg: "linear-gradient(135deg,#181818 0%,#2B2217 100%)",
-    text: "#F8F5EE",
-    accent: "#D4AF37",
+    bg: "var(--flavor-caramel-bg)",
+    text: "var(--flavor-caramel-text)",
+    accent: "var(--flavor-caramel-accent)",
     ingredients: ["Caramel", "Butter", "Sea Salt"],
   },
   {
@@ -87,9 +87,9 @@ export const flavors: Flavor[] = [
     description:
       "Sweet sun-ripened strawberries meet light, crunchy Makhana for a refreshing fruity snack.",
     image: flavorStrawberry,
-    bg: "linear-gradient(135deg,#181818 0%,#2A1A22 100%)",
-    text: "#F8F5EE",
-    accent: "#E46A8A",
+    bg: "var(--flavor-strawberry-bg)",
+    text: "var(--flavor-strawberry-text)",
+    accent: "var(--flavor-strawberry-accent)",
     ingredients: ["Strawberry", "Beetroot", "Vanilla"],
   },
 ];

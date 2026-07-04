@@ -140,12 +140,12 @@ function Hero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen overflow-hidden bg-[var(--cream)] pt-24 pb-16 text-[#f3c943] md:pt-28"
+      className="relative min-h-screen overflow-hidden bg-[var(--cream)] pt-24 pb-16 text-[var(--hero-accent)] md:pt-28"
     >
       <motion.div style={{ y: glowY }} className="absolute inset-0 opacity-95" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_78%,rgba(122,74,38,0.48),transparent_34%),radial-gradient(circle_at_50%_92%,rgba(243,201,67,0.2),transparent_34%),linear-gradient(180deg,#050505_0%,#050505_54%,#110905_100%)]" />
-        <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,rgba(255,255,255,.85)_1px,transparent_1px)] [background-size:3px_3px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.62),transparent_24%,transparent_76%,rgba(0,0,0,0.62))]" />
+        <div className="absolute inset-0 bg-[image:var(--hero-backdrop)]" />
+        <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,var(--hero-speckle)_1px,transparent_1px)] [background-size:3px_3px]" />
+        <div className="absolute inset-0 bg-[image:var(--hero-vignette)]" />
       </motion.div>
 
       <motion.div
@@ -156,7 +156,7 @@ function Hero() {
         {wordRows.map((word, index) => (
           <div
             key={`${word}-${index}`}
-            className="bg-gradient-to-b from-[#7a4a26] via-[#4a2c17] to-[#d2b48c]/10 bg-clip-text text-transparent opacity-[0.48]"
+            className="bg-[image:var(--hero-word-gradient)] bg-clip-text text-transparent opacity-[0.48]"
             style={{ opacity: Math.max(0.13, 0.48 - index * 0.08) }}
           >
             {word}
@@ -179,28 +179,28 @@ function Hero() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="mt-10 w-[min(84vw,700px)] object-contain drop-shadow-[0_48px_58px_rgba(0,0,0,0.72)] md:mt-16"
+          className="mt-10 w-[min(84vw,700px)] object-contain drop-shadow-[var(--hero-image-shadow)] md:mt-16"
         />
         <motion.div
           style={{ opacity, y: titleY }}
           className="-mt-8 mb-8 md:mb-8 max-w-3xl md:-mt-12"
         >
-          <p className="text-balance text-base font-semibold uppercase tracking-[0.42em] text-[#f3c943]/82 md:text-lg">
+          <p className="text-balance text-base font-semibold uppercase tracking-[0.42em] text-[color:var(--hero-kicker)] md:text-lg">
             Premium Roasted Fox Nuts
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href="#flavors"
-              className="group inline-flex min-h-14 items-center justify-center gap-4 rounded-full border border-[#f3c943]/70 bg-[linear-gradient(180deg,rgba(35,24,8,0.96),rgba(5,5,5,0.96))] py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.13em] text-[#fff2c4] shadow-[0_18px_50px_rgba(0,0,0,0.42),0_0_0_1px_rgba(255,255,255,0.08),inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[#ffe17a] hover:text-white hover:shadow-[0_22px_62px_rgba(243,201,67,0.24),0_0_0_1px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f3c943] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="group inline-flex min-h-14 items-center justify-center gap-4 rounded-full border border-[color:var(--hero-primary-border)] bg-[image:var(--hero-primary-bg)] py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.13em] text-[color:var(--hero-primary-text)] shadow-[var(--hero-primary-shadow)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[color:var(--hero-primary-border-hover)] hover:text-[color:var(--hero-primary-text-hover)] hover:shadow-[var(--hero-primary-shadow-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
               <span>Explore flavours</span>
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-[#f3c943] text-[#0b0b0b] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-transform group-hover:translate-x-0.5 group-hover:bg-[#ffe17a]">
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--hero-accent)] text-[color:var(--hero-icon-text)] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-transform group-hover:translate-x-0.5 group-hover:bg-[var(--hero-accent-hover)]">
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </span>
             </a>
             <a
               href="#process"
-              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#f3c943]/45 bg-[#f3c943]/10 px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[#ffe6a3] shadow-[0_14px_38px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[#f3c943]/85 hover:bg-[#f3c943]/18 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f3c943] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[color:var(--hero-secondary-border)] bg-[var(--hero-secondary-bg)] px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[color:var(--hero-secondary-text)] shadow-[var(--hero-secondary-shadow)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[color:var(--hero-secondary-border-hover)] hover:bg-[var(--hero-secondary-bg-hover)] hover:text-[color:var(--hero-secondary-text-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
               See process
             </a>
@@ -208,15 +208,15 @@ function Hero() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-center text-[10px] uppercase tracking-[0.34em] text-[#d2b48c]/70">
+      <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-center text-[10px] uppercase tracking-[0.34em] text-[color:var(--hero-scroll-text)]">
         <motion.span
-          className="block h-9 w-px bg-[linear-gradient(to_bottom,transparent,#f3c943,transparent)]"
+          className="block h-9 w-px bg-[image:var(--hero-scroll-line)]"
           animate={{ scaleY: [0.35, 1, 0.35], opacity: [0.35, 1, 0.35] }}
           transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-b from-transparent via-[#050505]/90 to-[var(--cream)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-[image:var(--hero-bottom-fade)]" />
     </section>
   );
 }
@@ -295,12 +295,12 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
   const topDrop = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["0vh", "19vh", "19vh", "30vh"] : ["0vh", "25vh", "25vh", "48vh"],
+    isMobile ? ["0vh", "7vh", "7vh", "14vh"] : ["0vh", "25vh", "25vh", "48vh"],
   );
   const topLeftDrop = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["2vh", "21vh", "21vh", "24vh"] : ["2vh", "28vh", "28vh", "30vh"],
+    isMobile ? ["1vh", "8vh", "8vh", "12vh"] : ["2vh", "28vh", "28vh", "30vh"],
   );
   const bottomLift = useTransform(
     smoothProgress,
@@ -310,13 +310,15 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
   const topLeftX = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["-10vw", "-38vw", "-38vw", "-30vw"] : ["-7vw", "-46vw", "-46vw", "-35vw"],
+    isMobile ? ["-12vw", "-46vw", "-46vw", "-58vw"] : ["-7vw", "-46vw", "-46vw", "-56vw"],
   );
   const topRightX = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["4vw", "28vw", "28vw", "24vw"] : ["2vw", "37vw", "37vw", "40vw"],
+    isMobile ? ["8vw", "40vw", "40vw", "54vw"] : ["2vw", "37vw", "37vw", "40vw"],
   );
+  const topCornerOpacity = useTransform(smoothProgress, [0, 0.82, 0.94, 1], [1, 1, 0.35, 0]);
+  const bottomLeftOpacity = useTransform(smoothProgress, [0, 0.76, 0.9, 1], [1, 1, 0, 0]);
   const pull = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
@@ -331,12 +333,12 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
   const scale = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? [0.68, 0.88, 0.88, 0.72] : [0.78, 1.08, 1.08, 0.82],
+    isMobile ? [0.86, 1.08, 1.08, 0.9] : [0.78, 1.08, 1.08, 0.82],
   );
   const topLeftScale = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? [0.78, 1.02, 1.02, 0.95] : [1.1, 1.4, 1.4, 1.25],
+    isMobile ? [0.98, 1.22, 1.22, 1.08] : [1.1, 1.4, 1.4, 1.25],
   );
 
   const items = [
@@ -345,6 +347,7 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
       x: topLeftX,
       y: topLeftDrop,
       scale: topLeftScale,
+      opacity: topCornerOpacity,
       rotate: [-10, 9, -10],
     },
     {
@@ -352,6 +355,7 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
       x: topRightX,
       y: topDrop,
       scale,
+      opacity: topCornerOpacity,
       rotate: [11, -8, 11],
     },
     {
@@ -359,6 +363,7 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
       x: pull,
       y: bottomLift,
       scale,
+      opacity: bottomLeftOpacity,
       rotate: [10, -10, 10],
     },
     {
@@ -366,6 +371,7 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
       x: pullReverse,
       y: bottomRightDrop,
       scale,
+      opacity: 1,
       rotate: [-11, 8, -11],
     },
   ];
@@ -379,14 +385,14 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
         <motion.div
           key={item.className}
           className={`absolute ${item.className}`}
-          style={{ y: item.y, x: item.x, scale: item.scale }}
+          style={{ y: item.y, x: item.x, scale: item.scale, opacity: item.opacity }}
         >
           <motion.img
             src={makhanaImg}
             alt=""
             width={250}
             height={250}
-            className="relative h-12 w-12 object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.45)] sm:h-14 sm:w-14 md:h-24 md:w-24 lg:h-28 lg:w-28"
+            className="relative h-16 w-16 object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.45)] sm:h-20 sm:w-20 md:h-24 md:w-24 lg:h-28 lg:w-28"
             animate={{ y: [10, -22, 10], rotate: item.rotate, scale: [1, 1.06, 1] }}
             transition={{
               duration: 2.9 + index * 0.32,
@@ -601,7 +607,7 @@ function Home() {
       <CTA />
       <Footer />
       {/* TODO: Add WhatsApp button */}
-      {/* <FloatingWhatsApp /> */}
+      <FloatingWhatsApp />
     </div>
   );
 }
