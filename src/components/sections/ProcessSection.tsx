@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
 import benefitBowl from "@/assets/benefit-bowl.jpg";
-import benefitCollection from "@/assets/benefit-collection.jpg";
+import benefitCollection from "@/assets/Product/flavor_collection.png";
 import benefitHarvest from "@/assets/benefit-harvest.jpg";
-import flavorCaramel from "@/assets/flavor-caramel.png";
-import flavorChocolate from "@/assets/flavor-chocolate.png";
-import flavorStrawberry from "@/assets/flavor-strawberry.png";
+import mintPudina from "@/assets/Product/mint_pudina.png";
+import mixMasala from "@/assets/Product/mix_masala.png";
+import tangyCheese from "@/assets/Product/tangy_cheese.png";
+import tomatoTango from "@/assets/Product/tomato_tango.png";
 import { processStages, type ProcessStage } from "./data";
 import { SectionHeading } from "./SectionHeading";
 
@@ -45,9 +46,9 @@ const processVisuals: ProcessVisual[] = [
   },
   {
     eyebrow: "Flavour tumble",
-    note: "Chocolate, caramel, and strawberry seasonings coat every piece evenly.",
-    products: [flavorChocolate, flavorCaramel, flavorStrawberry],
-    chips: ["cocoa", "caramel", "berry"],
+    note: "Mint, pepper, onion, masala, tomato and tangy cheese seasonings coat every crunchy bite.",
+    products: [mintPudina, mixMasala, tomatoTango, tangyCheese],
+    chips: ["mint", "masala", "tomato", "cheese"],
     frame: "flavors",
   },
   {
@@ -232,11 +233,12 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
         {/* <div className="absolute left-4 top-4 h-20 w-20 rounded-full border border-[#f3c943]/20 md:left-5 md:top-5 md:h-28 md:w-28" /> */}
         {/* <div className="absolute bottom-4 right-5 h-16 w-28 rounded-full bg-[#f3c943]/10 blur-xl md:bottom-5 md:right-8 md:h-20 md:w-40" /> */}
 
-        <div className="relative z-10 grid min-h-[235px] grid-cols-3 gap-2 md:min-h-[340px] md:gap-4">
+        <div className="relative z-10 grid min-h-[235px] grid-cols-2 gap-2 md:min-h-[340px] md:grid-cols-4 md:gap-4">
           {[
-            ["Chocolate", "Cocoa dust", flavorChocolate, "from-[#2a1711] to-[#5b351e]"],
-            ["Caramel", "Golden glaze", flavorCaramel, "from-[#35210b] to-[#b8860b]"],
-            ["Strawberry", "Berry finish", flavorStrawberry, "from-[#33141f] to-[#b73a62]"],
+            ["Mint Pudina", "Cool herb", mintPudina, "from-[#123c24] to-[#5fbf72]"],
+            ["Mix Masala", "Warm spice", mixMasala, "from-[#3d1f10] to-[#c46b1f]"],
+            ["Tomato Tango", "Tangy bite", tomatoTango, "from-[#233f8f] to-[#d9364d]"],
+            ["Tangy Cheese", "Cheesy tang", tangyCheese, "from-[#4b2608] to-[#d47b18]"],
           ].map(([name, note, src, gradient], productIndex) => (
             <motion.div
               key={name}
@@ -282,7 +284,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
     return (
       <div className="relative min-h-[360px] p-7">
         <div className="absolute left-0 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full bg-[var(--process-accent)] opacity-10 blur-2xl" />
-        <div className="relative z-10 grid min-h-[300px] grid-cols-1 gap-5 md:grid-cols-[1fr_0.86fr]">
+        <div className="relative z-10 grid min-h-[300px] grid-cols-1 gap-5 md:grid-cols-[0.92fr_1.08fr]">
           <div className="flex flex-col justify-center">
             <div className="font-display text-[clamp(3.4rem,8vw,6.8rem)] font-black leading-none text-[color:var(--process-accent)]">
               Fresh lock
@@ -304,9 +306,9 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
           <motion.img
             src={visual.image}
             alt={visual.imageAlt}
-            width={620}
-            height={620}
-            className="self-center rounded-[2rem_0.75rem_2.75rem_0.75rem] border border-[color:var(--process-border)] object-cover shadow-[var(--process-panel-shadow)]"
+            width={900}
+            height={700}
+            className="w-full max-w-[560px] self-center justify-self-center rounded-[2rem_0.75rem_2.75rem_0.75rem] border border-[color:var(--process-border)] object-contain p-3 shadow-[var(--process-panel-shadow)] md:scale-110"
             animate={{ rotate: active ? [2, -2, 2] : 2, y: active ? [0, -10, 0] : 0 }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
           />

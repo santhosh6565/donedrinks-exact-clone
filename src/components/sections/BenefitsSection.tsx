@@ -1,4 +1,6 @@
 import { motion } from "motion/react";
+import { Check, Flame } from "lucide-react";
+import lotferoxLogo from "@/assets/Lotferox_logo.png";
 import { benefits, type BenefitItem } from "./data";
 import { SectionHeading } from "./SectionHeading";
 
@@ -9,6 +11,10 @@ interface BenefitCardProps {
 
 function BenefitCard({ item, index }: BenefitCardProps) {
   const heightClass = item.tall ? "row-span-2 min-h-[420px]" : "min-h-[260px]";
+  const isRoastedCard = item.kind === "text" && item.title.startsWith("Roasted");
+  const isFlavourCard = item.kind === "text" && item.title.startsWith("Six");
+  const flavourDots = ["#5fbf72", "#f0b389", "#b673c2", "#f0a13a", "#ff6b6b", "#ffd166"];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -24,20 +30,71 @@ function BenefitCard({ item, index }: BenefitCardProps) {
     >
       {item.kind === "text" ? (
         <div
-          className="flex h-full flex-col justify-between p-8 md:p-10"
+          className="relative flex h-full flex-col justify-between p-8 md:p-10"
           style={{ background: item.bg, color: item.text }}
         >
-          <span className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-            0{index + 1}
-          </span>
+          <div className="pointer-events-none absolute inset-0 opacity-25">
+            <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full border border-current" />
+            <div className="absolute -bottom-20 left-6 h-56 w-56 rounded-full bg-current opacity-10 blur-2xl" />
+            <div className="absolute inset-0 [background-image:radial-gradient(circle_at_center,currentColor_1px,transparent_1px)] [background-size:18px_18px] opacity-20" />
+          </div>
+
+          {isRoastedCard && (
+            <div className="pointer-events-none absolute right-6 top-6 grid h-20 w-20 place-items-center rounded-full border border-current/25 bg-white/10 backdrop-blur-sm md:right-8 md:top-8 md:h-24 md:w-24">
+              <Flame className="h-8 w-8" aria-hidden />
+            </div>
+          )}
+
+          {isFlavourCard && (
+            <div className="pointer-events-none absolute right-7 top-7 grid grid-cols-3 gap-2">
+              {flavourDots.map((dot) => (
+                <span
+                  key={dot}
+                  className="h-4 w-4 rounded-full border border-white/45 shadow-[0_8px_16px_rgba(0,0,0,0.18)]"
+                  style={{ background: dot }}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="relative z-10 flex items-start justify-between gap-5">
+            <span className="text-[11px] uppercase tracking-[0.3em] opacity-60">
+              0{index + 1}
+            </span>
+            {(isRoastedCard || isFlavourCard) && (
+              <span className="rounded-full border border-current/20 bg-white/12 px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] backdrop-blur-sm">
+                {isRoastedCard ? "Dry roast" : "6 packs"}
+              </span>
+            )}
+          </div>
+
           <div className="space-y-4">
-            <h3 className="font-display text-[clamp(1.6rem,2.4vw,2.4rem)] font-bold leading-[1.05]">
+            {(isRoastedCard || isFlavourCard) && (
+              <div className="relative z-10 flex flex-wrap gap-2">
+                {(isRoastedCard ? ["Low oil", "Crisp bite"] : ["25 gm", "6 flavours"]).map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-current/18 bg-white/12 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] backdrop-blur-sm"
+                  >
+                    <Check className="h-3 w-3" aria-hidden />
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            <h3 className="relative z-10 font-display text-[clamp(1.6rem,2.4vw,2.4rem)] font-bold leading-[1.05]">
               {item.title}
             </h3>
-            <p className="text-sm leading-relaxed opacity-80 max-w-sm">
+            <p className="relative z-10 max-w-sm text-sm leading-relaxed opacity-80">
               {item.description}
             </p>
           </div>
+
+          {isFlavourCard && (
+            <div className="pointer-events-none absolute bottom-5 right-5 font-display text-[8rem] font-black leading-none opacity-10">
+              6
+            </div>
+          )}
         </div>
       ) : (
         <img
@@ -55,10 +112,18 @@ export function BenefitsSection() {
   return (
     <section
       id="benefits"
-      className="relative py-20 md:py-28"
+      className="relative overflow-hidden py-20 md:py-28"
       style={{ background: "var(--cream)" }}
     >
-      <div className="mx-auto max-w-7xl px-6 text-cocoa">
+      <img
+        src={lotferoxLogo}
+        alt=""
+        aria-hidden
+        loading="lazy"
+        className="pointer-events-none absolute left-[75%] top-[80%] hidden w-[min(30vw,400px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.90] mix-blend-multiply lg:block"
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 text-cocoa">
         <div className="flex justify-center">
           <SectionHeading
             badge="Benefits"

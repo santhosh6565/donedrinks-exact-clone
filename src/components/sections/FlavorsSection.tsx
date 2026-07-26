@@ -21,10 +21,10 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
     >
       <div className="flex w-full items-center justify-between text-[11px] uppercase tracking-[0.3em] opacity-70">
         <span>0{index + 1}</span>
-        <span>Makhana</span>
+        <span>25 gm</span>
       </div>
 
-      <h3 className="font-display text-[clamp(2rem,3vw,2.75rem)] font-bold leading-none">
+      <h3 className="font-display text-center text-[clamp(2rem,3vw,2.75rem)] font-bold leading-none">
         {flavor.name}
       </h3>
 
@@ -33,9 +33,9 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
           src={flavor.image}
           alt={`${flavor.name} makhana pouch`}
           loading="lazy"
-          width={768}
-          height={1024}
-          className="relative z-10 max-h-[340px] w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.25)]"
+          width={1080}
+          height={1350}
+          className="relative z-10 max-h-[290px] w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.25)]"
           animate={{ y: [0, -10, 0] }}
           transition={{
             duration: 5 + index * 0.5,
@@ -96,7 +96,8 @@ export function FlavorsSection() {
             badge="Product Flavours"
             title={
               <>
-                Three signatures, <em className="italic text-coral-deep">all crave-worthy.</em>
+                Six roasted makhana flavours,{" "}
+                <em className="italic text-coral-deep">all snack-smart.</em>
               </>
             }
           />

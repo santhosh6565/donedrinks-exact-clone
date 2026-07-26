@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
-import { ArrowRight, Facebook, Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, MapPin, MessageCircle, Phone } from "lucide-react";
 import heroBowl from "@/assets/hero-section-image.png";
 import makhanaImg from "@/assets/Makhana-img1.png";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -13,7 +13,7 @@ import lotferoxLogo from "@/assets/Lotferox_logo.png";
 //TODO: Add WhatsApp number and message
 const WHATSAPP_NUMBER = "919884471751";
 const WHATSAPP_MESSAGE =
-  "Hi Makhana, I would like to order your signature makhana flavours. Please share the available boxes, prices, and delivery details.";
+  "Hi LoTFerox, I would like to order your 25 gm roasted makhana flavours. Please share available flavours, prices, and delivery details.";
 const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const FACEBOOK_HREF = "https://www.facebook.com/";
 const INSTAGRAM_HREF = "https://www.instagram.com/";
@@ -21,11 +21,16 @@ const INSTAGRAM_HREF = "https://www.instagram.com/";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Makhana — A Snack Worth Finishing" },
+      { title: "LoTFerox Nuts Roasted Makhana | 25 gm Fox Nuts Snacks" },
       {
         name: "description",
         content:
-          "Premium roasted makhana in signature flavours. Crunchy, light, protein-rich and crafted from harvest to pouch.",
+          "Shop LoTFerox Nuts roasted makhana fox nuts in 25 gm packs. Vegan, gluten free, roasted not fried and available in Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.",
+      },
+      {
+        name: "keywords",
+        content:
+          "LoTFerox, LoTFerox Nuts, roasted makhana, fox nuts, makhana snacks, 25 gm makhana, vegan snacks, gluten free snacks, roasted not fried makhana",
       },
     ],
   }),
@@ -161,9 +166,9 @@ function Hero() {
       className="relative min-h-screen overflow-hidden bg-[var(--cream)] pt-24 pb-16 text-[var(--hero-accent)] md:pt-28"
     >
       <motion.div style={{ y: glowY }} className="absolute inset-0 opacity-95" aria-hidden>
-        <div className="absolute inset-0 bg-[image:var(--hero-backdrop)]" />
+        <div className="absolute inset-0 bg-[var(--cream)]" />
         <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,var(--hero-speckle)_1px,transparent_1px)] [background-size:3px_3px]" />
-        <div className="absolute inset-0 bg-[image:var(--hero-vignette)]" />
+        <div className="absolute inset-0" />
       </motion.div>
 
       <motion.div
@@ -186,8 +191,8 @@ function Hero() {
         <motion.img
           src={heroBowl}
           alt="Bowl filled with roasted makhana"
-          width={400}
-          height={400}
+          width={300}
+          height={300}
           animate={{
             y: [0, -12, 0],
             rotate: [0, 1, 0, -1, 0],
@@ -197,28 +202,29 @@ function Hero() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="mt-10 w-[min(84vw,700px)] object-contain drop-shadow-[var(--hero-image-shadow)] md:mt-16"
+          className="mt-10 w-[min(84vw,650px)] object-contain drop-shadow-[var(--hero-image-shadow)] md:mt-16"
         />
         <motion.div
           style={{ opacity, y: titleY }}
           className="-mt-8 mb-8 md:mb-8 max-w-3xl md:-mt-12"
         >
           <p className="text-balance text-base font-semibold uppercase tracking-[0.42em] text-[color:var(--hero-kicker)] md:text-lg">
-            Premium Roasted Fox Nuts
+            Smart Snacking For Smart People
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href="#flavors"
-              className="group inline-flex min-h-14 items-center justify-center gap-4 rounded-full border border-[color:var(--hero-primary-border)] bg-[image:var(--hero-primary-bg)] py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.13em] text-[color:var(--hero-primary-text)] shadow-[var(--hero-primary-shadow)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[color:var(--hero-primary-border-hover)] hover:text-[color:var(--hero-primary-text-hover)] hover:shadow-[var(--hero-primary-shadow-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
+              className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-full border border-white/45 bg-white/28 px-1.5 py-1.5 text-sm font-black uppercase tracking-[0.13em] text-[#2b211b] shadow-[0_18px_42px_rgba(43,33,27,0.12),inset_0_1px_0_rgba(255,255,255,0.72)] backdrop-blur-md transition-all hover:-translate-y-1 hover:border-white/70 hover:bg-white/42 hover:shadow-[0_24px_54px_rgba(43,33,27,0.16),inset_0_1px_0_rgba(255,255,255,0.82)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
-              <span>Explore flavours</span>
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--hero-accent)] text-[color:var(--hero-icon-text)] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-transform group-hover:translate-x-0.5 group-hover:bg-[var(--hero-accent-hover)]">
+              <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 opacity-0 blur-sm transition-all duration-700 group-hover:left-[115%] group-hover:opacity-100" />
+              <span className="relative px-5">Explore 25 gm flavours</span>
+              <span className="relative grid h-11 w-11 place-items-center rounded-full bg-[#2b211b] text-[#f8f1e6] shadow-[0_8px_20px_rgba(43,33,27,0.22),inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform group-hover:translate-x-1">
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </span>
             </a>
             <a
               href="#process"
-              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[color:var(--hero-secondary-border)] bg-[var(--hero-secondary-bg)] px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[color:var(--hero-secondary-text)] shadow-[var(--hero-secondary-shadow)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[color:var(--hero-secondary-border-hover)] hover:bg-[var(--hero-secondary-bg-hover)] hover:text-[color:var(--hero-secondary-text-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
+              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#6d4a31]/24 bg-transparent px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[#2b211b] transition-all hover:-translate-y-1 hover:border-[#6d4a31]/55 hover:bg-white/25 hover:text-[#6d4a31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
               See process
             </a>
@@ -226,27 +232,25 @@ function Hero() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-center text-[10px] uppercase tracking-[0.34em] text-[color:var(--hero-scroll-text)]">
+      {/* <div className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-center text-[10px] uppercase tracking-[0.34em] text-[color:var(--hero-scroll-text)]">
         <motion.span
           className="block h-9 w-px bg-[image:var(--hero-scroll-line)]"
           animate={{ scaleY: [0.35, 1, 0.35], opacity: [0.35, 1, 0.35] }}
           transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
         />
-      </div>
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-[image:var(--hero-bottom-fade)]" />
+      </div> */}
     </section>
   );
 }
 
 function Marquee() {
   const items = [
-    "No added sugar",
-    "Real ingredients",
+    "Vegan",
+    "Roasted not fried",
     "Gluten free",
-    "20g protein",
-    "High fiber",
-    "Slow roasted",
+    "Light . Crunchy . Delicious",
+    "25 gm packs",
+    "Snack smart",
   ];
   return (
     <div className="relative overflow-hidden bg-[var(--cream)] text-black">
@@ -461,13 +465,13 @@ function Story() {
           Our story
         </span>
         <h2 className="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.05] text-cocoa">
-          We made the snack
+          We made makhana
           <br />
-          we wished existed.
+          snack-smart.
         </h2>
         <p className="mx-auto mt-8 max-w-2xl text-lg text-cocoa/70">
-          Most of what's on the shelf tastes like a compromise. We started with a small batch, a
-          notebook, and a stubborn idea: crunch shouldn't be optional.
+          LoTFerox Nuts turns roasted fox nuts into light, crunchy and delicious everyday snacks
+          across six bold 25 gm flavours.
         </p>
       </div>
     </section>
@@ -485,8 +489,8 @@ function CTA() {
           Ready?
         </h2>
         <p className="mx-auto mt-6 max-w-lg text-lg opacity-80">
-          Want the freshest crunch? Message us on WhatsApp and we'll help you pick the perfect
-          flavour box.
+          Want LoTFerox roasted makhana? Message us on WhatsApp and we'll help you pick from Mint
+          Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.
         </p>
         <a
           href={WHATSAPP_HREF}
@@ -520,10 +524,10 @@ function Footer() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(255,225,122,0.18),transparent_32%),linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.22))]" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.2fr_0.8fr_1fr]">
         <div>
-          <div className="font-display text-3xl font-black text-cream">MAKHANA</div>
+          <div className="font-display text-3xl font-black text-cream">LoTFerox Nuts</div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/75">
-            Premium roasted fox nuts made for clean crunch, bold flavours, and easy everyday
-            snacking.
+            Roasted makhana fox nuts made for smart snacking: vegan, gluten free, roasted not fried,
+            light, crunchy and delicious.
           </p>
           <div className="mt-6 flex gap-3">
             {["TT", "IG", "FB"].map((s) => (
@@ -560,23 +564,19 @@ function Footer() {
             <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
             WhatsApp orders
           </a>
-          <a href="mailto:hello@makhana.example" className="flex gap-3">
-            <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
-            hello@makhana.example
-          </a>
           <div className="flex gap-3">
             <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
-            Mon-Sat, 10 AM - 7 PM
+            Customer care details coming soon
           </div>
           <div className="flex gap-3">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
-            Fresh batches delivered across your city.
+            25 gm roasted makhana packs available in six flavours.
           </div>
         </div>
       </div>
       <div className="relative mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-3 border-t border-[#fff2a8]/16 px-6 pt-6 text-xs text-cream/55 md:flex-row">
-        <span>© {new Date().getFullYear()} Makhana. Crafted with crunch.</span>
-        <span>No added sugar · Gluten free · Slow roasted</span>
+        <span>© {new Date().getFullYear()} LoTFerox Nuts. Smart snacking for smart people.</span>
+        <span>Vegan · Gluten free · Roasted not fried</span>
       </div>
     </footer>
   );

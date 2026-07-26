@@ -1,6 +1,9 @@
-import flavorChocolate from "@/assets/flavor-chocolate.png";
-import flavorCaramel from "@/assets/flavor-caramel.png";
-import flavorStrawberry from "@/assets/flavor-strawberry.png";
+import creamOnion from "@/assets/Product/cream_onion.png";
+import himalayanSaltPepper from "@/assets/Product/himalayan_salt_pepper.png";
+import mintPudina from "@/assets/Product/mint_pudina.png";
+import mixMasala from "@/assets/Product/mix_masala.png";
+import tangyCheese from "@/assets/Product/tangy_cheese.png";
+import tomatoTango from "@/assets/Product/tomato_tango.png";
 import benefitBowl from "@/assets/benefit-bowl.jpg";
 import benefitLifestyle from "@/assets/benefit-lifestyle.jpg";
 import benefitCollection from "@/assets/benefit-collection.jpg";
@@ -16,37 +19,37 @@ export interface ProcessStage {
 export const processStages: ProcessStage[] = [
   {
     number: "01",
-    title: "Sustainably Harvested",
+    title: "Quality Fox Nuts Selected",
     description:
-      "Our premium Makhana is carefully harvested from the finest Euryale ferox farms, ensuring exceptional quality and freshness from the source.",
+      "LoTFerox starts with carefully selected makhana, also known as fox nuts, chosen for a light and crisp snacking experience.",
     accent: "var(--sage)",
   },
   {
     number: "02",
-    title: "Naturally Dried & Roasted",
+    title: "Roasted, Not Fried",
     description:
-      "The harvested seeds are naturally dried and expertly roasted to develop their signature light, crunchy texture.",
+      "Each batch is roasted to build crunch without deep frying, making it a smarter everyday snack.",
     accent: "var(--cream)",
   },
   {
     number: "03",
-    title: "Popped to Perfection",
+    title: "Light & Crunchy Texture",
     description:
-      "Using traditional techniques, each seed is perfectly popped to create the crisp, airy snack loved by all.",
+      "The fox nuts are popped into airy bites with the signature light, crunchy and delicious texture printed on every pack.",
     accent: "var(--blush)",
   },
   {
     number: "04",
-    title: "Infused with Signature Flavours",
+    title: "Seasoned in Six Flavours",
     description:
-      "From classic spices to bold gourmet seasonings, every batch is coated with carefully crafted flavours for an unforgettable taste.",
+      "Choose from Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.",
     accent: "var(--coral)",
   },
   {
     number: "05",
-    title: "Packed with Your Favourite Flavour",
+    title: "Packed in 25 gm Pouches",
     description:
-      "Freshly packed using hygienic, freshness-lock packaging to preserve the crunch, aroma, and delicious flavour in every bite.",
+      "Every flavour comes in a convenient 25 gm pack for quick snacking at work, school, travel or home.",
     accent: "var(--coral-deep)",
   },
 ];
@@ -63,44 +66,64 @@ export interface Flavor {
 
 export const flavors: Flavor[] = [
   {
-    name: "Chocolate",
+    name: "Mint Pudina",
     description:
-      "Rich Belgian-style cocoa blended with perfectly roasted Makhana for an indulgent yet guilt-free crunch.",
-    image: flavorChocolate,
-    bg: "var(--flavor-chocolate-bg)",
-    text: "var(--flavor-chocolate-text)",
-    accent: "var(--flavor-chocolate-accent)",
-    ingredients: ["Belgian Cocoa", "Vanilla", "Sea Salt"],
+      "A cool, refreshing roasted makhana flavour with minty pudina notes for crisp, smart snacking.",
+    image: mintPudina,
+    bg: "linear-gradient(135deg, #123c24 0%, #5fbf72 100%)",
+    text: "#f8fff1",
+    accent: "#8de08d",
+    ingredients: ["25 gm", "Vegan", "Roasted Not Fried"],
   },
   {
-    name: "Salted Caramel",
+    name: "Himalayan Salt & Pepper",
     description:
-      "Golden caramel balanced with delicate sea salt creates a rich buttery flavour in every bite.",
-    image: flavorCaramel,
-    bg: "var(--flavor-caramel-bg)",
-    text: "var(--flavor-caramel-text)",
-    accent: "var(--flavor-caramel-accent)",
-    ingredients: ["Caramel", "Butter", "Sea Salt"],
+      "Classic salted makhana with a peppery kick, made for people who like clean crunch with bold taste.",
+    image: himalayanSaltPepper,
+    bg: "linear-gradient(135deg, #1b1b1b 0%, #8c8f91 52%, #f0b389 100%)",
+    text: "#ffffff",
+    accent: "#f0b389",
+    ingredients: ["25 gm", "Gluten Free", "Light & Crunchy"],
   },
   {
-    name: "Strawberry",
+    name: "Cream & Onion",
     description:
-      "Sweet sun-ripened strawberries meet light, crunchy Makhana for a refreshing fruity snack.",
-    image: flavorStrawberry,
-    bg: "var(--flavor-strawberry-bg)",
-    text: "var(--flavor-strawberry-text)",
-    accent: "var(--flavor-strawberry-accent)",
-    ingredients: ["Strawberry", "Beetroot", "Vanilla"],
+      "Creamy, savoury roasted fox nuts with onion-style seasoning for a smooth and addictive crunch.",
+    image: creamOnion,
+    bg: "linear-gradient(135deg, #241024 0%, #8d3c96 52%, #6fc56f 100%)",
+    text: "#fff7ff",
+    accent: "#b673c2",
+    ingredients: ["25 gm", "Guilt Free", "Snack Smart"],
   },
   {
-    name: "Vanilla",
+    name: "Mix Masala",
     description:
-      "Creamy vanilla blended with Makhana for a smooth, sweet snack that's perfect for any occasion.",
-    image: flavorStrawberry,
-    bg: "var(--flavor-vanilla-bg)",
-    text: "var(--flavor-vanilla-text)",
-    accent: "var(--flavor-vanilla-accent)",
-    ingredients: ["Vanilla", "Butter", "Sea Salt"],
+      "A lively Indian masala makhana flavour with warm spice notes for snack-time cravings.",
+    image: mixMasala,
+    bg: "linear-gradient(135deg, #3d1f10 0%, #c46b1f 58%, #f1dfbd 100%)",
+    text: "#fff8ec",
+    accent: "#f0a13a",
+    ingredients: ["25 gm", "Roasted", "Delicious"],
+  },
+  {
+    name: "Tomato Tango",
+    description:
+      "Tangy tomato-style roasted makhana with a playful punch of flavour in every crunchy bite.",
+    image: tomatoTango,
+    bg: "linear-gradient(135deg, #233f8f 0%, #d9364d 54%, #f495a8 100%)",
+    text: "#fff7f8",
+    accent: "#ff6b6b",
+    ingredients: ["25 gm", "Vegan", "Weight Friendly"],
+  },
+  {
+    name: "Tangy Cheese",
+    description:
+      "A cheesy, tangy roasted makhana flavour with a savoury punch for crunchy snack cravings.",
+    image: tangyCheese,
+    bg: "linear-gradient(135deg, #4b2608 0%, #d47b18 54%, #ffd166 100%)",
+    text: "#fff8ec",
+    accent: "#ffd166",
+    ingredients: ["25 gm", "Roasted", "Cheesy Tang"],
   },
 ];
 
@@ -123,9 +146,9 @@ export type BenefitItem =
 export const benefits: BenefitItem[] = [
   {
     kind: "text",
-    title: "20g of plant-rich protein.",
+    title: "Roasted, not fried.",
     description:
-      "Every pouch is engineered for the busy days — protein that actually keeps you going.",
+      "LoTFerox roasted makhana gives you the crunch you want without the heaviness of fried snacks.",
     bg: "var(--cocoa)",
     text: "var(--cream)",
     tall: true,
@@ -133,8 +156,8 @@ export const benefits: BenefitItem[] = [
   { kind: "image", src: benefitBowl, alt: "Bowl of popped makhana", tall: false },
   {
     kind: "text",
-    title: "Zero added sugar.",
-    description: "Sweetness from real ingredients. Nothing sneaky on the back of the pack.",
+    title: "Vegan and gluten free.",
+    description: "A front-of-pack promise for smart snackers looking for simple everyday munching.",
     bg: "var(--coral)",
     text: "var(--cocoa)",
   },
@@ -146,8 +169,8 @@ export const benefits: BenefitItem[] = [
   },
   {
     kind: "text",
-    title: "Light, crisp, addictive.",
-    description: "Airy texture, big crunch, small calories — the snack that doesn't quit.",
+    title: "Light. Crunchy. Delicious.",
+    description: "Airy fox nuts with bold flavour seasoning, packed for a clean and satisfying bite.",
     bg: "var(--blush)",
     text: "var(--coral-deep)",
   },
@@ -158,8 +181,9 @@ export const benefits: BenefitItem[] = [
   },
   {
     kind: "text",
-    title: "Naturally gluten-free.",
-    description: "Wholesome, simple, and friendly to every kind of pantry.",
+    title: "Six 25 gm flavours.",
+    description:
+      "Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese in handy packs.",
     bg: "var(--sage)",
     text: "var(--cocoa)",
     tall: true,
