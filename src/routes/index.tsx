@@ -8,6 +8,7 @@ import heroBowl from "@/assets/hero-section-image.png";
 import makhanaImg from "@/assets/Makhana-img1.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ProcessSection, FlavorsSection, BenefitsSection } from "@/components/sections";
+import lotferoxLogo from "@/assets/Lotferox_logo.png";
 
 //TODO: Add WhatsApp number and message
 const WHATSAPP_NUMBER = "919884471751";
@@ -94,15 +95,39 @@ function StickyNav() {
   ];
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[padding,transform,opacity,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[padding,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         scrolled ? "py-3" : "py-6"
-      } ${hidden ? "pointer-events-none -translate-y-full opacity-0 blur-sm" : "translate-y-0 opacity-100 blur-0"}`}
+      } ${hidden ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"}`}
     >
       <div
         className={`relative mx-auto flex max-w-7xl items-center justify-center px-6 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:justify-between ${
           scrolled ? "scale-[0.98]" : "scale-100"
         }`}
       >
+       <div
+          className={`absolute right-6 h-16 w-36 overflow-hidden md:static md:h-16 md:w-36 ${
+            scrolled
+              ? "scale-90"
+              : "scale-100"
+          }`}
+        >
+          <img
+            src={lotferoxLogo}
+            alt="Lotferox"
+            className="h-full w-full object-contain"
+          />
+        </div>
+        <nav className="hidden gap-2 md:flex">
+          {links.map((n) => (
+            <a
+              key={n.label}
+              href={n.href}
+              className="rounded-full border border-[#f3c943]/12 bg-black/55 px-5 py-2 text-sm font-medium text-[#f8ead1] shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:bg-[#f3c943] hover:text-black hover:shadow-[0_18px_42px_rgba(243,201,67,0.18)]"
+            >
+              {n.label}
+            </a>
+          ))}
+        </nav>
         <div className="absolute left-6 hidden gap-2 md:static md:flex">
           {socialLinks.map(({ label, href, icon: Icon }) => (
             <a
@@ -117,24 +142,6 @@ function StickyNav() {
             </a>
           ))}
         </div>
-        <div
-          className={`rounded-full border border-[#f3c943]/18 bg-black/65 px-7 py-3 font-display text-xl font-black tracking-tight text-[#f8ead1] shadow-[0_16px_45px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-500 ${
-            scrolled ? "scale-90 bg-black/78 shadow-[0_14px_38px_rgba(0,0,0,0.4)]" : "scale-100"
-          }`}
-        >
-          MAKHANA
-        </div>
-        <nav className="hidden gap-2 md:flex">
-          {links.map((n) => (
-            <a
-              key={n.label}
-              href={n.href}
-              className="rounded-full border border-[#f3c943]/12 bg-black/55 px-5 py-3 text-sm font-medium text-[#f8ead1] shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:bg-[#f3c943] hover:text-black hover:shadow-[0_18px_42px_rgba(243,201,67,0.18)]"
-            >
-              {n.label}
-            </a>
-          ))}
-        </nav>
       </div>
     </header>
   );
@@ -595,16 +602,30 @@ function FloatingWhatsApp() {
 
 function Home() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+    if (prefersReducedMotion || isTouchDevice) {
+      return undefined;
+    }
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.75,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
+    let animationFrameId = 0;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      animationFrameId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+
+    animationFrameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+    };
   }, []);
 
   return (

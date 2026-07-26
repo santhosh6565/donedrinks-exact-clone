@@ -34,7 +34,7 @@
   animation: marquee-wave 2.6s ease-in-out infinite;
 }
 
-:root {
+/* :root {
   --cream: #0D0D0D;
   --makhana-cream: #0D0D0D;
 
@@ -123,13 +123,13 @@
 
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", system-ui, sans-serif;
-}
+} */
 
 
 /*
   Dark Brown Theme
 */
-/* 
+
 :root {
   --cream: #D8C7B0;
   --makhana-cream: #E5D7C4;
@@ -375,7 +375,7 @@
 
   --flavor-ring-offset:
     var(--cream);
-} */
+}
 
 @layer base {
   * { border-color: oklch(0.85 0.04 50 / 0.4); }

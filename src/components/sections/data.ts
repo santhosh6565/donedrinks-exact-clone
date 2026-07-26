@@ -92,6 +92,16 @@ export const flavors: Flavor[] = [
     accent: "var(--flavor-strawberry-accent)",
     ingredients: ["Strawberry", "Beetroot", "Vanilla"],
   },
+  {
+    name: "Vanilla",
+    description:
+      "Creamy vanilla blended with Makhana for a smooth, sweet snack that's perfect for any occasion.",
+    image: flavorStrawberry,
+    bg: "var(--flavor-vanilla-bg)",
+    text: "var(--flavor-vanilla-text)",
+    accent: "var(--flavor-vanilla-accent)",
+    ingredients: ["Vanilla", "Butter", "Sea Salt"],
+  },
 ];
 
 export type BenefitItem =
