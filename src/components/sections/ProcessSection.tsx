@@ -510,7 +510,7 @@ export function ProcessSection() {
               align="left"
               className="max-w-3xl gap-3 md:gap-6 [&>h2]:text-[clamp(1.85rem,8vw,2.6rem)] md:[&>h2]:text-[clamp(2.25rem,5.5vw,4.5rem)] [&>span]:px-3 [&>span]:py-1 md:[&>span]:px-4 md:[&>span]:py-1.5"
             />
-            <div className="mt-3 flex items-center gap-2 md:mt-6 md:gap-3">
+            <div className="mt-3 hidden items-center gap-2 md:mt-6 md:flex md:gap-3">
               <div className="whitespace-nowrap rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[color:var(--process-accent-soft)] backdrop-blur-xl md:px-4 md:py-2 md:text-xs md:tracking-[0.24em]">
                 {String(active + 1).padStart(2, "0")} /{" "}
                 {String(processStages.length).padStart(2, "0")}

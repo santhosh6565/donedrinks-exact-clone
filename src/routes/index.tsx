@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import type { RefObject } from "react";
+import type { ComponentType, RefObject, SVGProps } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
 import { ArrowRight, Facebook, Instagram, MapPin, MessageCircle, Phone } from "lucide-react";
@@ -52,6 +52,42 @@ function Wave({ from, to, flip = false }: { from: string; to: string; flip?: boo
         />
       </svg>
     </div>
+  );
+}
+
+function BrandButton({
+  href,
+  children,
+  icon: Icon,
+  external = false,
+  compact = false,
+}: {
+  href: string;
+  children: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  external?: boolean;
+  compact?: boolean;
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/55 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,235,168,0.84)_48%,rgba(255,255,255,0.74))] font-black uppercase tracking-[0.13em] text-[#24180b] shadow-[0_20px_48px_rgba(43,33,27,0.16),inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_28px_62px_rgba(43,33,27,0.22),inset_0_1px_0_rgba(255,255,255,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffe17a] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)] ${
+        compact ? "min-h-12 gap-3 py-1.5 pl-5 pr-1.5 text-xs" : "min-h-14 gap-4 py-1.5 pl-6 pr-1.5 text-sm"
+      }`}
+    >
+      <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/45 opacity-0 blur-sm transition-all duration-700 group-hover:left-[115%] group-hover:opacity-100" />
+      <span className="pointer-events-none absolute inset-1 rounded-full border border-white/35" />
+      <span className="relative whitespace-nowrap">{children}</span>
+      <span
+        className={`relative grid place-items-center rounded-full bg-[#2b211b] text-[#fff4c2] shadow-[0_10px_22px_rgba(43,33,27,0.24),inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform group-hover:translate-x-1 ${
+          compact ? "h-9 w-9" : "h-11 w-11"
+        }`}
+      >
+        <Icon className={compact ? "h-3.5 w-3.5" : "h-4 w-4"} aria-hidden />
+      </span>
+    </a>
   );
 }
 
@@ -212,19 +248,12 @@ function Hero() {
             Smart Snacking For Smart People
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a
-              href="#flavors"
-              className="group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-full border border-white/45 bg-white/28 px-1.5 py-1.5 text-sm font-black uppercase tracking-[0.13em] text-[#2b211b] shadow-[0_18px_42px_rgba(43,33,27,0.12),inset_0_1px_0_rgba(255,255,255,0.72)] backdrop-blur-md transition-all hover:-translate-y-1 hover:border-white/70 hover:bg-white/42 hover:shadow-[0_24px_54px_rgba(43,33,27,0.16),inset_0_1px_0_rgba(255,255,255,0.82)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
-            >
-              <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/35 opacity-0 blur-sm transition-all duration-700 group-hover:left-[115%] group-hover:opacity-100" />
-              <span className="relative px-5">Explore 25 gm flavours</span>
-              <span className="relative grid h-11 w-11 place-items-center rounded-full bg-[#2b211b] text-[#f8f1e6] shadow-[0_8px_20px_rgba(43,33,27,0.22),inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform group-hover:translate-x-1">
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </span>
-            </a>
+            <BrandButton href="#flavors" icon={ArrowRight}>
+              Explore 25 gm flavours
+            </BrandButton>
             <a
               href="#process"
-              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#6d4a31]/24 bg-transparent px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[#2b211b] transition-all hover:-translate-y-1 hover:border-[#6d4a31]/55 hover:bg-white/25 hover:text-[#6d4a31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
+              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#6d4a31]/24 bg-white/12 px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[#2b211b] shadow-[inset_0_1px_0_rgba(255,255,255,0.42)] backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-[#6d4a31]/55 hover:bg-white/30 hover:text-[#6d4a31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
               See process
             </a>
@@ -492,17 +521,11 @@ function CTA() {
           Want LoTFerox roasted makhana? Message us on WhatsApp and we'll help you pick from Mint
           Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.
         </p>
-        <a
-          href={WHATSAPP_HREF}
-          target="_blank"
-          rel="noreferrer"
-          className="group mt-10 inline-flex min-h-14 items-center justify-center gap-4 rounded-full border border-[#fff2a8]/60 bg-[linear-gradient(180deg,#fff0a6,#d4af37)] py-2 pl-7 pr-2 text-sm font-black uppercase tracking-[0.13em] text-[#170f02] shadow-[0_20px_50px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.72)] transition-all hover:-translate-y-1 hover:scale-105 hover:border-white hover:bg-[#ffe17a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffe17a] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--coral-deep)]"
-        >
-          <span>Order on WhatsApp</span>
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-[#130d03] text-[#ffe17a] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform group-hover:translate-x-0.5">
-            <MessageCircle className="h-4 w-4" aria-hidden />
-          </span>
-        </a>
+        <div className="mt-10">
+          <BrandButton href={WHATSAPP_HREF} icon={MessageCircle} external>
+            Order on WhatsApp
+          </BrandButton>
+        </div>
       </div>
     </section>
   );
@@ -521,7 +544,7 @@ function Footer() {
       className="relative overflow-hidden py-14 text-cream"
       style={{ background: "var(--coral-deep)" }}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(255,225,122,0.18),transparent_32%),linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.22))]" />
+      <div className="pointer-events-none absolute inset-0" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.2fr_0.8fr_1fr]">
         <div>
           <div className="font-display text-3xl font-black text-cream">LoTFerox Nuts</div>
@@ -560,10 +583,9 @@ function Footer() {
           <div className="text-xs font-black uppercase tracking-[0.24em] text-[#ffe17a]">
             Contact
           </div>
-          <a href={WHATSAPP_HREF} target="_blank" rel="noreferrer" className="flex gap-3">
-            <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+          <BrandButton href={WHATSAPP_HREF} icon={MessageCircle} external compact>
             WhatsApp orders
-          </a>
+          </BrandButton>
           <div className="flex gap-3">
             <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
             Customer care details coming soon
