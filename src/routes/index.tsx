@@ -61,27 +61,35 @@ function BrandButton({
   icon: Icon,
   external = false,
   compact = false,
+  tone = "light",
 }: {
   href: string;
   children: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   external?: boolean;
   compact?: boolean;
+  tone?: "light" | "dark";
 }) {
+  const isDark = tone === "dark";
+
   return (
     <a
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noreferrer" : undefined}
-      className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/55 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,235,168,0.84)_48%,rgba(255,255,255,0.74))] font-black uppercase tracking-[0.13em] text-[#24180b] shadow-[0_20px_48px_rgba(43,33,27,0.16),inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white hover:shadow-[0_28px_62px_rgba(43,33,27,0.22),inset_0_1px_0_rgba(255,255,255,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffe17a] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)] ${
+      className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full border font-black uppercase tracking-[0.13em] text-[#24180b] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffe17a] focus-visible:ring-offset-2 ${
+        isDark
+          ? "border-[#fff2a8]/75 bg-[linear-gradient(135deg,#fff8c7_0%,#ffd95a_48%,#f0b93d_100%)] shadow-[0_22px_52px_rgba(0,0,0,0.36),0_0_0_1px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.82)] hover:border-white hover:shadow-[0_28px_68px_rgba(255,217,90,0.2),0_24px_58px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.88)] focus-visible:ring-offset-[var(--coral-deep)]"
+          : "border-white/55 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,235,168,0.84)_48%,rgba(255,255,255,0.74))] shadow-[0_20px_48px_rgba(43,33,27,0.16),inset_0_1px_0_rgba(255,255,255,0.86)] hover:border-white hover:shadow-[0_28px_62px_rgba(43,33,27,0.22),inset_0_1px_0_rgba(255,255,255,0.9)] focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
+      } ${
         compact ? "min-h-12 gap-3 py-1.5 pl-5 pr-1.5 text-xs" : "min-h-14 gap-4 py-1.5 pl-6 pr-1.5 text-sm"
       }`}
     >
-      <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/45 opacity-0 blur-sm transition-all duration-700 group-hover:left-[115%] group-hover:opacity-100" />
-      <span className="pointer-events-none absolute inset-1 rounded-full border border-white/35" />
+      <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/55 opacity-0 blur-sm transition-all duration-700 group-hover:left-[115%] group-hover:opacity-100" />
+      <span className="pointer-events-none absolute inset-1 rounded-full border border-white/45" />
       <span className="relative whitespace-nowrap">{children}</span>
       <span
-        className={`relative grid place-items-center rounded-full bg-[#2b211b] text-[#fff4c2] shadow-[0_10px_22px_rgba(43,33,27,0.24),inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform group-hover:translate-x-1 ${
+        className={`relative grid place-items-center rounded-full bg-[#2b211b] text-[#fff4c2] shadow-[0_10px_22px_rgba(43,33,27,0.28),inset_0_1px_0_rgba(255,255,255,0.16)] transition-transform group-hover:translate-x-1 ${
           compact ? "h-9 w-9" : "h-11 w-11"
         }`}
       >
@@ -522,7 +530,7 @@ function CTA() {
           Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.
         </p>
         <div className="mt-10">
-          <BrandButton href={WHATSAPP_HREF} icon={MessageCircle} external>
+          <BrandButton href={WHATSAPP_HREF} icon={MessageCircle} external tone="dark">
             Order on WhatsApp
           </BrandButton>
         </div>
@@ -538,13 +546,18 @@ function Footer() {
     { label: "Benefits", href: "#benefits" },
     { label: "Story", href: "#story" },
   ];
+  const footerSocialLinks = [
+    { label: "Facebook", href: FACEBOOK_HREF, icon: Facebook },
+    { label: "WhatsApp", href: WHATSAPP_HREF, icon: MessageCircle },
+    { label: "Instagram", href: INSTAGRAM_HREF, icon: Instagram },
+  ];
 
   return (
     <footer
       className="relative overflow-hidden py-14 text-cream"
       style={{ background: "var(--coral-deep)" }}
     >
-      <div className="pointer-events-none absolute inset-0" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.22))]" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.2fr_0.8fr_1fr]">
         <div>
           <div className="font-display text-3xl font-black text-cream">LoTFerox Nuts</div>
@@ -553,13 +566,17 @@ function Footer() {
             light, crunchy and delicious.
           </p>
           <div className="mt-6 flex gap-3">
-            {["TT", "IG", "FB"].map((s) => (
-              <span
-                key={s}
-                className="grid h-10 w-10 place-items-center rounded-full border border-[#fff2a8]/20 bg-black/20 text-xs font-black text-[#ffe17a] backdrop-blur-xl"
+            {footerSocialLinks.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="grid h-10 w-10 place-items-center rounded-full border border-[#fff2a8]/35 bg-white/10 text-[#ffe17a] shadow-[0_14px_32px_rgba(0,0,0,0.24),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[#ffe17a] hover:bg-[#ffe17a] hover:text-[#24180b]"
               >
-                {s}
-              </span>
+                <Icon className="h-4 w-4" aria-hidden />
+              </a>
             ))}
           </div>
         </div>
@@ -583,7 +600,7 @@ function Footer() {
           <div className="text-xs font-black uppercase tracking-[0.24em] text-[#ffe17a]">
             Contact
           </div>
-          <BrandButton href={WHATSAPP_HREF} icon={MessageCircle} external compact>
+          <BrandButton href={WHATSAPP_HREF} icon={MessageCircle} external compact tone="dark">
             WhatsApp orders
           </BrandButton>
           <div className="flex gap-3">

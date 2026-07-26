@@ -112,7 +112,7 @@ export function BenefitsSection() {
   return (
     <section
       id="benefits"
-      className="relative overflow-hidden py-20 md:py-28"
+      className="relative isolate overflow-hidden py-20 md:py-28"
       style={{ background: "var(--cream)" }}
     >
       <img
@@ -120,7 +120,7 @@ export function BenefitsSection() {
         alt=""
         aria-hidden
         loading="lazy"
-        className="pointer-events-none absolute left-[75%] top-[80%] hidden w-[min(30vw,400px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.90] mix-blend-multiply lg:block"
+        className="pointer-events-none absolute left-[75%] top-[80%] z-0 hidden w-[min(30vw,400px)] -translate-x-1/2 -translate-y-1/2 opacity-80 drop-shadow-[0_18px_28px_rgba(76,38,18,0.12)] lg:block"
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 text-cocoa">
