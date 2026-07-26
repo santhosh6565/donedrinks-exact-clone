@@ -89,9 +89,9 @@ function StickyNav() {
   }, []);
 
   const links = [
-    { label: "Process", href: "#process" },
     { label: "Flavours", href: "#flavors" },
     { label: "Benefits", href: "#benefits" },
+    { label: "Process", href: "#process" },
   ];
   const socialLinks = [
     { label: "Facebook", href: FACEBOOK_HREF, icon: Facebook },
