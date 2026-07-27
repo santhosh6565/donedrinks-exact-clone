@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ComponentType, RefObject, SVGProps } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
-import { ArrowRight, Facebook, Instagram, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Facebook, Instagram, MapPin, MessageCircle, Moon, Phone, Sun } from "lucide-react";
 import heroBowl from "@/assets/hero-section-image.png";
 import makhanaImg from "@/assets/Makhana-img1.png";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -17,6 +17,7 @@ const WHATSAPP_MESSAGE =
 const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const FACEBOOK_HREF = "https://www.facebook.com/";
 const INSTAGRAM_HREF = "https://www.instagram.com/";
+const THEME_STORAGE_KEY = "lotferox-theme";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -99,6 +100,47 @@ function BrandButton({
   );
 }
 
+function ThemeToggle({ scrolled }: { scrolled: boolean }) {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const isDark = theme === "dark";
+
+  useEffect(() => {
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = storedTheme === "dark" || storedTheme === "light"
+      ? storedTheme
+      : prefersDark
+        ? "dark"
+        : "light";
+
+    setTheme(initialTheme);
+    document.documentElement.classList.toggle("dark", initialTheme === "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = isDark ? "light" : "dark";
+    setTheme(nextTheme);
+    window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
+  };
+
+  return (
+    <button
+      type="button"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+      aria-pressed={isDark}
+      onClick={toggleTheme}
+      className={`group grid h-10 w-10 place-items-center rounded-full border border-[#f3c943]/20 bg-black/55 text-[#ffe17a] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black md:h-10 md:w-10 ${scrolled ? "scale-90" : ""}`}
+    >
+      {isDark ? (
+        <Sun className="h-4 w-4 transition-transform group-hover:rotate-45" aria-hidden />
+      ) : (
+        <Moon className="h-4 w-4 transition-transform group-hover:-rotate-12" aria-hidden />
+      )}
+    </button>
+  );
+}
+
 function StickyNav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -177,7 +219,8 @@ function StickyNav() {
             </a>
           ))}
         </nav>
-        <div className="absolute left-6 hidden gap-2 md:static md:flex">
+        <div className="absolute left-6 flex gap-2 md:static">
+          <ThemeToggle scrolled={scrolled} />
           {socialLinks.map(({ label, href, icon: Icon }) => (
             <a
               key={label}
@@ -185,7 +228,7 @@ function StickyNav() {
               target="_blank"
               rel="noreferrer"
               aria-label={label}
-              className={`grid h-10 w-10 place-items-center rounded-full border border-[#f3c943]/15 bg-black/55 text-[#d2b48c] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:text-[#f3c943] ${scrolled ? "scale-90" : ""}`}
+              className={`hidden h-10 w-10 place-items-center rounded-full border border-[#f3c943]/15 bg-black/55 text-[#d2b48c] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:text-[#f3c943] md:grid ${scrolled ? "scale-90" : ""}`}
             >
               <Icon className="h-4 w-4" aria-hidden />
             </a>
@@ -211,7 +254,7 @@ function Hero() {
     >
       <motion.div style={{ y: glowY }} className="absolute inset-0 opacity-95" aria-hidden>
         <div className="absolute inset-0 bg-[var(--cream)]" />
-        <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,var(--hero-speckle)_1px,transparent_1px)] [background-size:3px_3px]" />
+        {/* <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,var(--hero-speckle)_1px,transparent_1px)] [background-size:3px_3px]" /> */}
         <div className="absolute inset-0" />
       </motion.div>
 
@@ -261,7 +304,7 @@ function Hero() {
             </BrandButton>
             <a
               href="#process"
-              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[#6d4a31]/24 bg-white/12 px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[#2b211b] shadow-[inset_0_1px_0_rgba(255,255,255,0.42)] backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-[#6d4a31]/55 hover:bg-white/30 hover:text-[#6d4a31] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
+              className="inline-flex min-h-14 items-center justify-center rounded-full border border-[color:var(--hero-secondary-border)] bg-[var(--hero-secondary-bg)] px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[color:var(--hero-secondary-text)] shadow-[var(--hero-secondary-shadow)] backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-[color:var(--hero-secondary-border-hover)] hover:bg-[var(--hero-secondary-bg-hover)] hover:text-[color:var(--hero-secondary-text-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
               See process
             </a>
