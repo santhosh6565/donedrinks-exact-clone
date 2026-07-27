@@ -3,7 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import type { ComponentType, RefObject, SVGProps } from "react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
-import { ArrowRight, Facebook, Instagram, MapPin, MessageCircle, Moon, Phone, Sun } from "lucide-react";
+import {
+  ArrowRight,
+  Facebook,
+  Instagram,
+  MapPin,
+  Menu,
+  MessageCircle,
+  Moon,
+  Phone,
+  Sun,
+  X,
+} from "lucide-react";
 import heroBowl from "@/assets/hero-section-image.png";
 import makhanaImg from "@/assets/Makhana-img1.png";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -144,6 +155,7 @@ function ThemeToggle({ scrolled }: { scrolled: boolean }) {
 function StickyNav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const lastScrollY = useRef(0);
   const upwardScrollDistance = useRef(0);
 
@@ -188,7 +200,7 @@ function StickyNav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[padding,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         scrolled ? "py-3" : "py-6"
-      } ${hidden ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"}`}
+      } ${hidden && !mobileOpen ? "pointer-events-none -translate-y-full opacity-0" : "translate-y-0 opacity-100"}`}
     >
       <div
         className={`relative mx-auto flex max-w-7xl items-center justify-center px-6 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:justify-between ${
@@ -196,7 +208,7 @@ function StickyNav() {
         }`}
       >
        <div
-          className={`absolute right-6 h-16 w-36 overflow-hidden md:static md:h-16 md:w-36 ${
+          className={`absolute left-1/2 h-14 w-32 -translate-x-1/2 overflow-hidden md:static md:h-16 md:w-36 md:translate-x-0 ${
             scrolled
               ? "scale-90"
               : "scale-100"
@@ -219,7 +231,7 @@ function StickyNav() {
             </a>
           ))}
         </nav>
-        <div className="absolute left-6 flex gap-2 md:static">
+        <div className="absolute left-6 flex items-center gap-2 md:static">
           <ThemeToggle scrolled={scrolled} />
           {socialLinks.map(({ label, href, icon: Icon }) => (
             <a
@@ -234,7 +246,68 @@ function StickyNav() {
             </a>
           ))}
         </div>
+        <button
+          type="button"
+          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((open) => !open)}
+          className={`absolute right-6 grid h-10 w-10 place-items-center rounded-full border border-[#f3c943]/20 bg-black/55 text-[#ffe17a] shadow-[0_12px_35px_rgba(0,0,0,0.3)] backdrop-blur-xl transition-all duration-300 hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black md:hidden ${
+            scrolled ? "scale-90" : ""
+          }`}
+        >
+          {mobileOpen ? <X className="h-4 w-4" aria-hidden /> : <Menu className="h-4 w-4" aria-hidden />}
+        </button>
       </div>
+
+      {mobileOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -12, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -12, scale: 0.98 }}
+          transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-4 mt-3 overflow-hidden rounded-3xl border border-[#f3c943]/20 bg-black/78 p-3 text-[#f8ead1] shadow-[0_24px_65px_rgba(0,0,0,0.42)] backdrop-blur-2xl md:hidden"
+        >
+          <nav className="grid gap-2">
+            {links.map((n) => (
+              <a
+                key={n.label}
+                href={n.href}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-2xl border border-white/8 bg-white/8 px-4 py-3 text-sm font-black uppercase tracking-[0.16em] transition-colors hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black"
+              >
+                {n.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="mt-3 grid grid-cols-3 gap-2">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                onClick={() => setMobileOpen(false)}
+                className="grid h-11 place-items-center rounded-2xl border border-[#f3c943]/18 bg-white/8 text-[#ffe17a] transition-colors hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black"
+              >
+                <Icon className="h-4 w-4" aria-hidden />
+              </a>
+            ))}
+          </div>
+
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMobileOpen(false)}
+            className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#25D366]/35 bg-[#25D366] px-4 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_28px_rgba(37,211,102,0.24)]"
+          >
+            <MessageCircle className="h-4 w-4" aria-hidden />
+            Order on WhatsApp
+          </a>
+        </motion.div>
+      )}
     </header>
   );
 }
