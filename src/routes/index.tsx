@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import type { ComponentType, RefObject, SVGProps } from "react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { AnimatePresence, motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
 import {
   ArrowRight,
@@ -255,59 +255,80 @@ function StickyNav() {
             scrolled ? "scale-90" : ""
           }`}
         >
-          {mobileOpen ? <X className="h-4 w-4" aria-hidden /> : <Menu className="h-4 w-4" aria-hidden />}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={mobileOpen ? "close" : "menu"}
+              initial={{ opacity: 0, rotate: -45, scale: 0.8 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
+              transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {mobileOpen ? <X className="h-4 w-4" aria-hidden /> : <Menu className="h-4 w-4" aria-hidden />}
+            </motion.span>
+          </AnimatePresence>
         </button>
       </div>
 
-      {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -12, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -12, scale: 0.98 }}
-          transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-4 mt-3 overflow-hidden rounded-3xl border border-[#f3c943]/20 bg-black/78 p-3 text-[#f8ead1] shadow-[0_24px_65px_rgba(0,0,0,0.42)] backdrop-blur-2xl md:hidden"
-        >
-          <nav className="grid gap-2">
-            {links.map((n) => (
-              <a
-                key={n.label}
-                href={n.href}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-2xl border border-white/8 bg-white/8 px-4 py-3 text-sm font-black uppercase tracking-[0.16em] transition-colors hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black"
-              >
-                {n.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="mt-3 grid grid-cols-3 gap-2">
-            {socialLinks.map(({ label, href, icon: Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                onClick={() => setMobileOpen(false)}
-                className="grid h-11 place-items-center rounded-2xl border border-[#f3c943]/18 bg-white/8 text-[#ffe17a] transition-colors hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black"
-              >
-                <Icon className="h-4 w-4" aria-hidden />
-              </a>
-            ))}
-          </div>
-
-          <a
-            href={WHATSAPP_HREF}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setMobileOpen(false)}
-            className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#25D366]/35 bg-[#25D366] px-4 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_28px_rgba(37,211,102,0.24)]"
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -14, scale: 0.98, height: 0 }}
+            animate={{ opacity: 1, y: 0, scale: 1, height: "auto" }}
+            exit={{ opacity: 0, y: -14, scale: 0.98, height: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-4 mt-3 overflow-hidden rounded-3xl border border-[#f3c943]/20 bg-black/78 p-3 text-[#f8ead1] shadow-[0_24px_65px_rgba(0,0,0,0.42)] backdrop-blur-2xl md:hidden"
           >
-            <MessageCircle className="h-4 w-4" aria-hidden />
-            Order on WhatsApp
-          </a>
-        </motion.div>
-      )}
+            <nav className="grid gap-2">
+              {links.map((n, index) => (
+                <motion.a
+                  key={n.label}
+                  href={n.href}
+                  onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.04, duration: 0.24 }}
+                  className="rounded-2xl border border-white/8 bg-white/8 px-4 py-3 text-sm font-black uppercase tracking-[0.16em] transition-colors hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black"
+                >
+                  {n.label}
+                </motion.a>
+              ))}
+            </nav>
+
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {socialLinks.map(({ label, href, icon: Icon }, index) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 + index * 0.04, duration: 0.24 }}
+                  className="grid h-11 place-items-center rounded-2xl border border-[#f3c943]/18 bg-white/8 text-[#ffe17a] transition-colors hover:border-[#f3c943]/45 hover:bg-[#f3c943] hover:text-black"
+                >
+                  <Icon className="h-4 w-4" aria-hidden />
+                </motion.a>
+              ))}
+            </div>
+
+            <motion.a
+              href={WHATSAPP_HREF}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setMobileOpen(false)}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18, duration: 0.24 }}
+              className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#25D366]/35 bg-[#25D366] px-4 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_28px_rgba(37,211,102,0.24)]"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden />
+              Order on WhatsApp
+            </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
@@ -318,7 +339,7 @@ function Hero() {
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -90]);
   const glowY = useTransform(scrollYProgress, [0, 1], [0, -70]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const wordRows = ["MAKHANA", "MAKHANA", "MAKHANA", "MAKHANA", "MAKHANA"];
+  const wordRows = ["LoTFerox", "LoTFerox", "LoTFerox", "LoTFerox", "LoTFerox"];
 
   return (
     <section
@@ -362,7 +383,7 @@ function Hero() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="mt-10 w-[min(84vw,650px)] object-contain drop-shadow-[var(--hero-image-shadow)] md:mt-16"
+          className="mt-10 w-[min(84vw,730px)] object-contain drop-shadow-[var(--hero-image-shadow)] md:mt-16"
         />
         <motion.div
           style={{ opacity, y: titleY }}
@@ -373,7 +394,7 @@ function Hero() {
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <BrandButton href="#flavors" icon={ArrowRight}>
-              Explore 25 gm flavours
+              Explore flavours
             </BrandButton>
             <a
               href="#process"

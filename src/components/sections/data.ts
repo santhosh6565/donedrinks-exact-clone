@@ -2,6 +2,7 @@ import creamOnion from "@/assets/Product/cream_onion.png";
 import himalayanSaltPepper from "@/assets/Product/himalayan_salt_pepper.png";
 import mintPudina from "@/assets/Product/mint_pudina.png";
 import mixMasala from "@/assets/Product/mix_masala.png";
+import rawMakhana from "@/assets/Product/raw.png";
 import tangyCheese from "@/assets/Product/tangy_cheese.png";
 import tomatoTango from "@/assets/Product/tomato_tango.png";
 import benefitBowl from "@/assets/benefit-bowl.jpg";
@@ -124,6 +125,16 @@ export const flavors: Flavor[] = [
     text: "#fff8ec",
     accent: "#ffd166",
     ingredients: ["25 gm", "Roasted", "Cheesy Tang"],
+  },
+  {
+    name: "Raw Makhana",
+    description:
+      "Premium raw fox nuts in a 25 gm pack for light, crunchy and naturally delicious everyday snacking.",
+    image: rawMakhana,
+    bg: "linear-gradient(135deg, #fff2d8 0%, #f28a20 48%, #6f2d90 100%)",
+    text: "#2b211b",
+    accent: "#f28a20",
+    ingredients: ["25 gm", "Raw Fox Nuts", "Gluten Free"],
   },
 ];
 
