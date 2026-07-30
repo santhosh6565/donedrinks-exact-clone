@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Check, Flame } from "lucide-react";
-import lotferoxLogo from "@/assets/lotferox-nuts-logo.webp";
+import lotferoxLogo from "@/assets/brand/lotferox-nuts-logo.webp";
 import { benefits, type BenefitItem } from "./data";
 import { SectionHeading } from "./SectionHeading";
 

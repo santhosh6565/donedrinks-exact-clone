@@ -9,8 +9,8 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import flavorCollectionImage from "@/assets/Product/lotferox-7-makhana-products-social-share.jpg";
-import lotferoxLogo from "@/assets/lotferox-nuts-logo.webp";
+import flavorCollectionImage from "@/assets/seo/lotferox-makhana-products-social-share.jpg";
+import lotferoxLogo from "@/assets/brand/lotferox-nuts-logo.webp";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 

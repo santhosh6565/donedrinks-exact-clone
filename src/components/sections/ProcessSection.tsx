@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
-import benefitBowl from "@/assets/benefit-bowl.jpg";
-import benefitCollection from "@/assets/Product/lotferox-7-makhana-products-collection.webp";
-import benefitHarvest from "@/assets/benefit-harvest.jpg";
-import mintPudina from "@/assets/Product/lotferox-mint-pudina-makhana-25gm.webp";
-import mixMasala from "@/assets/Product/lotferox-mix-masala-makhana-25gm.webp";
-import tangyCheese from "@/assets/Product/lotferox-tangy-cheese-makhana-25gm.webp";
-import tomatoTango from "@/assets/Product/lotferox-tomato-tango-makhana-25gm.webp";
+import benefitBowl from "@/assets/sections/benefit-makhana-bowl.jpg";
+import benefitCollection from "@/assets/products/lotferox-makhana-product-collection.webp";
+import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.jpg";
+import mintPudina from "@/assets/products/lotferox-mint-pudina-makhana-25gm.webp";
+import mixMasala from "@/assets/products/lotferox-mix-masala-makhana-25gm.webp";
+import tangyCheese from "@/assets/products/lotferox-tangy-cheese-makhana-25gm.webp";
+import tomatoTango from "@/assets/products/lotferox-tomato-tango-makhana-25gm.webp";
 import { processStages, type ProcessStage } from "./data";
 import { SectionHeading } from "./SectionHeading";
 

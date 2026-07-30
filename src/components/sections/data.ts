@@ -1,14 +1,14 @@
-import creamOnion from "@/assets/Product/lotferox-cream-onion-makhana-25gm.webp";
-import himalayanSaltPepper from "@/assets/Product/lotferox-himalayan-salt-pepper-makhana-25gm.webp";
-import mintPudina from "@/assets/Product/lotferox-mint-pudina-makhana-25gm.webp";
-import mixMasala from "@/assets/Product/lotferox-mix-masala-makhana-25gm.webp";
-import rawMakhana from "@/assets/Product/lotferox-raw-makhana-25gm.webp";
-import tangyCheese from "@/assets/Product/lotferox-tangy-cheese-makhana-25gm.webp";
-import tomatoTango from "@/assets/Product/lotferox-tomato-tango-makhana-25gm.webp";
-import benefitBowl from "@/assets/benefit-bowl.jpg";
-import benefitLifestyle from "@/assets/benefit-lifestyle.jpg";
-import benefitCollection from "@/assets/benefit-collection.jpg";
-import benefitHarvest from "@/assets/benefit-harvest.jpg";
+import creamOnion from "@/assets/products/lotferox-cream-onion-makhana-25gm.webp";
+import himalayanSaltPepper from "@/assets/products/lotferox-himalayan-salt-pepper-makhana-25gm.webp";
+import mintPudina from "@/assets/products/lotferox-mint-pudina-makhana-25gm.webp";
+import mixMasala from "@/assets/products/lotferox-mix-masala-makhana-25gm.webp";
+import rawMakhana from "@/assets/products/lotferox-raw-makhana-25gm.webp";
+import tangyCheese from "@/assets/products/lotferox-tangy-cheese-makhana-25gm.webp";
+import tomatoTango from "@/assets/products/lotferox-tomato-tango-makhana-25gm.webp";
+import benefitBowl from "@/assets/sections/benefit-makhana-bowl.jpg";
+import benefitLifestyle from "@/assets/sections/benefit-healthy-snacking-lifestyle.jpg";
+import benefitCollection from "@/assets/sections/benefit-makhana-collection.jpg";
+import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.jpg";
 
 export const companyInfo = {
   name: "LotFerox Nuts",

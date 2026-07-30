@@ -19,12 +19,12 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import heroBowl from "@/assets/lotferox-roasted-makhana-hero-bowl.webp";
-import makhanaImg from "@/assets/Makhana-img1.png";
+import heroBowl from "@/assets/hero/lotferox-roasted-makhana-bowl.webp";
+import makhanaImg from "@/assets/hero/makhana-floating-piece.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ProcessSection, FlavorsSection, BenefitsSection } from "@/components/sections";
 import { companyInfo } from "@/components/sections/data";
-import lotferoxLogo from "@/assets/lotferox-nuts-logo.webp";
+import lotferoxLogo from "@/assets/brand/lotferox-nuts-logo.webp";
 
 //TODO: Add WhatsApp number and message
 const WHATSAPP_NUMBER = "919884471751";
