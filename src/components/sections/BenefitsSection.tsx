@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Check, Flame } from "lucide-react";
-import lotferoxLogo from "@/assets/Lotferox_logo.png";
+import lotferoxLogo from "@/assets/lotferox-nuts-logo.webp";
 import { benefits, type BenefitItem } from "./data";
 import { SectionHeading } from "./SectionHeading";
 
@@ -12,8 +12,8 @@ interface BenefitCardProps {
 function BenefitCard({ item, index }: BenefitCardProps) {
   const heightClass = item.tall ? "row-span-2 min-h-[420px]" : "min-h-[260px]";
   const isRoastedCard = item.kind === "text" && item.title.startsWith("Roasted");
-  const isFlavourCard = item.kind === "text" && item.title.startsWith("Six");
-  const flavourDots = ["#5fbf72", "#f0b389", "#b673c2", "#f0a13a", "#ff6b6b", "#ffd166"];
+  const isFlavourCard = item.kind === "text" && item.title.startsWith("Seven");
+  const flavourDots = ["#5fbf72", "#f0b389", "#b673c2", "#f0a13a", "#ff6b6b", "#ffd166", "#7a3aa0"];
 
   return (
     <motion.div
@@ -63,7 +63,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
             </span>
             {(isRoastedCard || isFlavourCard) && (
               <span className="rounded-full border border-current/20 bg-white/12 px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] backdrop-blur-sm">
-                {isRoastedCard ? "Dry roast" : "6 packs"}
+                {isRoastedCard ? "Dry roast" : "7 packs"}
               </span>
             )}
           </div>
@@ -71,7 +71,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
           <div className="space-y-4">
             {(isRoastedCard || isFlavourCard) && (
               <div className="relative z-10 flex flex-wrap gap-2">
-                {(isRoastedCard ? ["Low oil", "Crisp bite"] : ["25 gm", "6 flavours"]).map((tag) => (
+                {(isRoastedCard ? ["Low oil", "Crisp bite"] : ["7 products", "Raw + roasted"]).map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center gap-1.5 rounded-full border border-current/18 bg-white/12 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] backdrop-blur-sm"
@@ -92,7 +92,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
 
           {isFlavourCard && (
             <div className="pointer-events-none absolute bottom-5 right-5 font-display text-[8rem] font-black leading-none opacity-10">
-              6
+              7
             </div>
           )}
         </div>
@@ -101,6 +101,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
           src={item.src}
           alt={item.alt}
           loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       )}
@@ -120,6 +121,9 @@ export function BenefitsSection() {
         alt=""
         aria-hidden
         loading="lazy"
+        decoding="async"
+        width={760}
+        height={428}
         className="pointer-events-none absolute left-[75%] top-[80%] z-0 hidden w-[min(30vw,400px)] -translate-x-1/2 -translate-y-1/2 opacity-80 drop-shadow-[0_18px_28px_rgba(76,38,18,0.12)] lg:block"
       />
 

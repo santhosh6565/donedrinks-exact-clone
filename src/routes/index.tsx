@@ -6,25 +6,30 @@ import Lenis from "lenis";
 import {
   ArrowRight,
   Facebook,
+  Globe2,
+  Handshake,
   Instagram,
+  Leaf,
+  Mail,
   MapPin,
   Menu,
   MessageCircle,
   Moon,
-  Phone,
+  ShieldCheck,
   Sun,
   X,
 } from "lucide-react";
-import heroBowl from "@/assets/hero-section-image.png";
+import heroBowl from "@/assets/lotferox-roasted-makhana-hero-bowl.webp";
 import makhanaImg from "@/assets/Makhana-img1.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ProcessSection, FlavorsSection, BenefitsSection } from "@/components/sections";
-import lotferoxLogo from "@/assets/Lotferox_logo.png";
+import { companyInfo } from "@/components/sections/data";
+import lotferoxLogo from "@/assets/lotferox-nuts-logo.webp";
 
 //TODO: Add WhatsApp number and message
 const WHATSAPP_NUMBER = "919884471751";
 const WHATSAPP_MESSAGE =
-  "Hi LoTFerox, I would like to order your 25 gm roasted makhana flavours. Please share available flavours, prices, and delivery details.";
+  "Hi LoTFerox, I would like to order your makhana products. Please share all 7 products, prices, and delivery details.";
 const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const FACEBOOK_HREF = "https://www.facebook.com/";
 const INSTAGRAM_HREF = "https://www.instagram.com/";
@@ -33,16 +38,16 @@ const THEME_STORAGE_KEY = "lotferox-theme";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LoTFerox Nuts Roasted Makhana | 25 gm Fox Nuts Snacks" },
+      { title: "LoTFerox Nuts 7 Makhana Products | Fox Nuts Snacks" },
       {
         name: "description",
         content:
-          "Shop LoTFerox Nuts roasted makhana fox nuts in 25 gm packs. Vegan, gluten free, roasted not fried and available in Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.",
+          "Shop LoTFerox Nuts makhana fox nuts. Explore 7 products including Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango, Tangy Cheese and Raw Makhana.",
       },
       {
         name: "keywords",
         content:
-          "LoTFerox, LoTFerox Nuts, roasted makhana, fox nuts, makhana snacks, 25 gm makhana, vegan snacks, gluten free snacks, roasted not fried makhana",
+          "LoTFerox, LoTFerox Nuts, roasted makhana, raw makhana, Bihar makhana, fox nuts, makhana snacks, Chennai healthy snacks, vegan snacks, gluten free snacks",
       },
     ],
   }),
@@ -190,6 +195,7 @@ function StickyNav() {
     { label: "Flavours", href: "#flavors" },
     { label: "Benefits", href: "#benefits" },
     { label: "Process", href: "#process" },
+    { label: "Purpose", href: "#purpose" },
   ];
   const socialLinks = [
     { label: "Facebook", href: FACEBOOK_HREF, icon: Facebook },
@@ -217,6 +223,10 @@ function StickyNav() {
           <img
             src={lotferoxLogo}
             alt="Lotferox"
+            width={1920}
+            height={1080}
+            loading="eager"
+            decoding="async"
             className="h-full w-full object-contain"
           />
         </div>
@@ -374,6 +384,8 @@ function Hero() {
           alt="Bowl filled with roasted makhana"
           width={300}
           height={300}
+          loading="eager"
+          decoding="async"
           animate={{
             y: [0, -12, 0],
             rotate: [0, 1, 0, -1, 0],
@@ -423,7 +435,7 @@ function Marquee() {
     "Roasted not fried",
     "Gluten free",
     "Light . Crunchy . Delicious",
-    "25 gm packs",
+    "7 products",
     "Snack smart",
   ];
   return (
@@ -606,7 +618,7 @@ function HeroFlavorsShowcase() {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <div ref={ref} className="relative bg-var(--cream)">
+    <div ref={ref} className="relative bg-[var(--cream)]">
       <ScrollMakhanaLayer targetRef={ref} />
       <Hero />
       <Marquee />
@@ -645,8 +657,108 @@ function Story() {
         </h2>
         <p className="mx-auto mt-8 max-w-2xl text-lg text-cocoa/70">
           LoTFerox Nuts turns roasted fox nuts into light, crunchy and delicious everyday snacks
-          across six bold 25 gm flavours.
+          across seven smart products, from bold roasted flavours to premium Raw Makhana.
         </p>
+      </div>
+    </section>
+  );
+}
+
+function PurposeSection() {
+  const pillars = [
+    {
+      label: "Vision",
+      title: "Premium Bihar Makhana for every home.",
+      text: "To make nutritious, delicious and guilt-free makhana a daily snack choice for families around the world.",
+      icon: Globe2,
+    },
+    {
+      label: "Mission",
+      title: "Farm-fresh quality with real crunch.",
+      text: "We source premium makhana from Bihar, preserve its natural value and create fresh flavours for modern snacking.",
+      icon: Leaf,
+    },
+    {
+      label: "Promise",
+      title: "Freshness, trust and value in every pack.",
+      text: "Hand-selected makhana, natural produce, reliable processing, competitive pricing and export-ready quality.",
+      icon: Handshake,
+    },
+  ];
+
+  return (
+    <section
+      id="purpose"
+      className="bg-[var(--cream)] pb-5 pt-14 md:pb-8 md:pt-20"
+    >
+
+      <div className="mx-auto max-w-7xl px-6 text-cocoa">
+        <div className="mx-auto max-w-4xl text-center">
+
+          <span className="inline-flex items-center justify-center rounded-full border border-coral/20 px-4 py-1.5 text-xs font-black uppercase tracking-[0.28em] text-coral-deep dark:border-[#d4af37]/28 dark:text-[#f4d675]">
+            Purpose
+          </span>
+          <h2 className="mx-auto mt-4 max-w-3xl font-display text-[clamp(2.5rem,5.2vw,5rem)] font-bold leading-[0.98] text-cocoa">
+            From Bihar farms to homes around the world.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-cocoa/70 md:text-lg dark:text-[#f5f2ea]/72">
+            We are building LoTFerox Nuts as a trusted makhana brand: natural, crunchy, accessible
+            and made for everyday wellness.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-8 grid max-w-6xl gap-4 md:grid-cols-3">
+          {pillars.map((pillar, index) => (
+            <motion.article
+              key={pillar.label}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-[22px] border border-cocoa/10 bg-white/20 p-6 transition-colors hover:border-coral/22 dark:border-[#d4af37]/14 dark:bg-white/[0.035] dark:hover:border-[#d4af37]/28"
+            >
+              <div className="flex items-center gap-4">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-coral/16 text-coral-deep dark:border-[#d4af37]/22 dark:text-[#f4d675]">
+                  <pillar.icon className="h-5 w-5" aria-hidden />
+                </span>
+                <div className="text-left">
+                  <div className="text-[10px] font-black uppercase tracking-[0.24em] text-coral-deep dark:text-[#f4d675]">
+                    {pillar.label}
+                  </div>
+                  <div className="mt-1 h-px w-14 bg-coral/25 dark:bg-[#d4af37]/28" />
+                </div>
+              </div>
+
+              <h3 className="mt-7 font-display text-2xl font-bold leading-tight text-cocoa">
+                {pillar.title}
+              </h3>
+              <p className="mt-4 text-sm leading-7 text-cocoa/68 dark:text-[#f5f2ea]/66">
+                {pillar.text}
+              </p>
+            </motion.article>
+          ))}
+        </div>
+
+        <div className="mx-auto mt-6 grid max-w-6xl gap-3 border-y border-cocoa/10 py-4 text-sm font-semibold text-cocoa/78 dark:border-[#d4af37]/16 dark:text-[#f5f2ea]/78 md:grid-cols-3">
+          {[
+            { icon: ShieldCheck, label: "FSSAI", value: companyInfo.fssai },
+            { icon: MapPin, label: "Company", value: companyInfo.address },
+            { icon: Mail, label: "Email", value: companyInfo.email },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="flex items-center gap-3 px-1 py-2 md:justify-center"
+            >
+              <item.icon className="h-4 w-4 shrink-0 text-coral-deep dark:text-[#f4d675]" aria-hidden />
+              <div className="min-w-0">
+                <div className="text-[9px] font-black uppercase tracking-[0.2em] text-cocoa/45 dark:text-[#d4af37]/58">
+                  {item.label}
+                </div>
+                <div className="truncate text-sm text-cocoa/78 dark:text-[#f5f2ea]/78">{item.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -663,8 +775,8 @@ function CTA() {
           Ready?
         </h2>
         <p className="mx-auto mt-6 max-w-lg text-lg opacity-80">
-          Want LoTFerox roasted makhana? Message us on WhatsApp and we'll help you pick from Mint
-          Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.
+          Want LoTFerox makhana? Message us on WhatsApp and we'll help you pick from all 7 products,
+          including roasted flavours and premium Raw Makhana.
         </p>
         <div className="mt-10">
           <BrandButton href={WHATSAPP_HREF} icon={MessageCircle} external tone="dark">
@@ -682,6 +794,7 @@ function Footer() {
     { label: "Flavours", href: "#flavors" },
     { label: "Benefits", href: "#benefits" },
     { label: "Story", href: "#story" },
+    { label: "Purpose", href: "#purpose" },
   ];
   const footerSocialLinks = [
     { label: "Facebook", href: FACEBOOK_HREF, icon: Facebook },
@@ -697,10 +810,10 @@ function Footer() {
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.22))]" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-6 md:grid-cols-[1.2fr_0.8fr_1fr]">
         <div>
-          <div className="font-display text-3xl font-black text-cream">LoTFerox Nuts</div>
+          <div className="font-display text-3xl font-black text-cream">{companyInfo.name}</div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/75">
-            Roasted makhana fox nuts made for smart snacking: vegan, gluten free, roasted not fried,
-            light, crunchy and delicious.
+            Premium makhana fox nuts made for smart snacking: vegan, gluten free, roasted not
+            fried, light, crunchy and delicious.
           </p>
           <div className="mt-6 flex gap-3">
             {footerSocialLinks.map(({ label, href, icon: Icon }) => (
@@ -741,18 +854,24 @@ function Footer() {
             WhatsApp orders
           </BrandButton>
           <div className="flex gap-3">
-            <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
-            Customer care details coming soon
+            <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+            <a href={`mailto:${companyInfo.email}`} className="transition-colors hover:text-[#ffe17a]">
+              {companyInfo.email}
+            </a>
           </div>
           <div className="flex gap-3">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
-            25 gm roasted makhana packs available in six flavours.
+            {companyInfo.address}
+          </div>
+          <div className="flex gap-3">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+            FSSAI Licence No. {companyInfo.fssai}
           </div>
         </div>
       </div>
       <div className="relative mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-3 border-t border-[#fff2a8]/16 px-6 pt-6 text-xs text-cream/55 md:flex-row">
-        <span>© {new Date().getFullYear()} LoTFerox Nuts. Smart snacking for smart people.</span>
-        <span>Vegan · Gluten free · Roasted not fried</span>
+        <span>© {new Date().getFullYear()} {companyInfo.name}. Smart snacking for smart people.</span>
+        <span>7 products · Vegan · Gluten free · Roasted not fried</span>
       </div>
     </footer>
   );
@@ -810,6 +929,7 @@ function Home() {
       <HeroFlavorsShowcase />
       <BenefitsSection />
       <ProcessSection />
+      <PurposeSection />
       <Story />
       <Wave from="var(--cream)" to="var(--coral-deep)" />
       <CTA />

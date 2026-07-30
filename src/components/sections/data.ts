@@ -1,14 +1,21 @@
-import creamOnion from "@/assets/Product/cream_onion.png";
-import himalayanSaltPepper from "@/assets/Product/himalayan_salt_pepper.png";
-import mintPudina from "@/assets/Product/mint_pudina.png";
-import mixMasala from "@/assets/Product/mix_masala.png";
-import rawMakhana from "@/assets/Product/raw.png";
-import tangyCheese from "@/assets/Product/tangy_cheese.png";
-import tomatoTango from "@/assets/Product/tomato_tango.png";
+import creamOnion from "@/assets/Product/lotferox-cream-onion-makhana-25gm.webp";
+import himalayanSaltPepper from "@/assets/Product/lotferox-himalayan-salt-pepper-makhana-25gm.webp";
+import mintPudina from "@/assets/Product/lotferox-mint-pudina-makhana-25gm.webp";
+import mixMasala from "@/assets/Product/lotferox-mix-masala-makhana-25gm.webp";
+import rawMakhana from "@/assets/Product/lotferox-raw-makhana-25gm.webp";
+import tangyCheese from "@/assets/Product/lotferox-tangy-cheese-makhana-25gm.webp";
+import tomatoTango from "@/assets/Product/lotferox-tomato-tango-makhana-25gm.webp";
 import benefitBowl from "@/assets/benefit-bowl.jpg";
 import benefitLifestyle from "@/assets/benefit-lifestyle.jpg";
 import benefitCollection from "@/assets/benefit-collection.jpg";
 import benefitHarvest from "@/assets/benefit-harvest.jpg";
+
+export const companyInfo = {
+  name: "LotFerox Nuts",
+  address: "Chennai - 600130, Tamil Nadu",
+  fssai: "12426008001442",
+  email: "lotferoxnuts@gmail.com",
+};
 
 export interface ProcessStage {
   number: string;
@@ -41,16 +48,16 @@ export const processStages: ProcessStage[] = [
   },
   {
     number: "04",
-    title: "Seasoned in Six Flavours",
+    title: "Seven Makhana Products",
     description:
-      "Choose from Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.",
+      "Choose from the full LoTFerox lineup of seasoned makhana flavours and premium Raw Makhana.",
     accent: "var(--coral)",
   },
   {
     number: "05",
-    title: "Packed in 25 gm Pouches",
+    title: "Packed Fresh for Everyday Snacking",
     description:
-      "Every flavour comes in a convenient 25 gm pack for quick snacking at work, school, travel or home.",
+      "Every flavour is packed for quick snacking at work, school, travel or home.",
     accent: "var(--coral-deep)",
   },
 ];
@@ -74,7 +81,7 @@ export const flavors: Flavor[] = [
     bg: "linear-gradient(135deg, #123c24 0%, #5fbf72 100%)",
     text: "#f8fff1",
     accent: "#8de08d",
-    ingredients: ["25 gm", "Vegan", "Roasted Not Fried"],
+    ingredients: ["Vegan", "Roasted Not Fried", "Cool Mint"],
   },
   {
     name: "Himalayan Salt & Pepper",
@@ -84,7 +91,7 @@ export const flavors: Flavor[] = [
     bg: "linear-gradient(135deg, #1b1b1b 0%, #8c8f91 52%, #f0b389 100%)",
     text: "#ffffff",
     accent: "#f0b389",
-    ingredients: ["25 gm", "Gluten Free", "Light & Crunchy"],
+    ingredients: ["Gluten Free", "Light & Crunchy", "Pepper Kick"],
   },
   {
     name: "Cream & Onion",
@@ -94,7 +101,7 @@ export const flavors: Flavor[] = [
     bg: "linear-gradient(135deg, #241024 0%, #8d3c96 52%, #6fc56f 100%)",
     text: "#fff7ff",
     accent: "#b673c2",
-    ingredients: ["25 gm", "Guilt Free", "Snack Smart"],
+    ingredients: ["Guilt Free", "Snack Smart", "Creamy Bite"],
   },
   {
     name: "Mix Masala",
@@ -104,7 +111,7 @@ export const flavors: Flavor[] = [
     bg: "linear-gradient(135deg, #3d1f10 0%, #c46b1f 58%, #f1dfbd 100%)",
     text: "#fff8ec",
     accent: "#f0a13a",
-    ingredients: ["25 gm", "Roasted", "Delicious"],
+    ingredients: ["Roasted", "Delicious", "Masala Spice"],
   },
   {
     name: "Tomato Tango",
@@ -114,7 +121,7 @@ export const flavors: Flavor[] = [
     bg: "linear-gradient(135deg, #233f8f 0%, #d9364d 54%, #f495a8 100%)",
     text: "#fff7f8",
     accent: "#ff6b6b",
-    ingredients: ["25 gm", "Vegan", "Weight Friendly"],
+    ingredients: ["Vegan", "Weight Friendly", "Tangy Tomato"],
   },
   {
     name: "Tangy Cheese",
@@ -124,17 +131,17 @@ export const flavors: Flavor[] = [
     bg: "linear-gradient(135deg, #4b2608 0%, #d47b18 54%, #ffd166 100%)",
     text: "#fff8ec",
     accent: "#ffd166",
-    ingredients: ["25 gm", "Roasted", "Cheesy Tang"],
+    ingredients: ["Roasted", "Cheesy Tang", "Crunchy Bite"],
   },
   {
     name: "Raw Makhana",
     description:
-      "Premium raw fox nuts in a 25 gm pack for light, crunchy and naturally delicious everyday snacking.",
+      "Premium raw fox nuts for light, crunchy and naturally delicious everyday snacking.",
     image: rawMakhana,
     bg: "linear-gradient(135deg, #fff2d8 0%, #f28a20 48%, #6f2d90 100%)",
     text: "#2b211b",
     accent: "#f28a20",
-    ingredients: ["25 gm", "Raw Fox Nuts", "Gluten Free"],
+    ingredients: ["Raw Fox Nuts", "Gluten Free", "Naturally Light"],
   },
 ];
 
@@ -192,9 +199,9 @@ export const benefits: BenefitItem[] = [
   },
   {
     kind: "text",
-    title: "Six 25 gm flavours.",
+    title: "Seven smart products.",
     description:
-      "Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese in handy packs.",
+      "Seasoned makhana flavours plus premium Raw Makhana in handy packs.",
     bg: "var(--sage)",
     text: "var(--cocoa)",
     tall: true,

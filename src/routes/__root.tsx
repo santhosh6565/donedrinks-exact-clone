@@ -9,18 +9,26 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import flavorCollectionImage from "@/assets/Product/flavor_collection.png";
-import lotferoxLogo from "@/assets/Lotferox_logo.png";
+import flavorCollectionImage from "@/assets/Product/lotferox-7-makhana-products-social-share.jpg";
+import lotferoxLogo from "@/assets/lotferox-nuts-logo.webp";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL ?? "https://lotferox.com").replace(/\/$/, "");
 const PAGE_URL = `${SITE_URL}/`;
-const SEO_TITLE = "LoTFerox Nuts | Roasted Makhana Fox Nuts Snacks";
+const SEO_TITLE = "LoTFerox Nuts | 7 Makhana Fox Nuts Products";
 const SEO_DESCRIPTION =
-  "LoTFerox Nuts makes roasted makhana fox nuts in 25 gm packs across six snack-smart flavours: Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango and Tangy Cheese.";
+  "LoTFerox Nuts makes premium makhana fox nuts across 7 products: Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango, Tangy Cheese and Raw Makhana.";
 const SEO_IMAGE = new URL(flavorCollectionImage, PAGE_URL).toString();
 const SEO_LOGO = new URL(lotferoxLogo, PAGE_URL).toString();
+const COMPANY_INFO = {
+  name: "LotFerox Nuts",
+  email: "lotferoxnuts@gmail.com",
+  fssai: "12426008001442",
+  locality: "Chennai",
+  postalCode: "600130",
+  region: "Tamil Nadu",
+};
 const FLAVOURS = [
   "Mint Pudina",
   "Himalayan Salt & Pepper",
@@ -28,6 +36,7 @@ const FLAVOURS = [
   "Mix Masala",
   "Tomato Tango",
   "Tangy Cheese",
+  "Raw Makhana",
 ];
 
 const structuredData = {
@@ -36,9 +45,23 @@ const structuredData = {
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "LoTFerox Nuts",
+      name: COMPANY_INFO.name,
       url: PAGE_URL,
       logo: SEO_LOGO,
+      email: `mailto:${COMPANY_INFO.email}`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: COMPANY_INFO.locality,
+        postalCode: COMPANY_INFO.postalCode,
+        addressRegion: COMPANY_INFO.region,
+        addressCountry: "IN",
+      },
+      identifier: {
+        "@type": "PropertyValue",
+        name: "FSSAI Licence No.",
+        value: COMPANY_INFO.fssai,
+      },
+      areaServed: ["India", "Global"],
       sameAs: ["https://www.facebook.com/", "https://www.instagram.com/"],
     },
     {
@@ -50,14 +73,15 @@ const structuredData = {
     },
     {
       "@type": "Product",
-      "@id": `${SITE_URL}/#roasted-makhana`,
-      name: "LoTFerox Nuts Roasted Makhana",
+      "@id": `${SITE_URL}/#makhana-products`,
+      name: "LoTFerox Nuts Makhana Products",
       brand: { "@id": `${SITE_URL}/#organization` },
-      category: "Roasted Makhana Fox Nuts Snacks",
+      category: "Makhana Fox Nuts Snacks",
       description: SEO_DESCRIPTION,
       image: SEO_IMAGE,
       size: "25 gm",
-      keywords: "roasted makhana, fox nuts, vegan snacks, gluten free snacks, roasted not fried",
+      keywords:
+        "roasted makhana, raw makhana, Bihar makhana, fox nuts, vegan snacks, gluten free snacks, roasted not fried, Chennai healthy snacks",
     },
     {
       "@type": "ItemList",
@@ -142,26 +166,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "keywords",
         content:
-          "LoTFerox, LoTFerox Nuts, roasted makhana, fox nuts, makhana snacks, 25 gm makhana, Mint Pudina makhana, Tangy Cheese makhana, vegan snacks, gluten free snacks",
+          "LoTFerox, LoTFerox Nuts, LotFerox Nuts, roasted makhana, raw makhana, Bihar makhana, fox nuts, makhana snacks, Chennai healthy snacks, FSSAI makhana, Mint Pudina makhana, Tangy Cheese makhana, vegan snacks, gluten free snacks",
       },
-      { name: "author", content: "LoTFerox Nuts" },
+      { name: "author", content: COMPANY_INFO.name },
       { name: "robots", content: "index, follow, max-image-preview:large" },
       { name: "theme-color", content: "#f7f7f2" },
-      { property: "og:site_name", content: "LoTFerox Nuts" },
+      { property: "og:site_name", content: COMPANY_INFO.name },
       { property: "og:title", content: SEO_TITLE },
       { property: "og:description", content: SEO_DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:url", content: PAGE_URL },
       { property: "og:image", content: SEO_IMAGE },
       { property: "og:image:secure_url", content: SEO_IMAGE },
-      { property: "og:image:width", content: "1448" },
-      { property: "og:image:height", content: "1086" },
-      { property: "og:image:alt", content: "LoTFerox Nuts roasted makhana flavour collection" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "900" },
+      { property: "og:image:alt", content: "LoTFerox Nuts 7 makhana product collection" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: SEO_TITLE },
       { name: "twitter:description", content: SEO_DESCRIPTION },
       { name: "twitter:image", content: SEO_IMAGE },
-      { name: "twitter:image:alt", content: "LoTFerox Nuts roasted makhana flavour collection" },
+      { name: "twitter:image:alt", content: "LoTFerox Nuts 7 makhana product collection" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

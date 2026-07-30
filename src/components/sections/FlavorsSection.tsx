@@ -1,15 +1,27 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { flavors, type Flavor } from "./data";
+import { companyInfo, flavors, type Flavor } from "./data";
 import { SectionHeading } from "./SectionHeading";
 
 const WHATSAPP_NUMBER = "919884471751";
 const INITIAL_PRODUCT_COUNT = 6;
 
 function getProductInquiryHref(flavor: Flavor) {
-  const message = `Hi LoTFerox, I would like to inquire about ${flavor.name} Makhana 25 gm pack. Please share price, availability, and delivery details.`;
+  const productName = flavor.name.includes("Makhana") ? flavor.name : `${flavor.name} Makhana`;
+  const message = `Hi LoTFerox, I would like to inquire about ${productName}. Please share price, pack size, availability, and delivery details.`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+function FssaiBadge() {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/18 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] shadow-[inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-sm">
+      <span className="grid h-5 w-5 place-items-center rounded-full bg-[#0f8a3a] text-[8px] font-black text-white">
+        F
+      </span>
+      FSSAI {companyInfo.fssai}
+    </span>
+  );
 }
 
 interface FlavorCardProps {
@@ -18,6 +30,8 @@ interface FlavorCardProps {
 }
 
 function FlavorCard({ flavor, index }: FlavorCardProps) {
+  const productName = flavor.name.includes("Makhana") ? flavor.name : `${flavor.name} Makhana`;
+
   return (
     <motion.article
       layout
@@ -42,8 +56,9 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
       <div className="relative grid h-[280px] w-full place-items-center">
         <motion.img
           src={flavor.image}
-          alt={`${flavor.name} makhana pouch`}
+          alt={`LoTFerox Nuts ${productName} pack`}
           loading="lazy"
+          decoding="async"
           width={1080}
           height={1350}
           className="relative z-10 max-h-[290px] w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.25)]"
@@ -77,6 +92,13 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
         ))}
       </ul>
 
+      <div className="flex flex-wrap justify-center gap-2">
+        <FssaiBadge />
+        <span className="rounded-full border border-current/25 bg-white/12 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] backdrop-blur-sm">
+          {companyInfo.name}
+        </span>
+      </div>
+
       <motion.a
         href={getProductInquiryHref(flavor)}
         target="_blank"
@@ -100,7 +122,8 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
 
 export function FlavorsSection() {
   const [showAllProducts, setShowAllProducts] = useState(false);
-  const visibleFlavors = showAllProducts ? flavors : flavors.slice(0, INITIAL_PRODUCT_COUNT);
+  const baseFlavors = flavors.slice(0, INITIAL_PRODUCT_COUNT);
+  const extraFlavors = flavors.slice(INITIAL_PRODUCT_COUNT);
   const hiddenProductCount = Math.max(0, flavors.length - INITIAL_PRODUCT_COUNT);
 
   return (
@@ -115,23 +138,55 @@ export function FlavorsSection() {
             badge="Product Flavours"
             title={
               <>
-                Six favourites first,{" "}
-                <em className="italic text-coral-deep">show more for Raw Makhana.</em>
+                Seven makhana products,{" "}
+                <em className="italic text-coral-deep">one smart lineup.</em>
               </>
             }
           />
         </div>
 
-        <motion.div layout className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <AnimatePresence mode="popLayout">
-            {visibleFlavors.map((flavor, i) => (
-              <FlavorCard key={flavor.name} flavor={flavor} index={i} />
-            ))}
-          </AnimatePresence>
+        <motion.div
+          layout
+          transition={{ layout: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } }}
+          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {baseFlavors.map((flavor, i) => (
+            <FlavorCard key={flavor.name} flavor={flavor} index={i} />
+          ))}
         </motion.div>
 
+        <AnimatePresence initial={false}>
+          {showAllProducts && (
+            <motion.div
+              key="extra-products"
+              initial={{ height: 0, opacity: 0, marginTop: 0 }}
+              animate={{ height: "auto", opacity: 1, marginTop: 32 }}
+              exit={{ height: 0, opacity: 0, marginTop: 0 }}
+              transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <motion.div
+                layout
+                className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+              >
+                {extraFlavors.map((flavor, i) => (
+                  <FlavorCard
+                    key={flavor.name}
+                    flavor={flavor}
+                    index={INITIAL_PRODUCT_COUNT + i}
+                  />
+                ))}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {hiddenProductCount > 0 && (
-          <div className="mt-12 flex justify-center">
+          <motion.div
+            layout
+            transition={{ layout: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } }}
+            className="mt-12 flex justify-center"
+          >
             <motion.button
               type="button"
               onClick={() => setShowAllProducts((show) => !show)}
@@ -151,7 +206,7 @@ export function FlavorsSection() {
                 </motion.span>
               </span>
             </motion.button>
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
