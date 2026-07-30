@@ -447,83 +447,143 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 }
 
 export function ProcessSection() {
-  const ref = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(0);
-  const x = `-${progress * (processStages.length - 1) * (100 / processStages.length)}%`;
+  const [viewportWidth, setViewportWidth] = useState(0);
+
+  const totalStages = processStages.length;
+
+  /*
+   * Each panel occupies exactly one viewport width.
+   * Move from panel 1 to the final panel based on scroll progress.
+   */
+  const x = -(progress * (totalStages - 1) * viewportWidth);
 
   useEffect(() => {
-    let frame = 0;
+    let animationFrame = 0;
 
-    const updateProgress = () => {
-      frame = 0;
-      if (!ref.current) return;
+    const updateSection = () => {
+      animationFrame = 0;
 
-      const rect = ref.current.getBoundingClientRect();
-      const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
-      const nextProgress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
-      const nextActive = Math.min(
-        processStages.length - 1,
-        Math.floor(nextProgress * processStages.length + 0.0001),
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      const scrollableDistance = Math.max(
+        1,
+        section.offsetHeight - viewportHeight,
       );
 
+      const nextProgress = Math.min(
+        1,
+        Math.max(0, -rect.top / scrollableDistance),
+      );
+
+      const nextActive = Math.min(
+        totalStages - 1,
+        Math.floor(nextProgress * totalStages),
+      );
+
+      setViewportWidth(window.innerWidth);
       setProgress(nextProgress);
       setActive(nextActive);
     };
 
     const requestUpdate = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(updateProgress);
+      if (animationFrame) return;
+
+      animationFrame = window.requestAnimationFrame(updateSection);
     };
 
-    updateProgress();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
+    updateSection();
+
+    window.addEventListener("scroll", requestUpdate, {
+      passive: true,
+    });
+
     window.addEventListener("resize", requestUpdate);
 
     return () => {
-      if (frame) window.cancelAnimationFrame(frame);
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+      }
+
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
     };
-  }, []);
+  }, [totalStages]);
 
   return (
     <section
       id="process"
-      ref={ref}
-      className="relative"
-      style={{ height: `${processStages.length * 100}vh` }}
+      ref={sectionRef}
+      className="relative w-full"
+      style={{
+        height: `calc(${totalStages} * 100dvh)`,
+      }}
     >
-      <div className="sticky top-0 flex h-screen w-screen flex-col overflow-hidden bg-[var(--process-bg)] text-[color:var(--process-text)]">
+      <div className="sticky top-0 flex h-dvh min-h-[500px] w-full flex-col overflow-hidden bg-[var(--process-bg)] text-[color:var(--process-text)]">
+        {/* Background effects */}
         <div className="pointer-events-none absolute inset-0 bg-[image:var(--process-glow)]" />
+
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,var(--process-speckle)_1px,transparent_1px)] [background-size:3px_3px]" />
 
-        <div className="relative z-10 shrink-0 pt-6 md:pt-14">
-          <div className="mx-auto max-w-7xl px-4 md:px-6">
+        {/* Heading */}
+        <div className="relative z-10 shrink-0 pt-3 sm:pt-4 md:pt-6 lg:pt-8">
+          <div className="mx-auto w-full max-w-7xl px-4 sm:px-5 md:px-6 lg:px-8">
             <SectionHeading
               badge="Product Making"
               title={
                 <>
-                  From Harvest to <em className="italic text-coral-deep">Your Favourite Flavour</em>
+                  From Harvest to{" "}
+                  <em className="italic text-coral-deep">
+                    Your Favourite Flavour
+                  </em>
                 </>
               }
               align="left"
-              className="max-w-3xl gap-3 md:gap-6 [&>h2]:text-[clamp(1.85rem,8vw,2.6rem)] md:[&>h2]:text-[clamp(2.25rem,5.5vw,4.5rem)] [&>span]:px-3 [&>span]:py-1 md:[&>span]:px-4 md:[&>span]:py-1.5"
+              className="
+                max-w-4xl
+                gap-2
+                sm:gap-3
+                md:gap-4
+                [&>h2]:text-[clamp(1.65rem,7vw,2.5rem)]
+                [&>h2]:leading-[1.05]
+                sm:[&>h2]:text-[clamp(1.9rem,6vw,3rem)]
+                md:[&>h2]:text-[clamp(2.25rem,5vw,4rem)]
+                lg:[&>h2]:text-[clamp(2.75rem,4.5vw,4.5rem)]
+                [&>span]:px-3
+                [&>span]:py-1
+                [&>span]:text-[9px]
+                sm:[&>span]:text-[10px]
+                md:[&>span]:px-4
+                md:[&>span]:py-1.5
+                md:[&>span]:text-xs
+              "
             />
-            <div className="mt-3 hidden items-center gap-2 md:mt-6 md:flex md:gap-3">
-              <div className="whitespace-nowrap rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[color:var(--process-accent-soft)] backdrop-blur-xl md:px-4 md:py-2 md:text-xs md:tracking-[0.24em]">
+
+            {/* Progress indicator */}
+            <div className="mt-3 flex items-center gap-2 sm:mt-4 md:mt-5 md:gap-3">
+              <div className="shrink-0 whitespace-nowrap rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:px-3 sm:text-[10px] md:px-4 md:py-2 md:text-xs md:tracking-[0.24em]">
                 {String(active + 1).padStart(2, "0")} /{" "}
-                {String(processStages.length).padStart(2, "0")}
+                {String(totalStages).padStart(2, "0")}
               </div>
-              <div className="flex flex-1 gap-1.5 md:gap-2">
-                {processStages.map((s, i) => (
+
+              <div className="flex min-w-0 flex-1 gap-1 sm:gap-1.5 md:gap-2">
+                {processStages.map((stage, index) => (
                   <div
-                    key={s.number}
+                    key={stage.number}
                     className="h-[3px] flex-1 overflow-hidden rounded-full bg-[var(--process-progress-track)]"
                   >
                     <div
-                      className="h-full rounded-full bg-[var(--process-accent)] transition-all duration-500"
-                      style={{ width: i <= active ? "100%" : "0%" }}
+                      className="h-full rounded-full bg-[var(--process-accent)] transition-[width] duration-300 ease-out"
+                      style={{
+                        width: index <= active ? "100%" : "0%",
+                      }}
                     />
                   </div>
                 ))}
@@ -532,24 +592,40 @@ export function ProcessSection() {
           </div>
         </div>
 
-        <div className="relative z-10 flex-1 overflow-hidden">
+        {/* Sliding panels */}
+        <div className="relative z-10 min-h-0 flex-1 overflow-hidden">
           <motion.div
-            style={{ x, width: `${processStages.length * 100}vw` }}
+            animate={{ x }}
+            transition={{
+              type: "spring",
+              stiffness: 110,
+              damping: 24,
+              mass: 0.7,
+            }}
             className="flex h-full"
+            style={{
+              width: `${totalStages * 100}vw`,
+            }}
           >
-            {processStages.map((stage, i) => (
-              <StagePanel
+            {processStages.map((stage, index) => (
+              <div
                 key={stage.number}
-                stage={stage}
-                visual={processVisuals[i]}
-                index={i}
-                active={active === i}
-              />
+                className="h-full w-screen shrink-0"
+              >
+                <StagePanel
+                  stage={stage}
+                  visual={processVisuals[index]}
+                  index={index}
+                  active={active === index}
+                />
+              </div>
             ))}
           </motion.div>
 
-          <div className="pointer-events-none absolute bottom-6 right-6 hidden items-center gap-3 rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-[color:var(--process-accent-soft)] backdrop-blur-xl md:flex">
-            Continue <ArrowRight className="h-4 w-4" aria-hidden />
+          {/* Desktop continue indicator */}
+          <div className="pointer-events-none absolute bottom-4 right-4 hidden items-center gap-2 rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[color:var(--process-accent-soft)] backdrop-blur-xl md:flex lg:bottom-6 lg:right-6 lg:gap-3 lg:px-4 lg:py-2 lg:text-xs lg:tracking-[0.24em]">
+            Continue
+            <ArrowRight className="h-3.5 w-3.5 lg:h-4 lg:w-4" aria-hidden />
           </div>
         </div>
       </div>
