@@ -99,15 +99,15 @@ function CurvedArrowDoodle({ flip = false }: { flip?: boolean }) {
 function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "active">) {
   if (visual.frame === "heat") {
     return (
-      <div className="relative min-h-[250px] overflow-hidden rounded-[1.5rem] p-3 md:rounded-[2.25rem] md:p-4 lg:min-h-[320px] xl:min-h-[340px]">
+      <div className="relative min-h-[220px] overflow-hidden rounded-[1.5rem] p-2.5 sm:min-h-[240px] md:rounded-[2.25rem] md:p-4 lg:min-h-[300px] xl:min-h-[320px]">
         <div className="absolute" />
 
         {/* <CurvedArrowDoodle flip /> */}
 
-        <div className="relative z-10 grid min-h-[220px] grid-cols-[0.78fr_1.22fr] gap-2 md:min-h-[260px] md:grid-cols-[0.86fr_1.14fr] md:gap-3 lg:min-h-[280px] xl:min-h-[320px]">
+        <div className="relative z-10 grid min-h-[200px] grid-cols-[0.78fr_1.22fr] gap-2 sm:min-h-[220px] md:min-h-[250px] md:grid-cols-[0.86fr_1.14fr] md:gap-3 lg:min-h-[270px] xl:min-h-[310px]">
           <motion.div
             className="relative overflow-hidden rounded-[1.1rem] border border-[color:var(--process-border)] bg-[var(--process-surface)] shadow-[var(--process-panel-shadow)] md:rounded-[1.75rem]"
-            animate={{ y: active ? [0, -6, 0] : 0 }}
+            animate={{ y: active ? [0, -3, 0] : 0 }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
           >
             <img
@@ -115,7 +115,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
               alt={visual.imageAlt}
               width={620}
               height={620}
-              className="h-full min-h-[220px] w-full object-cover lg:min-h-[200px] xl:min-h-[220px]"
+              className="h-full min-h-[200px] w-full object-cover sm:min-h-[220px] lg:min-h-[200px] xl:min-h-[220px]"
             />
 
             <div className="absolute inset-0 bg-[image:var(--process-image-overlay)]" />
@@ -140,7 +140,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
               <motion.div
                 key={title}
                 className="rounded-[1rem] border border-[color:var(--process-accent-border)] bg-[var(--process-surface)] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl md:rounded-[1.4rem] md:p-4"
-                animate={{ x: active ? [0, i % 2 ? -6 : 6, 0] : 0 }}
+                animate={{ x: active ? [0, i % 2 ? -3 : 3, 0] : 0 }}
                 transition={{
                   duration: 3 + i * 0.2,
                   repeat: Infinity,
@@ -187,29 +187,29 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   }
   if (visual.frame === "pop") {
     return (
-      <div className="relative min-h-[360px] p-7">
+      <div className="relative min-h-[250px] p-3 sm:min-h-[300px] sm:p-5 md:min-h-[340px] md:p-7">
         <CurvedArrowDoodle />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_55%,var(--process-accent-muted),transparent_36%)]" />
-        <div className="relative z-10 grid min-h-[300px] place-items-center text-center">
+        <div className="relative z-10 grid min-h-[225px] place-items-center text-center sm:min-h-[260px] md:min-h-[300px]">
           <motion.div
-            className="absolute font-display text-[clamp(8rem,19vw,15rem)] font-black leading-none text-[color:var(--process-accent)] opacity-15"
-            animate={{ scale: active ? [0.96, 1.04, 0.96] : 1 }}
+            className="absolute font-display text-[clamp(5.8rem,18vw,15rem)] font-black leading-none text-[color:var(--process-accent)] opacity-15"
+            animate={{ scale: active ? [0.98, 1.02, 0.98] : 1 }}
             transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
           >
             POP
           </motion.div>
-          <div className="relative h-56 w-56">
+          <div className="relative h-44 w-44 sm:h-52 sm:w-52 md:h-56 md:w-56">
             {visual.chips.map((chip, i) => (
               <motion.span
                 key={chip}
-                className="absolute grid h-16 w-16 place-items-center rounded-[45%] border border-[color:var(--process-accent-border)] bg-[var(--process-chip-bg)] text-[10px] font-black uppercase leading-tight tracking-[0.12em] text-[color:var(--process-chip-text)] shadow-[var(--process-card-shadow)]"
+                className="absolute grid h-12 w-12 place-items-center rounded-[45%] border border-[color:var(--process-accent-border)] bg-[var(--process-chip-bg)] text-[8px] font-black uppercase leading-tight tracking-[0.08em] text-[color:var(--process-chip-text)] shadow-[var(--process-card-shadow)] sm:h-14 sm:w-14 md:h-16 md:w-16 md:text-[10px] md:tracking-[0.12em]"
                 style={{
                   left: `${42 + Math.cos((i / visual.chips.length) * Math.PI * 2) * 34}%`,
                   top: `${42 + Math.sin((i / visual.chips.length) * Math.PI * 2) * 34}%`,
                 }}
                 animate={{
-                  y: active ? [0, -18 - i * 3, 0] : 0,
-                  rotate: active ? [-8 + i * 5, 8 - i * 3, -8 + i * 5] : 0,
+                  y: active ? [0, -8 - i * 2, 0] : 0,
+                  rotate: active ? [-4 + i * 3, 4 - i * 2, -4 + i * 3] : 0,
                 }}
                 transition={{ duration: 2.8 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
               >
@@ -227,13 +227,13 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
 
   if (visual.frame === "flavors") {
     return (
-      <div className="relative min-h-[260px]">
+      <div className="relative min-h-[310px] sm:min-h-[340px] md:min-h-[320px] lg:min-h-[340px]">
         {/* <CurvedArrowDoodle flip /> */}
         {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(243,201,67,0.18),transparent_42%)]" /> */}
         {/* <div className="absolute left-4 top-4 h-20 w-20 rounded-full border border-[#f3c943]/20 md:left-5 md:top-5 md:h-28 md:w-28" /> */}
         {/* <div className="absolute bottom-4 right-5 h-16 w-28 rounded-full bg-[#f3c943]/10 blur-xl md:bottom-5 md:right-8 md:h-20 md:w-40" /> */}
 
-        <div className="relative z-10 grid min-h-[235px] grid-cols-2 gap-2 md:min-h-[340px] md:grid-cols-4 md:gap-4">
+        <div className="relative z-10 grid min-h-[300px] grid-cols-2 gap-2 sm:min-h-[320px] md:min-h-[320px] md:grid-cols-4 md:gap-4 lg:min-h-[340px]">
           {[
             ["Mint Pudina", "Cool herb", mintPudina, "from-[#123c24] to-[#5fbf72]"],
             ["Mix Masala", "Warm spice", mixMasala, "from-[#3d1f10] to-[#c46b1f]"],
@@ -242,10 +242,10 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
           ].map(([name, note, src, gradient], productIndex) => (
             <motion.div
               key={name}
-              className={`group relative flex min-h-[225px] flex-col justify-between overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-3 shadow-[0_24px_55px_rgba(0,0,0,0.32)] md:min-h-[310px] md:rounded-[1.6rem] md:p-5`}
+              className={`group relative flex min-h-[146px] flex-col justify-between overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-2.5 shadow-[0_24px_55px_rgba(0,0,0,0.32)] sm:min-h-[154px] md:min-h-[300px] md:rounded-[1.6rem] md:p-5 lg:min-h-[310px]`}
               animate={{
-                y: active ? [0, productIndex === 1 ? -16 : -8, 0] : 0,
-                rotate: active ? [-1 + productIndex, 1 - productIndex * 0.5, -1 + productIndex] : 0,
+                y: active ? [0, productIndex === 1 ? -6 : -4, 0] : 0,
+                rotate: active ? [-0.6 + productIndex * 0.35, 0.6 - productIndex * 0.2, -0.6 + productIndex * 0.35] : 0,
               }}
               transition={{
                 duration: 3.2 + productIndex * 0.22,
@@ -254,10 +254,10 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
               }}
             >
               <div>
-                <div className="text-[8px] font-black uppercase tracking-[0.12em] text-white/62 md:text-[10px] md:tracking-[0.22em]">
+                <div className="text-[7px] font-black uppercase tracking-[0.08em] text-white/62 sm:text-[8px] md:text-[10px] md:tracking-[0.22em]">
                   {note}
                 </div>
-                <div className="mt-1 font-display text-base font-black leading-none text-white md:mt-2 md:text-3xl">
+                <div className="mt-1 font-display text-sm font-black leading-none text-white sm:text-base md:mt-2 md:text-3xl">
                   {name}
                 </div>
               </div>
@@ -267,10 +267,10 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
                 alt=""
                 width={220}
                 height={300}
-                className="mx-auto max-h-32 object-contain drop-shadow-[0_28px_30px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:-translate-y-2 md:max-h-52"
+                className="mx-auto max-h-20 object-contain drop-shadow-[0_28px_30px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:-translate-y-1 sm:max-h-24 md:max-h-48 lg:max-h-52"
               />
 
-              <div className="rounded-full border border-[color:var(--process-border)] bg-[var(--process-surface)] px-2 py-1.5 text-center text-[8px] font-black uppercase tracking-[0.1em] text-[color:var(--process-accent-soft)] backdrop-blur-xl md:px-4 md:py-2 md:text-[10px] md:tracking-[0.18em]">
+              <div className="rounded-full border border-[color:var(--process-border)] bg-[var(--process-surface)] px-2 py-1 text-center text-[7px] font-black uppercase tracking-[0.08em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:text-[8px] md:px-4 md:py-2 md:text-[10px] md:tracking-[0.18em]">
                 Even coating
               </div>
             </motion.div>
@@ -282,18 +282,18 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
 
   if (visual.frame === "seal") {
     return (
-      <div className="relative min-h-[360px] p-7">
+      <div className="relative min-h-[300px] p-3 sm:min-h-[330px] sm:p-5 md:min-h-[340px] md:p-7">
         <div className="absolute left-0 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full bg-[var(--process-accent)] opacity-10 blur-2xl" />
-        <div className="relative z-10 grid min-h-[300px] grid-cols-1 gap-5 md:grid-cols-[0.92fr_1.08fr]">
+        <div className="relative z-10 grid min-h-[270px] grid-cols-1 gap-3 sm:min-h-[290px] md:min-h-[300px] md:grid-cols-[0.92fr_1.08fr] md:gap-5">
           <div className="flex flex-col justify-center">
-            <div className="font-display text-[clamp(3.4rem,8vw,6.8rem)] font-black leading-none text-[color:var(--process-accent)]">
+            <div className="font-display text-[clamp(2.25rem,9vw,6.8rem)] font-black leading-none text-[color:var(--process-accent)]">
               Fresh lock
             </div>
-            <div className="mt-6 space-y-3">
+            <div className="mt-3 space-y-2 sm:mt-4 md:mt-6 md:space-y-3">
               {visual.chips.map((chip) => (
                 <div
                   key={chip}
-                  className="flex items-center justify-between rounded-full border border-[color:var(--process-border)] bg-[var(--process-surface)] px-5 py-3 text-xs font-black uppercase tracking-[0.2em] text-[color:var(--process-accent-soft)]"
+                  className="flex items-center justify-between rounded-full border border-[color:var(--process-border)] bg-[var(--process-surface)] px-4 py-2 text-[10px] font-black uppercase tracking-[0.14em] text-[color:var(--process-accent-soft)] md:px-5 md:py-3 md:text-xs md:tracking-[0.2em]"
                 >
                   <span>{chip}</span>
                   <span className="grid h-6 w-6 place-items-center rounded-full bg-[var(--process-accent)] text-[color:var(--process-icon-text)]">
@@ -309,7 +309,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
             width={900}
             height={700}
             className="w-full max-w-[560px] self-center justify-self-center rounded-[2rem_0.75rem_2.75rem_0.75rem] border border-[color:var(--process-border)] object-contain p-3 shadow-[var(--process-panel-shadow)] md:scale-110"
-            animate={{ rotate: active ? [2, -2, 2] : 2, y: active ? [0, -10, 0] : 0 }}
+            animate={{ rotate: active ? [1, -1, 1] : 1, y: active ? [0, -4, 0] : 0 }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
           />
         </div>
@@ -318,7 +318,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   }
 
   return (
-    <div className="relative ml-4 md:ml-8 lg:ml-12 min-h-[360px]">
+    <div className="relative ml-0 min-h-[250px] sm:min-h-[300px] md:ml-8 md:min-h-[340px] lg:ml-12 lg:min-h-[360px]">
       <CurvedArrowDoodle />
       <div className="absolute -left-5 -top-5 h-32 w-32 rounded-full border border-[color:var(--process-accent-border)]" />
       <motion.img
@@ -327,7 +327,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
         width={900}
         height={640}
         className="absolute inset-0 h-full w-full rounded-[0.75rem_3.5rem_0.75rem_3.5rem] object-cover shadow-[var(--process-panel-shadow)]"
-        animate={{ scale: active ? 1.05 : 1 }}
+        animate={{ scale: active ? 1.02 : 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       />
       <div className="absolute inset-0 rounded-[0.75rem_3.5rem_0.75rem_3.5rem] bg-[image:var(--process-image-overlay)]" />
@@ -377,11 +377,11 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 
   return (
     <article
-      className="flex h-full w-screen shrink-0 items-start px-4 pb-4 pt-2 md:items-center md:px-16 md:pb-8 md:pt-4"
+      className="flex h-full w-screen shrink-0 items-start overflow-y-auto overscroll-contain px-4 pb-4 pt-2 md:items-center md:overflow-visible md:px-12 md:pb-6 md:pt-3 lg:px-16 lg:pb-8 lg:pt-4"
       aria-label={`Stage ${stage.number}`}
     >
       <div
-        className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-3 md:gap-12 ${layout.grid}`}
+        className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-2 sm:gap-3 md:gap-8 lg:gap-12 ${layout.grid}`}
       >
         <motion.div
           initial={false}
@@ -411,7 +411,7 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
             initial={false}
             animate={{ opacity: active ? 1 : 0.24, y: active ? 0 : 34 }}
             transition={{ duration: 0.7, delay: 0.04 }}
-            className={`mt-3 max-w-xl font-display font-bold leading-[0.95] text-[color:var(--process-text)] md:mt-6 ${layout.heading}`}
+            className={`mt-2 max-w-xl font-display font-bold leading-[0.95] text-[color:var(--process-text)] md:mt-5 lg:mt-6 ${layout.heading}`}
           >
             {stage.title}
           </motion.h3>
@@ -420,7 +420,7 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
             initial={false}
             animate={{ opacity: active ? 0.82 : 0.2, y: active ? 0 : 24 }}
             transition={{ duration: 0.7, delay: 0.08 }}
-            className="mt-3 line-clamp-2 max-w-xl text-sm leading-snug text-[color:var(--process-text-muted)] md:mt-6 md:line-clamp-none md:text-lg md:leading-relaxed"
+            className="mt-2 line-clamp-2 max-w-xl text-xs leading-snug text-[color:var(--process-text-muted)] sm:text-sm md:mt-4 md:line-clamp-3 md:text-base md:leading-relaxed lg:mt-6 lg:line-clamp-none lg:text-lg"
           >
             {stage.description}
           </motion.p>
@@ -429,7 +429,7 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
             initial={false}
             animate={{ opacity: active ? 1 : 0.22, y: active ? 0 : 22 }}
             transition={{ duration: 0.7, delay: 0.12 }}
-            className="mt-3 flex flex-wrap gap-1.5 md:mt-7 md:gap-2"
+            className="mt-2 flex flex-wrap gap-1.5 md:mt-5 md:gap-2 lg:mt-7"
           >
             {visual.chips.map((chip) => (
               <span
@@ -526,14 +526,14 @@ export function ProcessSection() {
         height: `calc(${totalStages} * 100dvh)`,
       }}
     >
-      <div className="sticky top-0 flex h-dvh min-h-[500px] w-full flex-col overflow-hidden bg-[var(--process-bg)] text-[color:var(--process-text)]">
+      <div className="sticky top-0 flex h-[100svh] w-full flex-col overflow-hidden bg-[var(--process-bg)] text-[color:var(--process-text)]">
         {/* Background effects */}
         <div className="pointer-events-none absolute inset-0 bg-[image:var(--process-glow)]" />
 
         <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,var(--process-speckle)_1px,transparent_1px)] [background-size:3px_3px]" />
 
         {/* Heading */}
-        <div className="relative z-10 shrink-0 pt-3 sm:pt-4 md:pt-6 lg:pt-8">
+        <div className="relative z-10 shrink-0 py-3 sm:py-4 md:py-5 lg:py-6">
           <div className="mx-auto w-full max-w-7xl px-4 sm:px-5 md:px-6 lg:px-8">
             <SectionHeading
               badge="Product Making"
@@ -554,8 +554,8 @@ export function ProcessSection() {
                 [&>h2]:text-[clamp(1.65rem,7vw,2.5rem)]
                 [&>h2]:leading-[1.05]
                 sm:[&>h2]:text-[clamp(1.9rem,6vw,3rem)]
-                md:[&>h2]:text-[clamp(2.25rem,5vw,4rem)]
-                lg:[&>h2]:text-[clamp(2.75rem,4.5vw,4.5rem)]
+                md:[&>h2]:text-[clamp(2.1rem,4.6vw,3.6rem)]
+                lg:[&>h2]:text-[clamp(2.5rem,4vw,4.2rem)]
                 [&>span]:px-3
                 [&>span]:py-1
                 [&>span]:text-[9px]
@@ -567,7 +567,7 @@ export function ProcessSection() {
             />
 
             {/* Progress indicator */}
-            <div className="mt-3 flex items-center gap-2 sm:mt-4 md:mt-5 md:gap-3">
+            <div className="mt-2 flex items-center gap-2 sm:mt-3 md:mt-4 md:gap-3">
               <div className="shrink-0 whitespace-nowrap rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:px-3 sm:text-[10px] md:px-4 md:py-2 md:text-xs md:tracking-[0.24em]">
                 {String(active + 1).padStart(2, "0")} /{" "}
                 {String(totalStages).padStart(2, "0")}

@@ -188,7 +188,7 @@ export const benefits: BenefitItem[] = [
   {
     kind: "text",
     title: "Light. Crunchy. Delicious.",
-    description: "Airy fox nuts with bold flavour seasoning, packed for a clean and satisfying bite.",
+    description: "Light, crunchy fox nuts with bold seasoning.",
     bg: "var(--blush)",
     text: "var(--coral-deep)",
   },

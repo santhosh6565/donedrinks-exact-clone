@@ -4,6 +4,7 @@ import type { ComponentType, RefObject, SVGProps } from "react";
 import { AnimatePresence, motion, useScroll, useTransform, useSpring } from "motion/react";
 import Lenis from "lenis";
 import {
+  ArrowUp,
   ArrowRight,
   Facebook,
   Globe2,
@@ -213,11 +214,11 @@ function StickyNav() {
           scrolled ? "scale-[0.98]" : "scale-100"
         }`}
       >
-       <div
+        <a
+          href="#hero"
+          aria-label="Back to hero section"
           className={`absolute left-1/2 h-14 w-32 -translate-x-1/2 overflow-hidden md:static md:h-16 md:w-36 md:translate-x-0 ${
-            scrolled
-              ? "scale-90"
-              : "scale-100"
+            scrolled ? "scale-90" : "scale-100"
           }`}
         >
           <img
@@ -229,7 +230,7 @@ function StickyNav() {
             decoding="async"
             className="h-full w-full object-contain"
           />
-        </div>
+        </a>
         <nav className="hidden gap-2 md:flex">
           {links.map((n) => (
             <a
@@ -353,6 +354,7 @@ function Hero() {
 
   return (
     <section
+      id="hero"
       ref={ref}
       className="relative min-h-screen overflow-hidden bg-[var(--cream)] pt-24 pb-16 text-[var(--hero-accent)] md:pt-28"
     >
@@ -895,6 +897,40 @@ function FloatingWhatsApp() {
   );
 }
 
+function BackToHeroButton() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const purpose = document.getElementById("purpose");
+    if (!purpose) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(entry.isIntersecting || window.scrollY >= purpose.offsetTop);
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(purpose);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <a
+      href="#hero"
+      aria-label="Back to hero section"
+      className={`group fixed bottom-24 right-5 z-[60] grid h-12 w-12 place-items-center rounded-full border border-[#f3c943]/30 bg-black/70 text-[#ffe17a] shadow-[0_16px_38px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#f3c943]/70 hover:bg-[#f3c943] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f3c943] focus-visible:ring-offset-2 focus-visible:ring-offset-black md:bottom-28 md:right-7 ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
+      }`}
+    >
+      <ArrowUp className="h-5 w-5 transition-transform group-hover:-translate-y-0.5" aria-hidden />
+      <span className="absolute -left-2 top-1/2 hidden -translate-x-full -translate-y-1/2 rounded-full border border-[#f3c943]/35 bg-black/78 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.32)] backdrop-blur-xl opacity-0 transition-all duration-300 group-hover:-translate-x-[calc(100%+0.25rem)] group-hover:opacity-100 lg:block">
+        Top
+      </span>
+    </a>
+  );
+}
+
 function Home() {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -935,6 +971,7 @@ function Home() {
       <CTA />
       <Footer />
       {/* TODO: Add WhatsApp button */}
+      <BackToHeroButton />
       <FloatingWhatsApp />
     </div>
   );
