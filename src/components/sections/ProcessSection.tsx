@@ -539,6 +539,7 @@ export function ProcessSection() {
                 align="left"
                 className="
                   max-w-4xl
+                  mt-6 md:mt-8 lg:mt-10
                   gap-2
                   sm:gap-3
                   md:gap-4
