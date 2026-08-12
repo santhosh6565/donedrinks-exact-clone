@@ -448,8 +448,10 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 
 export function ProcessSection() {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const autoSwipeResumeTimerRef = useRef<number | null>(null);
 
   const [active, setActive] = useState(0);
+  const [autoSwipePaused, setAutoSwipePaused] = useState(false);
 
   const totalStages = processStages.length;
 
@@ -462,6 +464,24 @@ export function ProcessSection() {
       block: "nearest",
       inline: "center",
     });
+  };
+
+  const pauseAutoSwipeTemporarily = () => {
+    setAutoSwipePaused(true);
+
+    if (autoSwipeResumeTimerRef.current) {
+      window.clearTimeout(autoSwipeResumeTimerRef.current);
+    }
+
+    autoSwipeResumeTimerRef.current = window.setTimeout(() => {
+      setAutoSwipePaused(false);
+      autoSwipeResumeTimerRef.current = null;
+    }, 9000);
+  };
+
+  const handleManualStageChange = (index: number) => {
+    pauseAutoSwipeTemporarily();
+    scrollToStage(index);
   };
 
   useEffect(() => {
@@ -517,6 +537,24 @@ export function ProcessSection() {
     };
   }, [totalStages]);
 
+  useEffect(() => {
+    if (autoSwipePaused || totalStages < 2) return;
+
+    const interval = window.setInterval(() => {
+      scrollToStage((active + 1) % totalStages);
+    }, 4200);
+
+    return () => window.clearInterval(interval);
+  }, [active, autoSwipePaused, totalStages]);
+
+  useEffect(() => {
+    return () => {
+      if (autoSwipeResumeTimerRef.current) {
+        window.clearTimeout(autoSwipeResumeTimerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section
       id="process"
@@ -571,7 +609,7 @@ export function ProcessSection() {
                         key={stage.number}
                         type="button"
                         aria-label={`Go to process stage ${index + 1}`}
-                        onClick={() => scrollToStage(index)}
+                        onClick={() => handleManualStageChange(index)}
                         className="h-[5px] flex-1 overflow-hidden rounded-full bg-[var(--process-progress-track)] transition-opacity hover:opacity-80"
                       >
                         <span
@@ -589,7 +627,7 @@ export function ProcessSection() {
                   <button
                     type="button"
                     aria-label="Previous process stage"
-                    onClick={() => scrollToStage(Math.max(0, active - 1))}
+                    onClick={() => handleManualStageChange(Math.max(0, active - 1))}
                     disabled={active === 0}
                     className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] text-[color:var(--process-accent-soft)] transition-all hover:-translate-y-0.5 hover:bg-[var(--process-accent)] hover:text-[color:var(--process-icon-text)] disabled:pointer-events-none disabled:opacity-35"
                   >
@@ -598,7 +636,7 @@ export function ProcessSection() {
                   <button
                     type="button"
                     aria-label="Next process stage"
-                    onClick={() => scrollToStage(Math.min(totalStages - 1, active + 1))}
+                    onClick={() => handleManualStageChange(Math.min(totalStages - 1, active + 1))}
                     disabled={active === totalStages - 1}
                     className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] text-[color:var(--process-accent-soft)] transition-all hover:-translate-y-0.5 hover:bg-[var(--process-accent)] hover:text-[color:var(--process-icon-text)] disabled:pointer-events-none disabled:opacity-35"
                   >
@@ -614,6 +652,12 @@ export function ProcessSection() {
           ref={scrollerRef}
           className="relative z-10 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-[6vw] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:gap-6 md:px-[6vw] lg:gap-0 lg:px-0"
           aria-label="Product making process stages"
+          onMouseEnter={() => setAutoSwipePaused(true)}
+          onMouseLeave={() => setAutoSwipePaused(false)}
+          onFocus={() => setAutoSwipePaused(true)}
+          onBlur={() => setAutoSwipePaused(false)}
+          onPointerDown={pauseAutoSwipeTemporarily}
+          onTouchStart={pauseAutoSwipeTemporarily}
         >
           {processStages.map((stage, index) => (
             <StagePanel

@@ -24,6 +24,7 @@ const SEO_LOGO = new URL(lotferoxLogo, PAGE_URL).toString();
 const COMPANY_INFO = {
   name: "LotFerox Nuts",
   email: "lotferoxnuts@gmail.com",
+  phone: "+91 72001 78469",
   fssai: "12426008001442",
   locality: "Chennai",
   postalCode: "600130",
@@ -49,6 +50,7 @@ const structuredData = {
       url: PAGE_URL,
       logo: SEO_LOGO,
       email: `mailto:${COMPANY_INFO.email}`,
+      telephone: COMPANY_INFO.phone,
       address: {
         "@type": "PostalAddress",
         addressLocality: COMPANY_INFO.locality,

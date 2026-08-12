@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { companyInfo, flavors, type Flavor } from "./data";
 import { SectionHeading } from "./SectionHeading";
 
-const WHATSAPP_NUMBER = "919884471751";
+const WHATSAPP_NUMBER = companyInfo.whatsappNumber;
 const INITIAL_PRODUCT_COUNT = 6;
 
 function getProductInquiryHref(flavor: Flavor) {
