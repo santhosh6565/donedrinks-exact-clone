@@ -463,6 +463,7 @@ export function ProcessSection() {
   const [active, setActive] = useState(0);
   const [autoSwipePaused, setAutoSwipePaused] = useState(false);
   const [autoSwipeEnabled, setAutoSwipeEnabled] = useState(false);
+  const [isTouchLayout, setIsTouchLayout] = useState(false);
 
   const totalStages = processStages.length;
 
@@ -496,10 +497,44 @@ export function ProcessSection() {
   const handleManualStageChange = (index: number) => {
     pauseAutoSwipeTemporarily();
     setActive(index);
-    scrollToStage(index);
+
+    // Desktop carousel only — mobile uses a single panel controlled by buttons.
+    if (!isTouchLayout) {
+      scrollToStage(index);
+    }
   };
 
   useEffect(() => {
+    const updateLayoutPreference = () => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+      // Mobile only — keep the existing carousel on tablet/laptop.
+      const isMobileWidth = window.matchMedia("(max-width: 767px)").matches;
+
+      setIsTouchLayout(isMobileWidth);
+      setAutoSwipeEnabled(!prefersReducedMotion && !isCoarsePointer && !isMobileWidth);
+    };
+
+    updateLayoutPreference();
+
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pointerQuery = window.matchMedia("(pointer: coarse)");
+    const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+    reducedMotionQuery.addEventListener("change", updateLayoutPreference);
+    pointerQuery.addEventListener("change", updateLayoutPreference);
+    mobileQuery.addEventListener("change", updateLayoutPreference);
+
+    return () => {
+      reducedMotionQuery.removeEventListener("change", updateLayoutPreference);
+      pointerQuery.removeEventListener("change", updateLayoutPreference);
+      mobileQuery.removeEventListener("change", updateLayoutPreference);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isTouchLayout) return;
+
     let animationFrame = 0;
 
     const updateSection = () => {
@@ -546,29 +581,7 @@ export function ProcessSection() {
       scroller?.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
     };
-  }, [totalStages]);
-
-  useEffect(() => {
-    const updateAutoSwipePreference = () => {
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-
-      setAutoSwipeEnabled(!prefersReducedMotion && !isTouchDevice);
-    };
-
-    updateAutoSwipePreference();
-
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const pointerQuery = window.matchMedia("(pointer: coarse)");
-
-    reducedMotionQuery.addEventListener("change", updateAutoSwipePreference);
-    pointerQuery.addEventListener("change", updateAutoSwipePreference);
-
-    return () => {
-      reducedMotionQuery.removeEventListener("change", updateAutoSwipePreference);
-      pointerQuery.removeEventListener("change", updateAutoSwipePreference);
-    };
-  }, []);
+  }, [isTouchLayout, totalStages]);
 
   useEffect(() => {
     if (!autoSwipeEnabled || autoSwipePaused || totalStages < 2) return;
@@ -681,28 +694,33 @@ export function ProcessSection() {
           </div>
         </div>
 
-        {/* Mobile/tablet: invisible active-stage sizer drives height so sibling panels cannot create bottom gaps. */}
-        <div className="relative">
-          <div className="pointer-events-none invisible px-[6vw] lg:hidden" aria-hidden>
-            <StagePanel
-              stage={processStages[active]}
-              visual={processVisuals[active]}
-              index={active}
-              active
-              fillWidth
-            />
+        {isTouchLayout ? (
+          <div className="px-[6vw]" aria-label="Product making process stages">
+            <motion.div
+              key={processStages[active].number}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <StagePanel
+                stage={processStages[active]}
+                visual={processVisuals[active]}
+                index={active}
+                active
+                fillWidth
+              />
+            </motion.div>
           </div>
-
+        ) : (
           <div
             ref={scrollerRef}
-            className="absolute inset-0 z-10 flex items-start snap-x snap-proximity gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth touch-pan-x px-[6vw] [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:snap-mandatory md:gap-6 md:px-[6vw] lg:static lg:inset-auto lg:h-auto lg:items-stretch lg:gap-0 lg:overflow-y-visible lg:px-0"
+            className="relative z-10 flex items-stretch snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain scroll-smooth px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             aria-label="Product making process stages"
             onMouseEnter={() => setAutoSwipePaused(true)}
             onMouseLeave={() => setAutoSwipePaused(false)}
             onFocus={() => setAutoSwipePaused(true)}
             onBlur={() => setAutoSwipePaused(false)}
             onPointerDown={pauseAutoSwipeTemporarily}
-            onTouchStart={pauseAutoSwipeTemporarily}
           >
             {processStages.map((stage, index) => (
               <StagePanel
@@ -714,7 +732,7 @@ export function ProcessSection() {
               />
             ))}
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
