@@ -35,6 +35,24 @@ const FACEBOOK_HREF = "https://www.facebook.com/";
 const INSTAGRAM_HREF = "https://www.instagram.com/";
 const THEME_STORAGE_KEY = "lotferox-theme";
 
+function scrollToSection(href: string, closeMenu?: () => void) {
+  if (!href.startsWith("#")) return;
+
+  const target = document.querySelector<HTMLElement>(href);
+  if (!target) return;
+
+  closeMenu?.();
+
+  const navOffset = window.matchMedia("(max-width: 767px)").matches ? 86 : 104;
+  const top = target.getBoundingClientRect().top + window.scrollY - navOffset;
+
+  window.history.pushState(null, "", href);
+  window.scrollTo({
+    top: Math.max(0, top),
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+  });
+}
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -94,6 +112,14 @@ function BrandButton({
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noreferrer" : undefined}
+      onClick={
+        !external && href.startsWith("#")
+          ? (event) => {
+              event.preventDefault();
+              scrollToSection(href);
+            }
+          : undefined
+      }
       className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full border font-black uppercase tracking-[0.13em] text-[#24180b] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffe17a] focus-visible:ring-offset-2 ${
         isDark
           ? "border-[#fff2a8]/75 bg-[linear-gradient(135deg,#fff8c7_0%,#ffd95a_48%,#f0b93d_100%)] shadow-[0_22px_52px_rgba(0,0,0,0.36),0_0_0_1px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.82)] hover:border-white hover:shadow-[0_28px_68px_rgba(255,217,90,0.2),0_24px_58px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.88)] focus-visible:ring-offset-[var(--coral-deep)]"
@@ -216,6 +242,10 @@ function StickyNav() {
         <a
           href="#hero"
           aria-label="Back to hero section"
+          onClick={(event) => {
+            event.preventDefault();
+            scrollToSection("#hero");
+          }}
           className={`absolute left-1/2 h-14 w-32 -translate-x-1/2 overflow-hidden md:static md:h-16 md:w-36 md:translate-x-0 ${
             scrolled ? "scale-90" : "scale-100"
           }`}
@@ -235,6 +265,10 @@ function StickyNav() {
             <a
               key={n.label}
               href={n.href}
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection(n.href);
+              }}
               className="rounded-full border border-[#f3c943]/12 bg-black/55 px-5 py-2 text-sm font-medium text-[#f8ead1] shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#f3c943]/35 hover:bg-[#f3c943] hover:text-black hover:shadow-[0_18px_42px_rgba(243,201,67,0.18)]"
             >
               {n.label}
@@ -293,7 +327,10 @@ function StickyNav() {
                 <motion.a
                   key={n.label}
                   href={n.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection(n.href, () => setMobileOpen(false));
+                  }}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.04, duration: 0.24 }}
@@ -411,6 +448,10 @@ function Hero() {
             </BrandButton>
             <a
               href="#process"
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection("#process");
+              }}
               className="inline-flex min-h-14 items-center justify-center rounded-full border border-[color:var(--hero-secondary-border)] bg-[var(--hero-secondary-bg)] px-7 py-4 text-sm font-black uppercase tracking-[0.13em] text-[color:var(--hero-secondary-text)] shadow-[var(--hero-secondary-shadow)] backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-[color:var(--hero-secondary-border-hover)] hover:bg-[var(--hero-secondary-bg-hover)] hover:text-[color:var(--hero-secondary-text-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
               See process
@@ -840,6 +881,10 @@ function Footer() {
             <a
               key={link.label}
               href={link.href}
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection(link.href);
+              }}
               className="text-sm font-semibold text-cream/75 transition-colors hover:text-[#ffe17a]"
             >
               {link.label}
@@ -924,6 +969,10 @@ function BackToHeroButton() {
     <a
       href="#hero"
       aria-label="Back to hero section"
+      onClick={(event) => {
+        event.preventDefault();
+        scrollToSection("#hero");
+      }}
       className={`group fixed bottom-24 right-5 z-[60] grid h-12 w-12 place-items-center rounded-full border border-[#f3c943]/30 bg-black/70 text-[#ffe17a] shadow-[0_16px_38px_rgba(0,0,0,0.28)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-[#f3c943]/70 hover:bg-[#f3c943] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f3c943] focus-visible:ring-offset-2 focus-visible:ring-offset-black md:bottom-28 md:right-7 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}

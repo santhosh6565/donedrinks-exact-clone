@@ -452,6 +452,7 @@ export function ProcessSection() {
 
   const [active, setActive] = useState(0);
   const [autoSwipePaused, setAutoSwipePaused] = useState(false);
+  const [autoSwipeEnabled, setAutoSwipeEnabled] = useState(false);
 
   const totalStages = processStages.length;
 
@@ -459,10 +460,13 @@ export function ProcessSection() {
     const scroller = scrollerRef.current;
     const panel = scroller?.children[index] as HTMLElement | undefined;
 
-    panel?.scrollIntoView({
+    if (!scroller || !panel) return;
+
+    const left = panel.offsetLeft - (scroller.clientWidth - panel.clientWidth) / 2;
+
+    scroller.scrollTo({
+      left,
       behavior: "smooth",
-      block: "nearest",
-      inline: "center",
     });
   };
 
@@ -538,14 +542,36 @@ export function ProcessSection() {
   }, [totalStages]);
 
   useEffect(() => {
-    if (autoSwipePaused || totalStages < 2) return;
+    const updateAutoSwipePreference = () => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+      setAutoSwipeEnabled(!prefersReducedMotion && !isTouchDevice);
+    };
+
+    updateAutoSwipePreference();
+
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pointerQuery = window.matchMedia("(pointer: coarse)");
+
+    reducedMotionQuery.addEventListener("change", updateAutoSwipePreference);
+    pointerQuery.addEventListener("change", updateAutoSwipePreference);
+
+    return () => {
+      reducedMotionQuery.removeEventListener("change", updateAutoSwipePreference);
+      pointerQuery.removeEventListener("change", updateAutoSwipePreference);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!autoSwipeEnabled || autoSwipePaused || totalStages < 2) return;
 
     const interval = window.setInterval(() => {
       scrollToStage((active + 1) % totalStages);
     }, 4200);
 
     return () => window.clearInterval(interval);
-  }, [active, autoSwipePaused, totalStages]);
+  }, [active, autoSwipeEnabled, autoSwipePaused, totalStages]);
 
   useEffect(() => {
     return () => {
