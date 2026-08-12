@@ -99,14 +99,14 @@ function CurvedArrowDoodle({ flip = false }: { flip?: boolean }) {
 function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "active">) {
   if (visual.frame === "heat") {
     return (
-      <div className="relative min-h-[205px] overflow-hidden rounded-[1.5rem] p-2 sm:min-h-[235px] md:rounded-[2.25rem] md:p-4 lg:min-h-[300px] xl:min-h-[320px]">
+      <div className="relative overflow-hidden rounded-[1.5rem] p-2 md:rounded-[2.25rem] md:p-4 lg:min-h-[300px] xl:min-h-[320px]">
         <div className="absolute" />
 
         {/* <CurvedArrowDoodle flip /> */}
 
-        <div className="relative z-10 grid min-h-[190px] grid-cols-[0.78fr_1.22fr] gap-2 sm:min-h-[215px] md:min-h-[250px] md:grid-cols-[0.86fr_1.14fr] md:gap-3 lg:min-h-[270px] xl:min-h-[310px]">
+        <div className="relative z-10 grid grid-cols-[0.78fr_1.22fr] gap-2 md:min-h-[250px] md:grid-cols-[0.86fr_1.14fr] md:gap-3 lg:min-h-[270px] xl:min-h-[310px]">
           <motion.div
-            className="relative overflow-hidden rounded-[1.1rem] border border-[color:var(--process-border)] bg-[var(--process-surface)] shadow-[var(--process-panel-shadow)] md:rounded-[1.75rem]"
+            className="relative min-h-[168px] overflow-hidden rounded-[1.1rem] border border-[color:var(--process-border)] bg-[var(--process-surface)] shadow-[var(--process-panel-shadow)] sm:min-h-[190px] md:min-h-0 md:rounded-[1.75rem]"
             animate={{ y: active ? [0, -3, 0] : 0 }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -115,7 +115,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
               alt={visual.imageAlt}
               width={620}
               height={620}
-              className="h-full min-h-[190px] w-full object-cover sm:min-h-[215px] lg:min-h-[200px] xl:min-h-[220px]"
+              className="h-full min-h-[168px] w-full object-cover sm:min-h-[190px] lg:min-h-[200px] xl:min-h-[220px]"
             />
 
             <div className="absolute inset-0 bg-[image:var(--process-image-overlay)]" />
@@ -139,7 +139,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
             ].map(([title, copy, meta], i) => (
               <motion.div
                 key={title}
-                className="rounded-[1rem] border border-[color:var(--process-accent-border)] bg-[var(--process-surface)] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl md:rounded-[1.4rem] md:p-4"
+                className="rounded-[1rem] border border-[color:var(--process-accent-border)] bg-[var(--process-surface)] p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl sm:p-3 md:rounded-[1.4rem] md:p-4"
                 animate={{ x: active ? [0, i % 2 ? -3 : 3, 0] : 0 }}
                 transition={{
                   duration: 3 + i * 0.2,
@@ -148,7 +148,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
                 }}
               >
                 <div className="flex items-center justify-between gap-2 md:gap-3">
-                  <div className="font-display text-lg font-black text-[color:var(--process-text)] md:text-2xl lg:text-3xl">
+                  <div className="font-display text-base font-black text-[color:var(--process-text)] sm:text-lg md:text-2xl lg:text-3xl">
                     {title}
                   </div>
 
@@ -161,11 +161,11 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
                   {copy}
                 </p>
 
-                <div className="mt-2 flex items-end gap-1.5 md:mt-3 md:gap-2">
-                  {[18, 28, 36, 24].map((height, barIndex) => (
+                <div className="mt-1.5 flex items-end gap-1.5 sm:mt-2 md:mt-3 md:gap-2">
+                  {[14, 22, 28, 18].map((height, barIndex) => (
                     <motion.span
                       key={`${title}-${height}`}
-                      className="w-3 rounded-full bg-[var(--process-accent)] opacity-80 md:w-4"
+                      className="w-2.5 rounded-full bg-[var(--process-accent)] opacity-80 sm:w-3 md:w-4"
                       animate={{
                         height: active ? [height, height + 8, height] : height,
                       }}
@@ -187,10 +187,10 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   }
   if (visual.frame === "pop") {
     return (
-      <div className="relative min-h-[230px] p-2 sm:min-h-[285px] sm:p-5 md:min-h-[340px] md:p-7">
+      <div className="relative p-2 sm:p-5 md:min-h-[340px] md:p-7">
         <CurvedArrowDoodle />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_55%,var(--process-accent-muted),transparent_36%)]" />
-        <div className="relative z-10 grid min-h-[215px] place-items-center text-center sm:min-h-[255px] md:min-h-[300px]">
+        <div className="relative z-10 grid place-items-center py-4 text-center sm:py-6 md:min-h-[300px] md:py-0">
           <motion.div
             className="absolute font-display text-[clamp(5.8rem,18vw,15rem)] font-black leading-none text-[color:var(--process-accent)] opacity-15"
             animate={{ scale: active ? [0.98, 1.02, 0.98] : 1 }}
@@ -227,13 +227,13 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
 
   if (visual.frame === "flavors") {
     return (
-      <div className="relative min-h-[292px] sm:min-h-[330px] md:min-h-[320px] lg:min-h-[340px]">
+      <div className="relative md:min-h-[320px] lg:min-h-[340px]">
         {/* <CurvedArrowDoodle flip /> */}
         {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(243,201,67,0.18),transparent_42%)]" /> */}
         {/* <div className="absolute left-4 top-4 h-20 w-20 rounded-full border border-[#f3c943]/20 md:left-5 md:top-5 md:h-28 md:w-28" /> */}
         {/* <div className="absolute bottom-4 right-5 h-16 w-28 rounded-full bg-[#f3c943]/10 blur-xl md:bottom-5 md:right-8 md:h-20 md:w-40" /> */}
 
-        <div className="relative z-10 grid min-h-[282px] grid-cols-2 gap-2 sm:min-h-[310px] md:min-h-[320px] md:grid-cols-4 md:gap-4 lg:min-h-[340px]">
+        <div className="relative z-10 grid grid-cols-2 gap-2 md:min-h-[320px] md:grid-cols-4 md:gap-4 lg:min-h-[340px]">
           {[
             ["Mint Pudina", "Cool herb", mintPudina, "from-[#123c24] to-[#5fbf72]"],
             ["Mix Masala", "Warm spice", mixMasala, "from-[#3d1f10] to-[#c46b1f]"],
@@ -242,7 +242,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
           ].map(([name, note, src, gradient], productIndex) => (
             <motion.div
               key={name}
-              className={`group relative flex min-h-[136px] flex-col justify-between overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-2.5 shadow-[0_24px_55px_rgba(0,0,0,0.32)] sm:min-h-[150px] md:min-h-[300px] md:rounded-[1.6rem] md:p-5 lg:min-h-[310px]`}
+              className={`group relative flex min-h-[128px] flex-col justify-between overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-2.5 shadow-[0_24px_55px_rgba(0,0,0,0.32)] sm:min-h-[140px] md:min-h-[300px] md:rounded-[1.6rem] md:p-5 lg:min-h-[310px]`}
               animate={{
                 y: active ? [0, productIndex === 1 ? -6 : -4, 0] : 0,
                 rotate: active ? [-0.6 + productIndex * 0.35, 0.6 - productIndex * 0.2, -0.6 + productIndex * 0.35] : 0,
@@ -282,9 +282,9 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
 
   if (visual.frame === "seal") {
     return (
-      <div className="relative min-h-[280px] p-2 sm:min-h-[320px] sm:p-5 md:min-h-[340px] md:p-7">
+      <div className="relative p-2 sm:p-5 md:min-h-[340px] md:p-7">
         <div className="absolute left-0 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full bg-[var(--process-accent)] opacity-10 blur-2xl" />
-        <div className="relative z-10 grid min-h-[260px] grid-cols-1 gap-3 sm:min-h-[285px] md:min-h-[300px] md:grid-cols-[0.92fr_1.08fr] md:gap-5">
+        <div className="relative z-10 grid grid-cols-1 gap-3 md:min-h-[300px] md:grid-cols-[0.92fr_1.08fr] md:gap-5">
           <div className="flex flex-col justify-center">
             <div className="font-display text-[clamp(2.25rem,9vw,6.8rem)] font-black leading-none text-[color:var(--process-accent)]">
               Fresh lock
@@ -308,7 +308,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
             alt={visual.imageAlt}
             width={900}
             height={700}
-            className="w-full max-w-[560px] self-center justify-self-center rounded-[2rem_0.75rem_2.75rem_0.75rem] border border-[color:var(--process-border)] object-contain p-3 shadow-[var(--process-panel-shadow)] md:scale-110"
+            className="mx-auto w-full max-w-[280px] self-center justify-self-center rounded-[2rem_0.75rem_2.75rem_0.75rem] border border-[color:var(--process-border)] object-contain p-2 shadow-[var(--process-panel-shadow)] sm:max-w-[360px] sm:p-3 md:max-w-[560px] md:scale-110"
             animate={{ rotate: active ? [1, -1, 1] : 1, y: active ? [0, -4, 0] : 0 }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -318,24 +318,26 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   }
 
   return (
-    <div className="relative ml-0 min-h-[230px] sm:min-h-[285px] md:ml-8 md:min-h-[340px] lg:ml-12 lg:min-h-[360px]">
+    <div className="relative ml-0 aspect-[5/4] w-full sm:aspect-[16/11] md:ml-8 md:aspect-auto md:min-h-[340px] lg:ml-12 lg:min-h-[360px]">
       <CurvedArrowDoodle />
-      <div className="absolute -left-5 -top-5 h-32 w-32 rounded-full border border-[color:var(--process-accent-border)]" />
+      <div className="absolute -left-5 -top-5 hidden h-32 w-32 rounded-full border border-[color:var(--process-accent-border)] md:block" />
       <motion.img
         src={visual.image}
         alt={visual.imageAlt}
         width={900}
         height={640}
-        className="absolute inset-0 h-full w-full rounded-[0.75rem_3.5rem_0.75rem_3.5rem] object-cover shadow-[var(--process-panel-shadow)]"
+        className="absolute inset-0 h-full w-full rounded-[0.75rem_2.25rem_0.75rem_2.25rem] object-cover shadow-[var(--process-panel-shadow)] md:rounded-[0.75rem_3.5rem_0.75rem_3.5rem]"
         animate={{ scale: active ? 1.02 : 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       />
-      <div className="absolute inset-0 rounded-[0.75rem_3.5rem_0.75rem_3.5rem] bg-[image:var(--process-image-overlay)]" />
-      <div className="absolute bottom-5 left-5 max-w-sm rounded-[1.25rem] border border-[color:var(--process-border)] bg-[var(--process-surface-strong)] p-5 text-[color:var(--process-accent-soft)] shadow-[var(--process-card-shadow)] backdrop-blur-xl">
-        <div className="text-xs font-black uppercase tracking-[0.22em]">
+      <div className="absolute inset-0 rounded-[0.75rem_2.25rem_0.75rem_2.25rem] bg-[image:var(--process-image-overlay)] md:rounded-[0.75rem_3.5rem_0.75rem_3.5rem]" />
+      <div className="absolute bottom-3 left-3 right-3 max-w-sm rounded-xl border border-[color:var(--process-border)] bg-[var(--process-surface-strong)] p-3 text-[color:var(--process-accent-soft)] shadow-[var(--process-card-shadow)] backdrop-blur-xl sm:bottom-4 sm:left-4 sm:right-auto sm:p-4 md:bottom-5 md:left-5 md:rounded-[1.25rem] md:p-5">
+        <div className="text-[10px] font-black uppercase tracking-[0.16em] md:text-xs md:tracking-[0.22em]">
           <span>{visual.eyebrow}</span>
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-[color:var(--process-text-muted)]">{visual.note}</p>
+        <p className="mt-1.5 line-clamp-2 text-xs leading-snug text-[color:var(--process-text-muted)] sm:mt-2 md:mt-3 md:line-clamp-none md:text-sm md:leading-relaxed">
+          {visual.note}
+        </p>
       </div>
     </div>
   );
@@ -377,11 +379,11 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 
   return (
     <article
-      className="flex min-h-[540px] w-[min(88vw,1180px)] shrink-0 snap-center items-start px-3 py-0 sm:min-h-[600px] sm:px-4 md:min-h-[660px] md:w-[min(88vw,1240px)] md:items-center md:px-10 lg:min-h-[calc(100dvh-16rem)] lg:w-screen lg:px-8 xl:px-10"
+      className="flex h-auto w-[min(88vw,1180px)] shrink-0 snap-center items-start self-start px-3 pb-5 pt-1 sm:px-4 sm:pb-6 md:w-[min(88vw,1240px)] md:items-center md:px-10 md:pb-8 lg:h-auto lg:min-h-[calc(100dvh-16rem)] lg:w-screen lg:self-stretch lg:px-8 lg:pb-8 xl:px-10"
       aria-label={`Stage ${stage.number}`}
     >
       <div
-        className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-2 sm:gap-3 md:gap-8 lg:gap-12 ${layout.grid}`}
+        className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-3 sm:gap-4 md:items-center md:gap-8 lg:gap-12 ${layout.grid}`}
       >
         <motion.div
           initial={false}
@@ -542,6 +544,58 @@ export function ProcessSection() {
   }, [totalStages]);
 
   useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    let frame = 0;
+
+    const syncScrollerHeight = () => {
+      frame = 0;
+
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+      if (isDesktop) {
+        scroller.style.height = "";
+        return;
+      }
+
+      const panel = scroller.children[active] as HTMLElement | undefined;
+      if (!panel) return;
+
+      const nextHeight = Math.ceil(panel.offsetHeight);
+      if (nextHeight > 0 && scroller.style.height !== `${nextHeight}px`) {
+        scroller.style.height = `${nextHeight}px`;
+      }
+    };
+
+    const requestSync = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(syncScrollerHeight);
+    };
+
+    requestSync();
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(requestSync) : null;
+    const activePanel = scroller.children[active] as HTMLElement | undefined;
+
+    if (activePanel) {
+      resizeObserver?.observe(activePanel);
+    }
+
+    window.addEventListener("resize", requestSync);
+
+    return () => {
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
+
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", requestSync);
+      scroller.style.height = "";
+    };
+  }, [active, totalStages]);
+
+  useEffect(() => {
     const updateAutoSwipePreference = () => {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
@@ -584,12 +638,12 @@ export function ProcessSection() {
   return (
     <section
       id="process"
-      className="relative w-full overflow-hidden bg-[var(--process-bg)] py-0 text-[color:var(--process-text)]"
+      className="relative w-full overflow-x-clip bg-[var(--process-bg)] pb-8 pt-0 text-[color:var(--process-text)] sm:pb-10 md:pb-12 lg:pb-14"
     >
       <div className="relative z-10">
-        <div className="py-0">
+        <div className="pb-3 pt-0 sm:pb-4 md:pb-5">
           <div className="mx-auto w-full max-w-7xl px-4 sm:px-5 md:px-6 lg:px-8">
-            <div className="grid gap-2 md:grid-cols-[1fr_0.95fr] md:items-end md:gap-3">
+            <div className="grid gap-3 md:grid-cols-[1fr_0.95fr] md:items-end md:gap-3">
               <SectionHeading
                 badge="Product Making"
                 title={
@@ -676,7 +730,7 @@ export function ProcessSection() {
 
         <div
           ref={scrollerRef}
-          className="relative z-10 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-[6vw] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:gap-6 md:px-[6vw] lg:gap-0 lg:px-0"
+          className="relative z-10 flex items-start snap-x snap-proximity gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth touch-pan-x px-[6vw] pb-1 transition-[height] duration-300 ease-out [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:snap-mandatory md:gap-6 md:px-[6vw] lg:h-auto! lg:items-stretch lg:overflow-y-visible lg:gap-0 lg:px-0 lg:transition-none"
           aria-label="Product making process stages"
           onMouseEnter={() => setAutoSwipePaused(true)}
           onMouseLeave={() => setAutoSwipePaused(false)}
