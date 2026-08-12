@@ -27,8 +27,7 @@ import { ProcessSection, FlavorsSection, BenefitsSection } from "@/components/se
 import { companyInfo } from "@/components/sections/data";
 import lotferoxLogo from "@/assets/brand/lotferox-nuts-logo.webp";
 
-//TODO: Add WhatsApp number and message
-const WHATSAPP_NUMBER = "919884471751";
+const WHATSAPP_NUMBER = companyInfo.whatsappNumber;
 const WHATSAPP_MESSAGE =
   "Hi LoTFerox, I would like to order your makhana products. Please share all 7 products, prices, and delivery details.";
 const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
@@ -859,6 +858,12 @@ function Footer() {
             <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
             <a href={`mailto:${companyInfo.email}`} className="transition-colors hover:text-[#ffe17a]">
               {companyInfo.email}
+            </a>
+          </div>
+          <div className="flex gap-3">
+            <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
+            <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-[#ffe17a]">
+              {companyInfo.phone}
             </a>
           </div>
           <div className="flex gap-3">

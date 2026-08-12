@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Sparkles } from "lucide-react";
 import benefitBowl from "@/assets/sections/benefit-makhana-bowl.jpg";
 import benefitCollection from "@/assets/products/lotferox-makhana-product-collection.webp";
 import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.jpg";
@@ -99,12 +99,12 @@ function CurvedArrowDoodle({ flip = false }: { flip?: boolean }) {
 function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "active">) {
   if (visual.frame === "heat") {
     return (
-      <div className="relative min-h-[220px] overflow-hidden rounded-[1.5rem] p-2.5 sm:min-h-[240px] md:rounded-[2.25rem] md:p-4 lg:min-h-[300px] xl:min-h-[320px]">
+      <div className="relative min-h-[205px] overflow-hidden rounded-[1.5rem] p-2 sm:min-h-[235px] md:rounded-[2.25rem] md:p-4 lg:min-h-[300px] xl:min-h-[320px]">
         <div className="absolute" />
 
         {/* <CurvedArrowDoodle flip /> */}
 
-        <div className="relative z-10 grid min-h-[200px] grid-cols-[0.78fr_1.22fr] gap-2 sm:min-h-[220px] md:min-h-[250px] md:grid-cols-[0.86fr_1.14fr] md:gap-3 lg:min-h-[270px] xl:min-h-[310px]">
+        <div className="relative z-10 grid min-h-[190px] grid-cols-[0.78fr_1.22fr] gap-2 sm:min-h-[215px] md:min-h-[250px] md:grid-cols-[0.86fr_1.14fr] md:gap-3 lg:min-h-[270px] xl:min-h-[310px]">
           <motion.div
             className="relative overflow-hidden rounded-[1.1rem] border border-[color:var(--process-border)] bg-[var(--process-surface)] shadow-[var(--process-panel-shadow)] md:rounded-[1.75rem]"
             animate={{ y: active ? [0, -3, 0] : 0 }}
@@ -115,7 +115,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
               alt={visual.imageAlt}
               width={620}
               height={620}
-              className="h-full min-h-[200px] w-full object-cover sm:min-h-[220px] lg:min-h-[200px] xl:min-h-[220px]"
+              className="h-full min-h-[190px] w-full object-cover sm:min-h-[215px] lg:min-h-[200px] xl:min-h-[220px]"
             />
 
             <div className="absolute inset-0 bg-[image:var(--process-image-overlay)]" />
@@ -187,10 +187,10 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   }
   if (visual.frame === "pop") {
     return (
-      <div className="relative min-h-[250px] p-3 sm:min-h-[300px] sm:p-5 md:min-h-[340px] md:p-7">
+      <div className="relative min-h-[230px] p-2 sm:min-h-[285px] sm:p-5 md:min-h-[340px] md:p-7">
         <CurvedArrowDoodle />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_55%,var(--process-accent-muted),transparent_36%)]" />
-        <div className="relative z-10 grid min-h-[225px] place-items-center text-center sm:min-h-[260px] md:min-h-[300px]">
+        <div className="relative z-10 grid min-h-[215px] place-items-center text-center sm:min-h-[255px] md:min-h-[300px]">
           <motion.div
             className="absolute font-display text-[clamp(5.8rem,18vw,15rem)] font-black leading-none text-[color:var(--process-accent)] opacity-15"
             animate={{ scale: active ? [0.98, 1.02, 0.98] : 1 }}
@@ -227,13 +227,13 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
 
   if (visual.frame === "flavors") {
     return (
-      <div className="relative min-h-[310px] sm:min-h-[340px] md:min-h-[320px] lg:min-h-[340px]">
+      <div className="relative min-h-[292px] sm:min-h-[330px] md:min-h-[320px] lg:min-h-[340px]">
         {/* <CurvedArrowDoodle flip /> */}
         {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_70%,rgba(243,201,67,0.18),transparent_42%)]" /> */}
         {/* <div className="absolute left-4 top-4 h-20 w-20 rounded-full border border-[#f3c943]/20 md:left-5 md:top-5 md:h-28 md:w-28" /> */}
         {/* <div className="absolute bottom-4 right-5 h-16 w-28 rounded-full bg-[#f3c943]/10 blur-xl md:bottom-5 md:right-8 md:h-20 md:w-40" /> */}
 
-        <div className="relative z-10 grid min-h-[300px] grid-cols-2 gap-2 sm:min-h-[320px] md:min-h-[320px] md:grid-cols-4 md:gap-4 lg:min-h-[340px]">
+        <div className="relative z-10 grid min-h-[282px] grid-cols-2 gap-2 sm:min-h-[310px] md:min-h-[320px] md:grid-cols-4 md:gap-4 lg:min-h-[340px]">
           {[
             ["Mint Pudina", "Cool herb", mintPudina, "from-[#123c24] to-[#5fbf72]"],
             ["Mix Masala", "Warm spice", mixMasala, "from-[#3d1f10] to-[#c46b1f]"],
@@ -242,7 +242,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
           ].map(([name, note, src, gradient], productIndex) => (
             <motion.div
               key={name}
-              className={`group relative flex min-h-[146px] flex-col justify-between overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-2.5 shadow-[0_24px_55px_rgba(0,0,0,0.32)] sm:min-h-[154px] md:min-h-[300px] md:rounded-[1.6rem] md:p-5 lg:min-h-[310px]`}
+              className={`group relative flex min-h-[136px] flex-col justify-between overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-2.5 shadow-[0_24px_55px_rgba(0,0,0,0.32)] sm:min-h-[150px] md:min-h-[300px] md:rounded-[1.6rem] md:p-5 lg:min-h-[310px]`}
               animate={{
                 y: active ? [0, productIndex === 1 ? -6 : -4, 0] : 0,
                 rotate: active ? [-0.6 + productIndex * 0.35, 0.6 - productIndex * 0.2, -0.6 + productIndex * 0.35] : 0,
@@ -282,9 +282,9 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
 
   if (visual.frame === "seal") {
     return (
-      <div className="relative min-h-[300px] p-3 sm:min-h-[330px] sm:p-5 md:min-h-[340px] md:p-7">
+      <div className="relative min-h-[280px] p-2 sm:min-h-[320px] sm:p-5 md:min-h-[340px] md:p-7">
         <div className="absolute left-0 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full bg-[var(--process-accent)] opacity-10 blur-2xl" />
-        <div className="relative z-10 grid min-h-[270px] grid-cols-1 gap-3 sm:min-h-[290px] md:min-h-[300px] md:grid-cols-[0.92fr_1.08fr] md:gap-5">
+        <div className="relative z-10 grid min-h-[260px] grid-cols-1 gap-3 sm:min-h-[285px] md:min-h-[300px] md:grid-cols-[0.92fr_1.08fr] md:gap-5">
           <div className="flex flex-col justify-center">
             <div className="font-display text-[clamp(2.25rem,9vw,6.8rem)] font-black leading-none text-[color:var(--process-accent)]">
               Fresh lock
@@ -318,7 +318,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   }
 
   return (
-    <div className="relative ml-0 min-h-[250px] sm:min-h-[300px] md:ml-8 md:min-h-[340px] lg:ml-12 lg:min-h-[360px]">
+    <div className="relative ml-0 min-h-[230px] sm:min-h-[285px] md:ml-8 md:min-h-[340px] lg:ml-12 lg:min-h-[360px]">
       <CurvedArrowDoodle />
       <div className="absolute -left-5 -top-5 h-32 w-32 rounded-full border border-[color:var(--process-accent-border)]" />
       <motion.img
@@ -358,7 +358,7 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
     pop: {
       grid: "md:grid-cols-[1.1fr_0.9fr]",
       visual: "md:order-1",
-      copy: "md:order-2 md:self-end md:pb-12",
+      copy: "md:order-2 md:self-end",
       heading: "text-[clamp(2.6rem,6vw,6rem)]",
     },
     flavors: {
@@ -377,7 +377,7 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 
   return (
     <article
-      className="flex h-full w-screen shrink-0 items-start overflow-y-auto overscroll-contain px-4 pb-4 pt-2 md:items-center md:overflow-visible md:px-12 md:pb-6 md:pt-3 lg:px-16 lg:pb-8 lg:pt-4"
+      className="flex min-h-[540px] w-[min(88vw,1180px)] shrink-0 snap-center items-start px-3 py-0 sm:min-h-[600px] sm:px-4 md:min-h-[660px] md:w-[min(88vw,1240px)] md:items-center md:px-10 lg:min-h-[calc(100dvh-16rem)] lg:w-screen lg:px-8 xl:px-10"
       aria-label={`Stage ${stage.number}`}
     >
       <div
@@ -447,19 +447,42 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 }
 
 export function ProcessSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const autoSwipeResumeTimerRef = useRef<number | null>(null);
 
-  const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(0);
-  const [viewportWidth, setViewportWidth] = useState(0);
+  const [autoSwipePaused, setAutoSwipePaused] = useState(false);
 
   const totalStages = processStages.length;
 
-  /*
-   * Each panel occupies exactly one viewport width.
-   * Move from panel 1 to the final panel based on scroll progress.
-   */
-  const x = -(progress * (totalStages - 1) * viewportWidth);
+  const scrollToStage = (index: number) => {
+    const scroller = scrollerRef.current;
+    const panel = scroller?.children[index] as HTMLElement | undefined;
+
+    panel?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  };
+
+  const pauseAutoSwipeTemporarily = () => {
+    setAutoSwipePaused(true);
+
+    if (autoSwipeResumeTimerRef.current) {
+      window.clearTimeout(autoSwipeResumeTimerRef.current);
+    }
+
+    autoSwipeResumeTimerRef.current = window.setTimeout(() => {
+      setAutoSwipePaused(false);
+      autoSwipeResumeTimerRef.current = null;
+    }, 9000);
+  };
+
+  const handleManualStageChange = (index: number) => {
+    pauseAutoSwipeTemporarily();
+    scrollToStage(index);
+  };
 
   useEffect(() => {
     let animationFrame = 0;
@@ -467,29 +490,25 @@ export function ProcessSection() {
     const updateSection = () => {
       animationFrame = 0;
 
-      const section = sectionRef.current;
-      if (!section) return;
+      const scroller = scrollerRef.current;
+      if (!scroller) return;
 
-      const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
+      const targetX = scroller.scrollLeft + scroller.clientWidth / 2;
+      let nextActive = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
 
-      const scrollableDistance = Math.max(
-        1,
-        section.offsetHeight - viewportHeight,
-      );
+      Array.from(scroller.children).forEach((panel, index) => {
+        const element = panel as HTMLElement;
+        const rect = panel.getBoundingClientRect();
+        const panelCenter = element.offsetLeft + rect.width / 2;
+        const distance = Math.abs(panelCenter - targetX);
 
-      const nextProgress = Math.min(
-        1,
-        Math.max(0, -rect.top / scrollableDistance),
-      );
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          nextActive = index;
+        }
+      });
 
-      const nextActive = Math.min(
-        totalStages - 1,
-        Math.floor(nextProgress * totalStages),
-      );
-
-      setViewportWidth(window.innerWidth);
-      setProgress(nextProgress);
       setActive(nextActive);
     };
 
@@ -501,7 +520,8 @@ export function ProcessSection() {
 
     updateSection();
 
-    window.addEventListener("scroll", requestUpdate, {
+    const scroller = scrollerRef.current;
+    scroller?.addEventListener("scroll", requestUpdate, {
       passive: true,
     });
 
@@ -512,121 +532,142 @@ export function ProcessSection() {
         window.cancelAnimationFrame(animationFrame);
       }
 
-      window.removeEventListener("scroll", requestUpdate);
+      scroller?.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
     };
   }, [totalStages]);
 
+  useEffect(() => {
+    if (autoSwipePaused || totalStages < 2) return;
+
+    const interval = window.setInterval(() => {
+      scrollToStage((active + 1) % totalStages);
+    }, 4200);
+
+    return () => window.clearInterval(interval);
+  }, [active, autoSwipePaused, totalStages]);
+
+  useEffect(() => {
+    return () => {
+      if (autoSwipeResumeTimerRef.current) {
+        window.clearTimeout(autoSwipeResumeTimerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section
       id="process"
-      ref={sectionRef}
-      className="relative w-full"
-      style={{
-        height: `calc(${totalStages} * 100dvh)`,
-      }}
+      className="relative w-full overflow-hidden bg-[var(--process-bg)] py-0 text-[color:var(--process-text)]"
     >
-      <div className="sticky top-0 flex h-[100svh] w-full flex-col overflow-hidden bg-[var(--process-bg)] text-[color:var(--process-text)]">
-        {/* Background effects */}
-        <div className="pointer-events-none absolute inset-0 bg-[image:var(--process-glow)]" />
-
-        <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,var(--process-speckle)_1px,transparent_1px)] [background-size:3px_3px]" />
-
-        {/* Heading */}
-        <div className="relative z-10 shrink-0 py-3 sm:py-4 md:py-5 lg:py-6">
+      <div className="relative z-10">
+        <div className="py-0">
           <div className="mx-auto w-full max-w-7xl px-4 sm:px-5 md:px-6 lg:px-8">
-            <SectionHeading
-              badge="Product Making"
-              title={
-                <>
-                  From Harvest to{" "}
-                  <em className="italic text-coral-deep">
-                    Your Favourite Flavour
-                  </em>
-                </>
-              }
-              align="left"
-              className="
-                max-w-4xl
-                gap-2
-                sm:gap-3
-                md:gap-4
-                [&>h2]:text-[clamp(1.65rem,7vw,2.5rem)]
-                [&>h2]:leading-[1.05]
-                sm:[&>h2]:text-[clamp(1.9rem,6vw,3rem)]
-                md:[&>h2]:text-[clamp(2.1rem,4.6vw,3.6rem)]
-                lg:[&>h2]:text-[clamp(2.5rem,4vw,4.2rem)]
-                [&>span]:px-3
-                [&>span]:py-1
-                [&>span]:text-[9px]
-                sm:[&>span]:text-[10px]
-                md:[&>span]:px-4
-                md:[&>span]:py-1.5
-                md:[&>span]:text-xs
-              "
-            />
+            <div className="grid gap-2 md:grid-cols-[1fr_0.95fr] md:items-end md:gap-3">
+              <SectionHeading
+                badge="Product Making"
+                title={
+                  <>
+                    From Harvest to{" "}
+                    <em className="italic text-coral-deep">
+                      Your Favourite Flavour
+                    </em>
+                  </>
+                }
+                align="left"
+                className="
+                  max-w-4xl
+                  mt-6 md:mt-8 lg:mt-10
+                  gap-2
+                  sm:gap-3
+                  md:gap-4
+                  [&>h2]:text-[clamp(1.65rem,7vw,2.5rem)]
+                  [&>h2]:leading-[1.05]
+                  sm:[&>h2]:text-[clamp(1.9rem,6vw,3rem)]
+                  md:[&>h2]:text-[clamp(2.1rem,4.6vw,3.6rem)]
+                  lg:[&>h2]:text-[clamp(2.5rem,4vw,4.2rem)]
+                  [&>span]:px-3
+                  [&>span]:py-1
+                  [&>span]:text-[9px]
+                  sm:[&>span]:text-[10px]
+                  md:[&>span]:px-4
+                  md:[&>span]:py-1.5
+                  md:[&>span]:text-xs
+                "
+              />
 
-            {/* Progress indicator */}
-            <div className="mt-2 flex items-center gap-2 sm:mt-3 md:mt-4 md:gap-3">
-              <div className="shrink-0 whitespace-nowrap rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:px-3 sm:text-[10px] md:px-4 md:py-2 md:text-xs md:tracking-[0.24em]">
-                {String(active + 1).padStart(2, "0")} /{" "}
-                {String(totalStages).padStart(2, "0")}
-              </div>
-
-              <div className="flex min-w-0 flex-1 gap-1 sm:gap-1.5 md:gap-2">
-                {processStages.map((stage, index) => (
-                  <div
-                    key={stage.number}
-                    className="h-[3px] flex-1 overflow-hidden rounded-full bg-[var(--process-progress-track)]"
-                  >
-                    <div
-                      className="h-full rounded-full bg-[var(--process-accent)] transition-[width] duration-300 ease-out"
-                      style={{
-                        width: index <= active ? "100%" : "0%",
-                      }}
-                    />
+              <div className="grid gap-2">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="shrink-0 whitespace-nowrap rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:px-3 sm:text-[10px] md:px-4 md:py-2 md:text-xs md:tracking-[0.24em]">
+                    {String(active + 1).padStart(2, "0")} /{" "}
+                    {String(totalStages).padStart(2, "0")}
                   </div>
-                ))}
+
+                  <div className="flex min-w-0 flex-1 gap-1 sm:gap-1.5 md:gap-2">
+                    {processStages.map((stage, index) => (
+                      <button
+                        key={stage.number}
+                        type="button"
+                        aria-label={`Go to process stage ${index + 1}`}
+                        onClick={() => handleManualStageChange(index)}
+                        className="h-[5px] flex-1 overflow-hidden rounded-full bg-[var(--process-progress-track)] transition-opacity hover:opacity-80"
+                      >
+                        <span
+                          className="block h-full rounded-full bg-[var(--process-accent)] transition-[width] duration-300 ease-out"
+                          style={{
+                            width: index <= active ? "100%" : "0%",
+                          }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    aria-label="Previous process stage"
+                    onClick={() => handleManualStageChange(Math.max(0, active - 1))}
+                    disabled={active === 0}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] text-[color:var(--process-accent-soft)] transition-all hover:-translate-y-0.5 hover:bg-[var(--process-accent)] hover:text-[color:var(--process-icon-text)] disabled:pointer-events-none disabled:opacity-35"
+                  >
+                    <ArrowLeft className="h-4 w-4" aria-hidden />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next process stage"
+                    onClick={() => handleManualStageChange(Math.min(totalStages - 1, active + 1))}
+                    disabled={active === totalStages - 1}
+                    className="grid h-10 w-10 place-items-center rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] text-[color:var(--process-accent-soft)] transition-all hover:-translate-y-0.5 hover:bg-[var(--process-accent)] hover:text-[color:var(--process-icon-text)] disabled:pointer-events-none disabled:opacity-35"
+                  >
+                    <ArrowRight className="h-4 w-4" aria-hidden />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Sliding panels */}
-        <div className="relative z-10 min-h-0 flex-1 overflow-hidden">
-          <motion.div
-            animate={{ x }}
-            transition={{
-              type: "spring",
-              stiffness: 110,
-              damping: 24,
-              mass: 0.7,
-            }}
-            className="flex h-full"
-            style={{
-              width: `${totalStages * 100}vw`,
-            }}
-          >
-            {processStages.map((stage, index) => (
-              <div
-                key={stage.number}
-                className="h-full w-screen shrink-0"
-              >
-                <StagePanel
-                  stage={stage}
-                  visual={processVisuals[index]}
-                  index={index}
-                  active={active === index}
-                />
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Desktop continue indicator */}
-          <div className="pointer-events-none absolute bottom-4 right-4 hidden items-center gap-2 rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[color:var(--process-accent-soft)] backdrop-blur-xl md:flex lg:bottom-6 lg:right-6 lg:gap-3 lg:px-4 lg:py-2 lg:text-xs lg:tracking-[0.24em]">
-            Continue
-            <ArrowRight className="h-3.5 w-3.5 lg:h-4 lg:w-4" aria-hidden />
-          </div>
+        <div
+          ref={scrollerRef}
+          className="relative z-10 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-[6vw] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:gap-6 md:px-[6vw] lg:gap-0 lg:px-0"
+          aria-label="Product making process stages"
+          onMouseEnter={() => setAutoSwipePaused(true)}
+          onMouseLeave={() => setAutoSwipePaused(false)}
+          onFocus={() => setAutoSwipePaused(true)}
+          onBlur={() => setAutoSwipePaused(false)}
+          onPointerDown={pauseAutoSwipeTemporarily}
+          onTouchStart={pauseAutoSwipeTemporarily}
+        >
+          {processStages.map((stage, index) => (
+            <StagePanel
+              key={stage.number}
+              stage={stage}
+              visual={processVisuals[index]}
+              index={index}
+              active={active === index}
+            />
+          ))}
         </div>
       </div>
     </section>

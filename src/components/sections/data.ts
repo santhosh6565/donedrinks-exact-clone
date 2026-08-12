@@ -15,6 +15,8 @@ export const companyInfo = {
   address: "Chennai - 600130, Tamil Nadu",
   fssai: "12426008001442",
   email: "lotferoxnuts@gmail.com",
+  phone: "+91 72001 78469",
+  whatsappNumber: "917200178469",
 };
 
 export interface ProcessStage {
