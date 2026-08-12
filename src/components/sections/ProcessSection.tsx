@@ -242,10 +242,10 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
           ].map(([name, note, src, gradient], productIndex) => (
             <motion.div
               key={name}
-              className={`group relative flex min-h-[128px] flex-col justify-between overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-2.5 shadow-[0_24px_55px_rgba(0,0,0,0.32)] sm:min-h-[140px] md:min-h-[300px] md:rounded-[1.6rem] md:p-5 lg:min-h-[310px]`}
+              className={`group relative flex min-h-[148px] flex-col overflow-hidden rounded-[1.05rem] border border-white/10 bg-gradient-to-br ${gradient} p-2.5 shadow-[0_24px_55px_rgba(0,0,0,0.32)] sm:min-h-[160px] md:min-h-[300px] md:rounded-[1.6rem] md:p-5 lg:min-h-[310px]`}
               animate={{
                 y: active ? [0, productIndex === 1 ? -6 : -4, 0] : 0,
-                rotate: active ? [-0.6 + productIndex * 0.35, 0.6 - productIndex * 0.2, -0.6 + productIndex * 0.35] : 0,
+                rotate: active ? [0, productIndex % 2 === 0 ? 0.35 : -0.35, 0] : 0,
               }}
               transition={{
                 duration: 3.2 + productIndex * 0.22,
@@ -253,7 +253,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
                 ease: "easeInOut",
               }}
             >
-              <div>
+              <div className="shrink-0">
                 <div className="text-[7px] font-black uppercase tracking-[0.08em] text-white/62 sm:text-[8px] md:text-[10px] md:tracking-[0.22em]">
                   {note}
                 </div>
@@ -262,15 +262,17 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
                 </div>
               </div>
 
-              <img
-                src={src}
-                alt=""
-                width={220}
-                height={300}
-                className="mx-auto max-h-20 object-contain drop-shadow-[0_28px_30px_rgba(0,0,0,0.45)] transition-transform duration-500 group-hover:-translate-y-1 sm:max-h-24 md:max-h-48 lg:max-h-52"
-              />
+              <div className="relative mx-auto flex min-h-0 w-full flex-1 items-center justify-center py-1.5 md:py-3">
+                <img
+                  src={src}
+                  alt=""
+                  width={220}
+                  height={300}
+                  className="mx-auto h-auto max-h-[4.75rem] w-auto max-w-[78%] object-contain object-center drop-shadow-[0_18px_22px_rgba(0,0,0,0.4)] transition-transform duration-500 group-hover:-translate-y-1 sm:max-h-[5.5rem] md:max-h-48 md:max-w-[85%] lg:max-h-52"
+                />
+              </div>
 
-              <div className="rounded-full border border-[color:var(--process-border)] bg-[var(--process-surface)] px-2 py-1 text-center text-[7px] font-black uppercase tracking-[0.08em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:text-[8px] md:px-4 md:py-2 md:text-[10px] md:tracking-[0.18em]">
+              <div className="shrink-0 rounded-full border border-[color:var(--process-border)] bg-[var(--process-surface)] px-2 py-1 text-center text-[7px] font-black uppercase tracking-[0.08em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:text-[8px] md:px-4 md:py-2 md:text-[10px] md:tracking-[0.18em]">
                 Even coating
               </div>
             </motion.div>
@@ -451,6 +453,8 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 export function ProcessSection() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const autoSwipeResumeTimerRef = useRef<number | null>(null);
+  const lockedStageRef = useRef<number | null>(null);
+  const unlockTimerRef = useRef<number | null>(null);
 
   const [active, setActive] = useState(0);
   const [autoSwipePaused, setAutoSwipePaused] = useState(false);
@@ -472,6 +476,27 @@ export function ProcessSection() {
     });
   };
 
+  const syncActiveScrollerHeight = (stageIndex = active) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    if (isDesktop) {
+      if (scroller.style.height) {
+        scroller.style.height = "";
+      }
+      return;
+    }
+
+    const panel = scroller.children[stageIndex] as HTMLElement | undefined;
+    if (!panel) return;
+
+    const nextHeight = Math.ceil(panel.offsetHeight);
+    if (nextHeight > 0) {
+      scroller.style.height = `${nextHeight}px`;
+    }
+  };
+
   const pauseAutoSwipeTemporarily = () => {
     setAutoSwipePaused(true);
 
@@ -485,9 +510,35 @@ export function ProcessSection() {
     }, 9000);
   };
 
-  const handleManualStageChange = (index: number) => {
-    pauseAutoSwipeTemporarily();
+  const goToStage = (index: number, { pauseAutoSwipe = true }: { pauseAutoSwipe?: boolean } = {}) => {
+    if (pauseAutoSwipe) {
+      pauseAutoSwipeTemporarily();
+    }
+
+    lockedStageRef.current = index;
+    setActive(index);
+
+    if (unlockTimerRef.current) {
+      window.clearTimeout(unlockTimerRef.current);
+    }
+
+    // Keep height locked to the destination stage while smooth-scroll settles.
+    unlockTimerRef.current = window.setTimeout(() => {
+      lockedStageRef.current = null;
+      unlockTimerRef.current = null;
+      syncActiveScrollerHeight(index);
+    }, 700);
+
     scrollToStage(index);
+
+    window.requestAnimationFrame(() => {
+      syncActiveScrollerHeight(index);
+      window.requestAnimationFrame(() => syncActiveScrollerHeight(index));
+    });
+  };
+
+  const handleManualStageChange = (index: number) => {
+    goToStage(index);
   };
 
   useEffect(() => {
@@ -515,7 +566,22 @@ export function ProcessSection() {
         }
       });
 
+      if (lockedStageRef.current != null) {
+        syncActiveScrollerHeight(lockedStageRef.current);
+
+        if (nextActive === lockedStageRef.current) {
+          lockedStageRef.current = null;
+          if (unlockTimerRef.current) {
+            window.clearTimeout(unlockTimerRef.current);
+            unlockTimerRef.current = null;
+          }
+          setActive(nextActive);
+        }
+        return;
+      }
+
       setActive(nextActive);
+      syncActiveScrollerHeight(nextActive);
     };
 
     const requestUpdate = () => {
@@ -548,31 +614,21 @@ export function ProcessSection() {
     if (!scroller) return;
 
     let frame = 0;
-
-    const syncScrollerHeight = () => {
-      frame = 0;
-
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-      if (isDesktop) {
-        scroller.style.height = "";
-        return;
-      }
-
-      const panel = scroller.children[active] as HTMLElement | undefined;
-      if (!panel) return;
-
-      const nextHeight = Math.ceil(panel.offsetHeight);
-      if (nextHeight > 0 && scroller.style.height !== `${nextHeight}px`) {
-        scroller.style.height = `${nextHeight}px`;
-      }
-    };
+    let cancelled = false;
 
     const requestSync = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(syncScrollerHeight);
+      if (frame || cancelled) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        if (!cancelled) {
+          syncActiveScrollerHeight(active);
+        }
+      });
     };
 
     requestSync();
+    // Re-measure after layout/fonts settle for the newly active panel.
+    const settleTimer = window.setTimeout(requestSync, 120);
 
     const resizeObserver =
       typeof ResizeObserver !== "undefined" ? new ResizeObserver(requestSync) : null;
@@ -585,13 +641,15 @@ export function ProcessSection() {
     window.addEventListener("resize", requestSync);
 
     return () => {
+      cancelled = true;
+      window.clearTimeout(settleTimer);
+
       if (frame) {
         window.cancelAnimationFrame(frame);
       }
 
       resizeObserver?.disconnect();
       window.removeEventListener("resize", requestSync);
-      scroller.style.height = "";
     };
   }, [active, totalStages]);
 
@@ -621,7 +679,7 @@ export function ProcessSection() {
     if (!autoSwipeEnabled || autoSwipePaused || totalStages < 2) return;
 
     const interval = window.setInterval(() => {
-      scrollToStage((active + 1) % totalStages);
+      goToStage((active + 1) % totalStages, { pauseAutoSwipe: false });
     }, 4200);
 
     return () => window.clearInterval(interval);
@@ -631,6 +689,9 @@ export function ProcessSection() {
     return () => {
       if (autoSwipeResumeTimerRef.current) {
         window.clearTimeout(autoSwipeResumeTimerRef.current);
+      }
+      if (unlockTimerRef.current) {
+        window.clearTimeout(unlockTimerRef.current);
       }
     };
   }, []);
@@ -730,7 +791,7 @@ export function ProcessSection() {
 
         <div
           ref={scrollerRef}
-          className="relative z-10 flex items-start snap-x snap-proximity gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth touch-pan-x px-[6vw] pb-1 transition-[height] duration-300 ease-out [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:snap-mandatory md:gap-6 md:px-[6vw] lg:h-auto! lg:items-stretch lg:overflow-y-visible lg:gap-0 lg:px-0 lg:transition-none"
+          className="relative z-10 flex items-start snap-x snap-proximity gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth touch-pan-x px-[6vw] pb-1 transition-[height] duration-300 ease-out [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:snap-mandatory md:gap-6 md:px-[6vw] lg:!h-auto lg:items-stretch lg:overflow-y-visible lg:gap-0 lg:px-0 lg:transition-none"
           aria-label="Product making process stages"
           onMouseEnter={() => setAutoSwipePaused(true)}
           onMouseLeave={() => setAutoSwipePaused(false)}
