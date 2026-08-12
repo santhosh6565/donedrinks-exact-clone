@@ -143,17 +143,21 @@ function BrandButton({
 }
 
 function ThemeToggle({ scrolled }: { scrolled: boolean }) {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof document === "undefined") return "light";
+    return document.documentElement.classList.contains("dark") ? "dark" : "light";
+  });
   const isDark = theme === "dark";
 
   useEffect(() => {
     const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initialTheme = storedTheme === "dark" || storedTheme === "light"
-      ? storedTheme
-      : prefersDark
-        ? "dark"
-        : "light";
+    const initialTheme =
+      storedTheme === "dark" || storedTheme === "light"
+        ? storedTheme
+        : prefersDark
+          ? "dark"
+          : "light";
 
     setTheme(initialTheme);
     document.documentElement.classList.toggle("dark", initialTheme === "dark");
@@ -565,30 +569,30 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
   const topRightX = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["10vw", "40vw", "40vw", "54vw"] : ["2vw", "37vw", "37vw", "40vw"],
+    isMobile ? ["6vw", "22vw", "22vw", "28vw"] : ["2vw", "37vw", "37vw", "40vw"],
   );
   const topCornerOpacity = useTransform(smoothProgress, [0, 0.82, 0.94, 1], [1, 1, 0.35, 0]);
   const bottomLeftOpacity = useTransform(smoothProgress, [0, 0.76, 0.9, 1], [1, 1, 0, 0]);
   const pull = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["0vw", "2vw", "2vw", "0vw"] : ["0vw", "4vw", "4vw", "0vw"],
+    isMobile ? ["0vw", "1.5vw", "1.5vw", "0vw"] : ["0vw", "4vw", "4vw", "0vw"],
   );
   const pullReverse = useTransform(pull, (value) => `-${value}`);
   const bottomRightDrop = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["0vh", "6vh", "6vh", "12vh"] : ["0vh", "10vh", "10vh", "20vh"],
+    isMobile ? ["0vh", "4vh", "4vh", "8vh"] : ["0vh", "10vh", "10vh", "20vh"],
   );
   const scale = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? [0.86, 1.08, 1.08, 0.9] : [0.78, 1.08, 1.08, 0.82],
+    isMobile ? [0.82, 0.98, 0.98, 0.86] : [0.78, 1.08, 1.08, 0.82],
   );
   const topLeftScale = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? [0.98, 1.22, 1.22, 1.08] : [1.1, 1.4, 1.4, 1.25],
+    isMobile ? [0.9, 1.05, 1.05, 0.95] : [1.1, 1.4, 1.4, 1.25],
   );
 
   const items = [
