@@ -66,6 +66,7 @@ interface StagePanelProps {
   visual: ProcessVisual;
   index: number;
   active: boolean;
+  fillWidth?: boolean;
 }
 
 function CurvedArrowDoodle({ flip = false }: { flip?: boolean }) {
@@ -345,7 +346,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   );
 }
 
-function StagePanel({ stage, visual, index, active }: StagePanelProps) {
+function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePanelProps) {
   const layout = {
     harvest: {
       grid: "md:grid-cols-[0.92fr_1.08fr]",
@@ -381,8 +382,13 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 
   return (
     <article
-      className="flex h-auto w-[min(88vw,1180px)] shrink-0 snap-center items-start self-start px-3 pb-5 pt-1 sm:px-4 sm:pb-6 md:w-[min(88vw,1240px)] md:items-center md:px-10 md:pb-8 lg:h-auto lg:min-h-[calc(100dvh-16rem)] lg:w-screen lg:self-stretch lg:px-8 lg:pb-8 xl:px-10"
+      className={`flex h-auto shrink-0 snap-center items-start px-3 pb-5 pt-1 sm:px-4 sm:pb-6 md:items-center md:px-10 md:pb-8 lg:min-h-[calc(100dvh-16rem)] lg:self-stretch lg:px-8 lg:pb-8 xl:px-10 ${
+        fillWidth
+          ? "w-full"
+          : "w-[min(88vw,1180px)] md:w-[min(88vw,1240px)] lg:w-screen"
+      }`}
       aria-label={`Stage ${stage.number}`}
+      aria-hidden={fillWidth ? true : undefined}
     >
       <div
         className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-3 sm:gap-4 md:items-center md:gap-8 lg:gap-12 ${layout.grid}`}
@@ -453,8 +459,6 @@ function StagePanel({ stage, visual, index, active }: StagePanelProps) {
 export function ProcessSection() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const autoSwipeResumeTimerRef = useRef<number | null>(null);
-  const lockedStageRef = useRef<number | null>(null);
-  const unlockTimerRef = useRef<number | null>(null);
 
   const [active, setActive] = useState(0);
   const [autoSwipePaused, setAutoSwipePaused] = useState(false);
@@ -476,27 +480,6 @@ export function ProcessSection() {
     });
   };
 
-  const syncActiveScrollerHeight = (stageIndex = active) => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
-
-    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-    if (isDesktop) {
-      if (scroller.style.height) {
-        scroller.style.height = "";
-      }
-      return;
-    }
-
-    const panel = scroller.children[stageIndex] as HTMLElement | undefined;
-    if (!panel) return;
-
-    const nextHeight = Math.ceil(panel.offsetHeight);
-    if (nextHeight > 0) {
-      scroller.style.height = `${nextHeight}px`;
-    }
-  };
-
   const pauseAutoSwipeTemporarily = () => {
     setAutoSwipePaused(true);
 
@@ -510,35 +493,10 @@ export function ProcessSection() {
     }, 9000);
   };
 
-  const goToStage = (index: number, { pauseAutoSwipe = true }: { pauseAutoSwipe?: boolean } = {}) => {
-    if (pauseAutoSwipe) {
-      pauseAutoSwipeTemporarily();
-    }
-
-    lockedStageRef.current = index;
-    setActive(index);
-
-    if (unlockTimerRef.current) {
-      window.clearTimeout(unlockTimerRef.current);
-    }
-
-    // Keep height locked to the destination stage while smooth-scroll settles.
-    unlockTimerRef.current = window.setTimeout(() => {
-      lockedStageRef.current = null;
-      unlockTimerRef.current = null;
-      syncActiveScrollerHeight(index);
-    }, 700);
-
-    scrollToStage(index);
-
-    window.requestAnimationFrame(() => {
-      syncActiveScrollerHeight(index);
-      window.requestAnimationFrame(() => syncActiveScrollerHeight(index));
-    });
-  };
-
   const handleManualStageChange = (index: number) => {
-    goToStage(index);
+    pauseAutoSwipeTemporarily();
+    setActive(index);
+    scrollToStage(index);
   };
 
   useEffect(() => {
@@ -566,37 +524,18 @@ export function ProcessSection() {
         }
       });
 
-      if (lockedStageRef.current != null) {
-        syncActiveScrollerHeight(lockedStageRef.current);
-
-        if (nextActive === lockedStageRef.current) {
-          lockedStageRef.current = null;
-          if (unlockTimerRef.current) {
-            window.clearTimeout(unlockTimerRef.current);
-            unlockTimerRef.current = null;
-          }
-          setActive(nextActive);
-        }
-        return;
-      }
-
       setActive(nextActive);
-      syncActiveScrollerHeight(nextActive);
     };
 
     const requestUpdate = () => {
       if (animationFrame) return;
-
       animationFrame = window.requestAnimationFrame(updateSection);
     };
 
     updateSection();
 
     const scroller = scrollerRef.current;
-    scroller?.addEventListener("scroll", requestUpdate, {
-      passive: true,
-    });
-
+    scroller?.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
 
     return () => {
@@ -608,50 +547,6 @@ export function ProcessSection() {
       window.removeEventListener("resize", requestUpdate);
     };
   }, [totalStages]);
-
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
-
-    let frame = 0;
-    let cancelled = false;
-
-    const requestSync = () => {
-      if (frame || cancelled) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        if (!cancelled) {
-          syncActiveScrollerHeight(active);
-        }
-      });
-    };
-
-    requestSync();
-    // Re-measure after layout/fonts settle for the newly active panel.
-    const settleTimer = window.setTimeout(requestSync, 120);
-
-    const resizeObserver =
-      typeof ResizeObserver !== "undefined" ? new ResizeObserver(requestSync) : null;
-    const activePanel = scroller.children[active] as HTMLElement | undefined;
-
-    if (activePanel) {
-      resizeObserver?.observe(activePanel);
-    }
-
-    window.addEventListener("resize", requestSync);
-
-    return () => {
-      cancelled = true;
-      window.clearTimeout(settleTimer);
-
-      if (frame) {
-        window.cancelAnimationFrame(frame);
-      }
-
-      resizeObserver?.disconnect();
-      window.removeEventListener("resize", requestSync);
-    };
-  }, [active, totalStages]);
 
   useEffect(() => {
     const updateAutoSwipePreference = () => {
@@ -679,7 +574,9 @@ export function ProcessSection() {
     if (!autoSwipeEnabled || autoSwipePaused || totalStages < 2) return;
 
     const interval = window.setInterval(() => {
-      goToStage((active + 1) % totalStages, { pauseAutoSwipe: false });
+      const next = (active + 1) % totalStages;
+      setActive(next);
+      scrollToStage(next);
     }, 4200);
 
     return () => window.clearInterval(interval);
@@ -689,9 +586,6 @@ export function ProcessSection() {
     return () => {
       if (autoSwipeResumeTimerRef.current) {
         window.clearTimeout(autoSwipeResumeTimerRef.current);
-      }
-      if (unlockTimerRef.current) {
-        window.clearTimeout(unlockTimerRef.current);
       }
     };
   }, []);
@@ -710,9 +604,7 @@ export function ProcessSection() {
                 title={
                   <>
                     From Harvest to{" "}
-                    <em className="italic text-coral-deep">
-                      Your Favourite Flavour
-                    </em>
+                    <em className="italic text-coral-deep">Your Favourite Flavour</em>
                   </>
                 }
                 align="left"
@@ -789,26 +681,39 @@ export function ProcessSection() {
           </div>
         </div>
 
-        <div
-          ref={scrollerRef}
-          className="relative z-10 flex items-start snap-x snap-proximity gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth touch-pan-x px-[6vw] pb-1 transition-[height] duration-300 ease-out [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:snap-mandatory md:gap-6 md:px-[6vw] lg:!h-auto lg:items-stretch lg:overflow-y-visible lg:gap-0 lg:px-0 lg:transition-none"
-          aria-label="Product making process stages"
-          onMouseEnter={() => setAutoSwipePaused(true)}
-          onMouseLeave={() => setAutoSwipePaused(false)}
-          onFocus={() => setAutoSwipePaused(true)}
-          onBlur={() => setAutoSwipePaused(false)}
-          onPointerDown={pauseAutoSwipeTemporarily}
-          onTouchStart={pauseAutoSwipeTemporarily}
-        >
-          {processStages.map((stage, index) => (
+        {/* Mobile/tablet: invisible active-stage sizer drives height so sibling panels cannot create bottom gaps. */}
+        <div className="relative">
+          <div className="pointer-events-none invisible px-[6vw] lg:hidden" aria-hidden>
             <StagePanel
-              key={stage.number}
-              stage={stage}
-              visual={processVisuals[index]}
-              index={index}
-              active={active === index}
+              stage={processStages[active]}
+              visual={processVisuals[active]}
+              index={active}
+              active
+              fillWidth
             />
-          ))}
+          </div>
+
+          <div
+            ref={scrollerRef}
+            className="absolute inset-0 z-10 flex items-start snap-x snap-proximity gap-3 overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth touch-pan-x px-[6vw] [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden sm:gap-4 sm:px-[5vw] md:snap-mandatory md:gap-6 md:px-[6vw] lg:static lg:inset-auto lg:h-auto lg:items-stretch lg:gap-0 lg:overflow-y-visible lg:px-0"
+            aria-label="Product making process stages"
+            onMouseEnter={() => setAutoSwipePaused(true)}
+            onMouseLeave={() => setAutoSwipePaused(false)}
+            onFocus={() => setAutoSwipePaused(true)}
+            onBlur={() => setAutoSwipePaused(false)}
+            onPointerDown={pauseAutoSwipeTemporarily}
+            onTouchStart={pauseAutoSwipeTemporarily}
+          >
+            {processStages.map((stage, index) => (
+              <StagePanel
+                key={stage.number}
+                stage={stage}
+                visual={processVisuals[index]}
+                index={index}
+                active={active === index}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

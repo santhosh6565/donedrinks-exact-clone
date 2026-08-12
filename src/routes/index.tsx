@@ -560,12 +560,12 @@ function ScrollMakhanaLayer({ targetRef }: { targetRef: RefObject<HTMLDivElement
   const topLeftX = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["-12vw", "-46vw", "-46vw", "-58vw"] : ["-7vw", "-46vw", "-46vw", "-56vw"],
+    isMobile ? ["-22vw", "-46vw", "-46vw", "-58vw"] : ["-7vw", "-46vw", "-46vw", "-56vw"],
   );
   const topRightX = useTransform(
     smoothProgress,
     [0, 0.52, 0.8, 1],
-    isMobile ? ["8vw", "40vw", "40vw", "54vw"] : ["2vw", "37vw", "37vw", "40vw"],
+    isMobile ? ["10vw", "40vw", "40vw", "54vw"] : ["2vw", "37vw", "37vw", "40vw"],
   );
   const topCornerOpacity = useTransform(smoothProgress, [0, 0.82, 0.94, 1], [1, 1, 0.35, 0]);
   const bottomLeftOpacity = useTransform(smoothProgress, [0, 0.76, 0.9, 1], [1, 1, 0, 0]);
