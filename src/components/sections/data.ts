@@ -2,6 +2,7 @@ import creamOnion from "@/assets/products/lotferox-cream-onion-makhana-25gm.webp
 import himalayanSaltPepper from "@/assets/products/lotferox-himalayan-salt-pepper-makhana-25gm.webp";
 import mintPudina from "@/assets/products/lotferox-mint-pudina-makhana-25gm.webp";
 import mixMasala from "@/assets/products/lotferox-mix-masala-makhana-25gm.webp";
+import periPeri from "@/assets/products/lotferox-peri-peri-makhana-25gm.webp";
 import rawMakhana from "@/assets/products/lotferox-raw-makhana-25gm.webp";
 import tangyCheese from "@/assets/products/lotferox-tangy-cheese-makhana-25gm.webp";
 import tomatoTango from "@/assets/products/lotferox-tomato-tango-makhana-25gm.webp";
@@ -144,6 +145,16 @@ export const flavors: Flavor[] = [
     text: "#2b211b",
     accent: "#f28a20",
     ingredients: ["Raw Fox Nuts", "Gluten Free", "Naturally Light"],
+  },
+  {
+    name: "Peri Peri",
+    description:
+      "A spicy, tangy roasted makhana flavour with a peri peri kick for a bold and addictive crunch.",
+    image: periPeri,
+    bg: "linear-gradient(135deg, #233f8f 0%, #8f2430 48%, #d9364d 72%, #f495a8 100%)",
+    text: "#fff7f8",
+    accent: "#ff6b6b",
+    ingredients: ["Roasted", "Spicy Peri", "Crunchy Bite"],
   },
 ];
 
