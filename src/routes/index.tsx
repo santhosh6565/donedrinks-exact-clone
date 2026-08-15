@@ -29,7 +29,7 @@ import lotferoxLogo from "@/assets/brand/lotferox-nuts-logo.webp";
 
 const WHATSAPP_NUMBER = companyInfo.whatsappNumber;
 const WHATSAPP_MESSAGE =
-  "Hi LoTFerox, I would like to order your makhana products. Please share all 7 products, prices, and delivery details.";
+  "Hi LoTFerox, I would like to order your makhana products. Please share all 8 products, prices, and delivery details.";
 const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const FACEBOOK_HREF = "https://www.facebook.com/";
 const INSTAGRAM_HREF = "https://www.instagram.com/";
@@ -56,11 +56,11 @@ function scrollToSection(href: string, closeMenu?: () => void) {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LoTFerox Nuts 7 Makhana Products | Fox Nuts Snacks" },
+      { title: "LoTFerox Nuts 8 Makhana Products | Fox Nuts Snacks" },
       {
         name: "description",
         content:
-          "Shop LoTFerox Nuts makhana fox nuts. Explore 7 products including Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango, Tangy Cheese and Raw Makhana.",
+          "Shop LoTFerox Nuts makhana fox nuts. Explore 8 products including Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango, Tangy Cheese, Raw Makhana and Peri Peri.",
       },
       {
         name: "keywords",
@@ -481,7 +481,7 @@ function Marquee() {
     "Roasted not fried",
     "Gluten free",
     "Light . Crunchy . Delicious",
-    "7 products",
+    "8 products",
     "Snack smart",
   ];
   return (
@@ -703,7 +703,7 @@ function Story() {
         </h2>
         <p className="mx-auto mt-8 max-w-2xl text-lg text-cocoa/70">
           LoTFerox Nuts turns roasted fox nuts into light, crunchy and delicious everyday snacks
-          across seven smart products, from bold roasted flavours to premium Raw Makhana.
+          across eight smart products, from bold roasted flavours to premium Raw Makhana.
         </p>
       </div>
     </section>
@@ -821,7 +821,7 @@ function CTA() {
           Ready?
         </h2>
         <p className="mx-auto mt-6 max-w-lg text-lg opacity-80">
-          Want LoTFerox makhana? Message us on WhatsApp and we'll help you pick from all 7 products,
+          Want LoTFerox makhana? Message us on WhatsApp and we'll help you pick from all 8 products,
           including roasted flavours and premium Raw Makhana.
         </p>
         <div className="mt-10">
@@ -927,7 +927,7 @@ function Footer() {
       </div>
       <div className="relative mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-3 border-t border-[#fff2a8]/16 px-6 pt-6 text-xs text-cream/55 md:flex-row">
         <span>© {new Date().getFullYear()} {companyInfo.name}. Smart snacking for smart people.</span>
-        <span>7 products · Vegan · Gluten free · Roasted not fried</span>
+        <span>8 products · Vegan · Gluten free · Roasted not fried</span>
       </div>
     </footer>
   );

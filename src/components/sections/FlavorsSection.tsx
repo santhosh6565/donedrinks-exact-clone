@@ -138,7 +138,7 @@ export function FlavorsSection() {
             badge="Product Flavours"
             title={
               <>
-                Seven makhana products,{" "}
+                Eight makhana products,{" "}
                 <em className="italic text-coral-deep">one smart lineup.</em>
               </>
             }

@@ -9,16 +9,16 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import flavorCollectionImage from "@/assets/seo/lotferox-makhana-products-social-share.jpg";
+import flavorCollectionImage from "@/assets/sections/benefit-makhana-collection.webp";
 import lotferoxLogo from "@/assets/brand/lotferox-nuts-logo.webp";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL ?? "https://lotferox.com").replace(/\/$/, "");
 const PAGE_URL = `${SITE_URL}/`;
-const SEO_TITLE = "LoTFerox Nuts | 7 Makhana Fox Nuts Products";
+const SEO_TITLE = "LoTFerox Nuts | 8 Makhana Fox Nuts Products";
 const SEO_DESCRIPTION =
-  "LoTFerox Nuts makes premium makhana fox nuts across 7 products: Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango, Tangy Cheese and Raw Makhana.";
+  "LoTFerox Nuts makes premium makhana fox nuts across 8 products: Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango, Tangy Cheese, Raw Makhana and Peri Peri.";
 const SEO_IMAGE = new URL(flavorCollectionImage, PAGE_URL).toString();
 const SEO_LOGO = new URL(lotferoxLogo, PAGE_URL).toString();
 const COMPANY_INFO = {
@@ -38,6 +38,7 @@ const FLAVOURS = [
   "Tomato Tango",
   "Tangy Cheese",
   "Raw Makhana",
+  "Peri Peri",
 ];
 
 const structuredData = {
@@ -180,14 +181,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:url", content: PAGE_URL },
       { property: "og:image", content: SEO_IMAGE },
       { property: "og:image:secure_url", content: SEO_IMAGE },
+      { property: "og:image:type", content: "image/webp" },
       { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "900" },
-      { property: "og:image:alt", content: "LoTFerox Nuts 7 makhana product collection" },
+      { property: "og:image:height", content: "1200" },
+      { property: "og:image:alt", content: "LoTFerox Nuts 8 makhana product collection" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: SEO_TITLE },
       { name: "twitter:description", content: SEO_DESCRIPTION },
       { name: "twitter:image", content: SEO_IMAGE },
-      { name: "twitter:image:alt", content: "LoTFerox Nuts 7 makhana product collection" },
+      { name: "twitter:image:alt", content: "LoTFerox Nuts 8 makhana product collection" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

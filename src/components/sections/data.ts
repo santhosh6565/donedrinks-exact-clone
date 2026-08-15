@@ -6,10 +6,10 @@ import periPeri from "@/assets/products/lotferox-peri-peri-makhana-25gm.webp";
 import rawMakhana from "@/assets/products/lotferox-raw-makhana-25gm.webp";
 import tangyCheese from "@/assets/products/lotferox-tangy-cheese-makhana-25gm.webp";
 import tomatoTango from "@/assets/products/lotferox-tomato-tango-makhana-25gm.webp";
-import benefitBowl from "@/assets/sections/benefit-makhana-bowl.jpg";
-import benefitLifestyle from "@/assets/sections/benefit-healthy-snacking-lifestyle.jpg";
-import benefitCollection from "@/assets/sections/benefit-makhana-collection.jpg";
-import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.jpg";
+import benefitBowl from "@/assets/sections/benefit-makhana-bowl.webp";
+import benefitLifestyle from "@/assets/sections/benefit-healthy-snacking-lifestyle.webp";
+import benefitCollection from "@/assets/sections/benefit-makhana-collection.webp";
+import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.webp";
 
 export const companyInfo = {
   name: "LotFerox Nuts",
@@ -51,7 +51,7 @@ export const processStages: ProcessStage[] = [
   },
   {
     number: "04",
-    title: "Seven Makhana Products",
+    title: "Eight Makhana Products",
     description:
       "Choose from the full LoTFerox lineup of seasoned makhana flavours and premium Raw Makhana.",
     accent: "var(--coral)",
@@ -208,11 +208,11 @@ export const benefits: BenefitItem[] = [
   {
     kind: "image",
     src: benefitCollection,
-    alt: "Collection of makhana pouches",
+    alt: "Lotus pods and seeds harvest",
   },
   {
     kind: "text",
-    title: "Seven smart products.",
+    title: "Eight smart products.",
     description:
       "Seasoned makhana flavours plus premium Raw Makhana in handy packs.",
     bg: "var(--sage)",
@@ -221,7 +221,8 @@ export const benefits: BenefitItem[] = [
   },
   {
     kind: "image",
+   
     src: benefitHarvest,
-    alt: "Lotus pods and seeds harvest",
+    alt: "Collection of makhana pouches",
   },
 ];

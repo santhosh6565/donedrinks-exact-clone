@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Check, Sparkles } from "lucide-react";
-import benefitBowl from "@/assets/sections/benefit-makhana-bowl.jpg";
-import benefitCollection from "@/assets/products/lotferox-makhana-product-collection.webp";
-import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.jpg";
+import benefitBowl from "@/assets/sections/benefit-makhana-bowl.webp";
+import benefitCollection from "@/assets/sections/benefit-makhana-collection.webp";
+import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.webp";
 import mintPudina from "@/assets/products/lotferox-mint-pudina-makhana-25gm.webp";
 import mixMasala from "@/assets/products/lotferox-mix-masala-makhana-25gm.webp";
 import tangyCheese from "@/assets/products/lotferox-tangy-cheese-makhana-25gm.webp";
@@ -321,7 +321,7 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
   }
 
   return (
-    <div className="relative ml-0 aspect-[5/4] w-full sm:aspect-[16/11] md:ml-8 md:aspect-auto md:min-h-[340px] lg:ml-12 lg:min-h-[360px]">
+    <div className="relative aspect-[5/4] w-full sm:aspect-[16/11] md:aspect-[5/4] md:min-h-[320px] lg:ml-8 lg:aspect-auto lg:min-h-[380px] xl:ml-12 xl:min-h-[420px]">
       <CurvedArrowDoodle />
       <div className="absolute -left-5 -top-5 hidden h-32 w-32 rounded-full border border-[color:var(--process-accent-border)] md:block" />
       <motion.img
@@ -349,49 +349,49 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
 function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePanelProps) {
   const layout = {
     harvest: {
-      grid: "md:grid-cols-[0.92fr_1.08fr]",
-      visual: "md:order-1",
-      copy: "md:order-2",
-      heading: "text-[clamp(2.4rem,5.5vw,5.4rem)]",
+      grid: "lg:grid-cols-[0.95fr_1.05fr]",
+      visual: "lg:order-1 lg:ml-2 xl:ml-4",
+      copy: "lg:order-2 lg:pl-4 xl:pl-6 lg:self-center",
+      heading: "text-[clamp(2rem,6vw,2.6rem)] md:text-[clamp(2.4rem,4vw,3.6rem)] lg:text-[clamp(2.8rem,4.2vw,5rem)]",
     },
     heat: {
-      grid: "md:grid-cols-[0.82fr_1.18fr]",
-      visual: "order-2 md:order-2",
-      copy: "order-1 md:order-1",
-      heading: "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2rem,4.4vw,4.5rem)]",
+      grid: "lg:grid-cols-[0.86fr_1.14fr]",
+      visual: "order-2 lg:order-2",
+      copy: "order-1 lg:order-1 lg:pr-4 xl:pr-6 lg:self-center",
+      heading: "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2rem,4vw,3.2rem)] lg:text-[clamp(2.4rem,3.6vw,4.4rem)]",
     },
     pop: {
-      grid: "md:grid-cols-[1.1fr_0.9fr]",
-      visual: "md:order-1",
-      copy: "md:order-2 md:self-end",
-      heading: "text-[clamp(2.6rem,6vw,6rem)]",
+      grid: "lg:grid-cols-[1.08fr_0.92fr]",
+      visual: "lg:order-1 lg:ml-2 xl:ml-4",
+      copy: "lg:order-2 lg:self-center lg:pl-4 xl:pl-6",
+      heading: "text-[clamp(2.2rem,6vw,2.8rem)] md:text-[clamp(2.6rem,4.2vw,4rem)] lg:text-[clamp(3rem,4.5vw,5.4rem)]",
     },
     flavors: {
-      grid: "md:grid-cols-[0.9fr_1.1fr]",
-      visual: "order-2 md:order-2",
-      copy: "order-1 md:order-1",
-      heading: "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2.2rem,5vw,5rem)]",
+      grid: "lg:grid-cols-[0.92fr_1.08fr]",
+      visual: "order-2 lg:order-2",
+      copy: "order-1 lg:order-1 lg:pr-4 xl:pr-6 lg:self-center",
+      heading: "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2.2rem,4vw,3.4rem)] lg:text-[clamp(2.6rem,4vw,4.8rem)]",
     },
     seal: {
-      grid: "md:grid-cols-[1.15fr_0.85fr]",
-      visual: "md:order-1",
-      copy: "md:order-2 md:self-center",
-      heading: "text-[clamp(2rem,4.6vw,4.8rem)]",
+      grid: "lg:grid-cols-[1.12fr_0.88fr]",
+      visual: "lg:order-1 lg:ml-2 xl:ml-4",
+      copy: "lg:order-2 lg:self-center lg:pl-4 xl:pl-6",
+      heading: "text-[clamp(1.9rem,5vw,2.5rem)] md:text-[clamp(2.2rem,3.8vw,3.4rem)] lg:text-[clamp(2.5rem,3.8vw,4.6rem)]",
     },
   }[visual.frame];
 
   return (
     <article
-      className={`flex h-auto shrink-0 snap-center items-start px-3 pb-5 pt-1 sm:px-4 sm:pb-6 md:items-center md:px-10 md:pb-8 lg:min-h-[calc(100dvh-16rem)] lg:self-stretch lg:px-8 lg:pb-8 xl:px-10 ${
+      className={`flex h-auto shrink-0 snap-center items-start ${
         fillWidth
-          ? "w-full"
-          : "w-[min(88vw,1180px)] md:w-[min(88vw,1240px)] lg:w-screen"
+          ? "w-full px-0 pb-4 pt-1"
+          : "w-[min(92vw,1180px)] px-4 pb-5 pt-2 sm:px-5 md:w-[min(90vw,1240px)] md:items-center md:justify-center md:px-6 md:pb-6 md:pt-3 lg:w-screen lg:min-h-[min(560px,calc(100dvh-18rem))] lg:items-center lg:justify-center lg:self-stretch lg:px-10 lg:pb-8 lg:pt-4 xl:px-14"
       }`}
       aria-label={`Stage ${stage.number}`}
       aria-hidden={fillWidth ? true : undefined}
     >
       <div
-        className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-3 sm:gap-4 md:items-center md:gap-8 lg:gap-12 ${layout.grid}`}
+        className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-4 sm:gap-5 md:gap-6 lg:items-center lg:justify-items-stretch lg:gap-12 xl:gap-16 ${layout.grid}`}
       >
         <motion.div
           initial={false}
@@ -421,7 +421,7 @@ function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePa
             initial={false}
             animate={{ opacity: active ? 1 : 0.24, y: active ? 0 : 34 }}
             transition={{ duration: 0.7, delay: 0.04 }}
-            className={`mt-2 max-w-xl font-display font-bold leading-[0.95] text-[color:var(--process-text)] md:mt-5 lg:mt-6 ${layout.heading}`}
+            className={`mt-3 max-w-xl font-display font-bold leading-[0.98] text-[color:var(--process-text)] md:mt-5 lg:mt-6 ${layout.heading}`}
           >
             {stage.title}
           </motion.h3>
@@ -430,7 +430,7 @@ function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePa
             initial={false}
             animate={{ opacity: active ? 0.82 : 0.2, y: active ? 0 : 24 }}
             transition={{ duration: 0.7, delay: 0.08 }}
-            className="mt-2 line-clamp-2 max-w-xl text-xs leading-snug text-[color:var(--process-text-muted)] sm:text-sm md:mt-4 md:line-clamp-3 md:text-base md:leading-relaxed lg:mt-6 lg:line-clamp-none lg:text-lg"
+            className="mt-3 max-w-xl text-sm leading-relaxed text-[color:var(--process-text-muted)] md:mt-4 md:text-base lg:mt-5 lg:text-lg lg:leading-relaxed"
           >
             {stage.description}
           </motion.p>
@@ -439,7 +439,7 @@ function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePa
             initial={false}
             animate={{ opacity: active ? 1 : 0.22, y: active ? 0 : 22 }}
             transition={{ duration: 0.7, delay: 0.12 }}
-            className="mt-2 flex flex-wrap gap-1.5 md:mt-5 md:gap-2 lg:mt-7"
+            className="mt-4 flex flex-wrap gap-2 md:mt-5 lg:mt-7"
           >
             {visual.chips.map((chip) => (
               <span
@@ -606,10 +606,10 @@ export function ProcessSection() {
   return (
     <section
       id="process"
-      className="relative w-full overflow-x-clip bg-[var(--process-bg)] pb-8 pt-0 text-[color:var(--process-text)] sm:pb-10 md:pb-12 lg:pb-14"
+      className="relative w-full overflow-x-clip bg-[var(--process-bg)] pb-6 pt-8 text-[color:var(--process-text)] sm:pb-8 sm:pt-10 md:pb-10 md:pt-12 lg:pb-12 lg:pt-14"
     >
       <div className="relative z-10">
-        <div className="pb-3 pt-0 sm:pb-4 md:pb-5">
+        <div className="pb-2 pt-0 sm:pb-3 md:pb-4">
           <div className="mx-auto w-full max-w-7xl px-4 sm:px-5 md:px-6 lg:px-8">
             <div className="grid gap-3 md:grid-cols-[1fr_0.95fr] md:items-end md:gap-3">
               <SectionHeading
@@ -623,10 +623,10 @@ export function ProcessSection() {
                 align="left"
                 className="
                   max-w-4xl
-                  mt-6 md:mt-8 lg:mt-10
+                  mt-0
                   gap-2
                   sm:gap-3
-                  md:gap-4
+                  md:gap-3
                   [&>h2]:text-[clamp(1.65rem,7vw,2.5rem)]
                   [&>h2]:leading-[1.05]
                   sm:[&>h2]:text-[clamp(1.9rem,6vw,3rem)]
@@ -695,7 +695,7 @@ export function ProcessSection() {
         </div>
 
         {isTouchLayout ? (
-          <div className="px-[6vw]" aria-label="Product making process stages">
+          <div className="mx-auto w-full max-w-7xl px-4 sm:px-5" aria-label="Product making process stages">
             <motion.div
               key={processStages[active].number}
               initial={{ opacity: 0, y: 18 }}

@@ -12,8 +12,8 @@ interface BenefitCardProps {
 function BenefitCard({ item, index }: BenefitCardProps) {
   const heightClass = item.tall ? "row-span-2 min-h-[420px]" : "min-h-[260px]";
   const isRoastedCard = item.kind === "text" && item.title.startsWith("Roasted");
-  const isFlavourCard = item.kind === "text" && item.title.startsWith("Seven");
-  const flavourDots = ["#5fbf72", "#f0b389", "#b673c2", "#f0a13a", "#ff6b6b", "#ffd166", "#7a3aa0"];
+  const isFlavourCard = item.kind === "text" && item.title.startsWith("Eight");
+  const flavourDots = ["#5fbf72", "#f0b389", "#b673c2", "#f0a13a", "#ff6b6b", "#ffd166", "#7a3aa0", "#d9364d"];
 
   return (
     <motion.div
@@ -63,7 +63,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
             </span>
             {(isRoastedCard || isFlavourCard) && (
               <span className="rounded-full border border-current/20 bg-white/12 px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] backdrop-blur-sm">
-                {isRoastedCard ? "Dry roast" : "7 packs"}
+                {isRoastedCard ? "Dry roast" : "8 packs"}
               </span>
             )}
           </div>
@@ -71,7 +71,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
           <div className="space-y-4">
             {(isRoastedCard || isFlavourCard) && (
               <div className="relative z-10 flex flex-wrap gap-2">
-                {(isRoastedCard ? ["Low oil", "Crisp bite"] : ["7 products", "Raw + roasted"]).map((tag) => (
+                {(isRoastedCard ? ["Low oil", "Crisp bite"] : ["8 products", "Raw + roasted"]).map((tag) => (
                   <span
                     key={tag}
                     className="inline-flex items-center gap-1.5 rounded-full border border-current/18 bg-white/12 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] backdrop-blur-sm"
@@ -92,7 +92,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
 
           {isFlavourCard && (
             <div className="pointer-events-none absolute bottom-5 right-5 font-display text-[8rem] font-black leading-none opacity-10">
-              7
+              8
             </div>
           )}
         </div>
@@ -113,7 +113,7 @@ export function BenefitsSection() {
   return (
     <section
       id="benefits"
-      className="relative isolate overflow-hidden py-20 md:py-28"
+      className="relative isolate overflow-hidden py-12 md:py-16 lg:py-20"
       style={{ background: "var(--cream)" }}
     >
       <img
@@ -136,10 +136,11 @@ export function BenefitsSection() {
                 Snack smarter, <em className="italic text-coral-deep">live softer.</em>
               </>
             }
+            className="gap-3 md:gap-4"
           />
         </div>
 
-        <div className="mt-16 grid auto-rows-[220px] grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid auto-rows-[220px] grid-cols-1 gap-6 sm:grid-cols-2 md:mt-10 lg:mt-12 lg:grid-cols-4">
           {benefits.map((item, i) => (
             <BenefitCard key={i} item={item} index={i} />
           ))}
