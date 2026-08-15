@@ -34,7 +34,6 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
 
   return (
     <motion.article
-      layout
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 28, scale: 0.96 }}
@@ -54,20 +53,14 @@ function FlavorCard({ flavor, index }: FlavorCardProps) {
       </h3>
 
       <div className="relative grid h-[280px] w-full place-items-center">
-        <motion.img
+        <img
           src={flavor.image}
           alt={`LoTFerox Nuts ${productName} pack`}
           loading="lazy"
           decoding="async"
-          width={1080}
-          height={1350}
-          className="relative z-10 max-h-[290px] w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.25)]"
-          animate={{ y: [0, -10, 0] }}
-          transition={{
-            duration: 5 + index * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          width={420}
+          height={525}
+          className="relative z-10 max-h-[290px] w-auto object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.25)] transition-transform duration-500 group-hover:-translate-y-2"
         />
 
         <div
@@ -145,15 +138,11 @@ export function FlavorsSection() {
           />
         </div>
 
-        <motion.div
-          layout
-          transition={{ layout: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } }}
-          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
-        >
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {baseFlavors.map((flavor, i) => (
             <FlavorCard key={flavor.name} flavor={flavor} index={i} />
           ))}
-        </motion.div>
+        </div>
 
         <AnimatePresence initial={false}>
           {showAllProducts && (
@@ -165,7 +154,7 @@ export function FlavorsSection() {
               transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden"
             >
-              <motion.div layout className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <motion.div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {extraFlavors.map((flavor, i) => (
                   <FlavorCard key={flavor.name} flavor={flavor} index={INITIAL_PRODUCT_COUNT + i} />
                 ))}
@@ -175,11 +164,7 @@ export function FlavorsSection() {
         </AnimatePresence>
 
         {hiddenProductCount > 0 && (
-          <motion.div
-            layout
-            transition={{ layout: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } }}
-            className="mt-12 flex justify-center"
-          >
+          <div className="mt-12 flex justify-center">
             <motion.button
               type="button"
               onClick={() => setShowAllProducts((show) => !show)}
@@ -201,7 +186,7 @@ export function FlavorsSection() {
                 </motion.span>
               </span>
             </motion.button>
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

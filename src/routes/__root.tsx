@@ -10,7 +10,6 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import flavorCollectionImage from "@/assets/sections/benefit-makhana-collection.webp";
-import heroBowlImage from "@/assets/hero/lotferox-roasted-makhana-bowl.webp";
 import lotferoxLogo from "@/assets/brand/lotferox-nuts-logo.webp";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -21,7 +20,6 @@ const SEO_TITLE = "LoTFerox Nuts | 8 Makhana Fox Nuts Products";
 const SEO_DESCRIPTION =
   "LoTFerox Nuts makes premium makhana fox nuts across 8 products: Mint Pudina, Himalayan Salt & Pepper, Cream & Onion, Mix Masala, Tomato Tango, Tangy Cheese, Raw Makhana and Peri Peri.";
 const SEO_IMAGE = new URL(flavorCollectionImage, PAGE_URL).toString();
-const HERO_IMAGE = new URL(heroBowlImage, PAGE_URL).toString();
 const SEO_LOGO = new URL(lotferoxLogo, PAGE_URL).toString();
 const COMPANY_INFO = {
   name: "LotFerox Nuts",
@@ -176,6 +174,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: COMPANY_INFO.name },
       { name: "robots", content: "index, follow, max-image-preview:large" },
       { name: "theme-color", content: "#f7f7f2" },
+      { "script:ld+json": structuredData },
       { property: "og:site_name", content: COMPANY_INFO.name },
       { property: "og:title", content: SEO_TITLE },
       { property: "og:description", content: SEO_DESCRIPTION },
@@ -196,14 +195,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "canonical", href: PAGE_URL },
-      { rel: "preload", as: "image", href: HERO_IMAGE, fetchPriority: "high" },
-    ],
-    scripts: [
-      {
-        tag: "script",
-        attrs: { type: "application/ld+json" },
-        children: JSON.stringify(structuredData),
-      },
     ],
   }),
   shellComponent: RootShell,

@@ -116,6 +116,8 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
               alt={visual.imageAlt}
               width={620}
               height={620}
+              loading="lazy"
+              decoding="async"
               className="h-full min-h-[168px] w-full object-cover sm:min-h-[190px] lg:min-h-[200px] xl:min-h-[220px]"
             />
 
@@ -205,8 +207,8 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
                 key={chip}
                 className="absolute grid h-12 w-12 place-items-center rounded-[45%] border border-[color:var(--process-accent-border)] bg-[var(--process-chip-bg)] text-[8px] font-black uppercase leading-tight tracking-[0.08em] text-[color:var(--process-chip-text)] shadow-[var(--process-card-shadow)] sm:h-14 sm:w-14 md:h-16 md:w-16 md:text-[10px] md:tracking-[0.12em]"
                 style={{
-                  left: `${42 + Math.cos((i / visual.chips.length) * Math.PI * 2) * 34}%`,
-                  top: `${42 + Math.sin((i / visual.chips.length) * Math.PI * 2) * 34}%`,
+                  left: `${Number((42 + Math.cos((i / visual.chips.length) * Math.PI * 2) * 34).toFixed(4))}%`,
+                  top: `${Number((42 + Math.sin((i / visual.chips.length) * Math.PI * 2) * 34).toFixed(4))}%`,
                 }}
                 animate={{
                   y: active ? [0, -8 - i * 2, 0] : 0,
@@ -269,6 +271,8 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
                   alt=""
                   width={220}
                   height={300}
+                  loading="lazy"
+                  decoding="async"
                   className="mx-auto h-auto max-h-[4.75rem] w-auto max-w-[78%] object-contain object-center drop-shadow-[0_18px_22px_rgba(0,0,0,0.4)] transition-transform duration-500 group-hover:-translate-y-1 sm:max-h-[5.5rem] md:max-h-48 md:max-w-[85%] lg:max-h-52"
                 />
               </div>
@@ -311,6 +315,8 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
             alt={visual.imageAlt}
             width={900}
             height={700}
+            loading="lazy"
+            decoding="async"
             className="mx-auto w-full max-w-[280px] self-center justify-self-center rounded-[2rem_0.75rem_2.75rem_0.75rem] border border-[color:var(--process-border)] object-contain p-2 shadow-[var(--process-panel-shadow)] sm:max-w-[360px] sm:p-3 md:max-w-[560px] md:scale-110"
             animate={{ rotate: active ? [1, -1, 1] : 1, y: active ? [0, -4, 0] : 0 }}
             transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
@@ -329,6 +335,8 @@ function StageVisual({ visual, active }: Pick<StagePanelProps, "visual" | "activ
         alt={visual.imageAlt}
         width={900}
         height={640}
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 h-full w-full rounded-[0.75rem_2.25rem_0.75rem_2.25rem] object-cover shadow-[var(--process-panel-shadow)] md:rounded-[0.75rem_3.5rem_0.75rem_3.5rem]"
         animate={{ scale: active ? 1.02 : 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -432,7 +440,7 @@ function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePa
 
           <motion.p
             initial={false}
-            animate={{ opacity: active ? 0.82 : 0.2, y: active ? 0 : 24 }}
+            animate={{ opacity: active ? 1 : 0.2, y: active ? 0 : 24 }}
             transition={{ duration: 0.7, delay: 0.08 }}
             className="mt-3 max-w-xl text-sm leading-relaxed text-[color:var(--process-text-muted)] md:mt-4 md:text-base lg:mt-5 lg:text-lg lg:leading-relaxed"
           >
@@ -461,12 +469,14 @@ function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePa
 }
 
 export function ProcessSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const autoSwipeResumeTimerRef = useRef<number | null>(null);
 
   const [active, setActive] = useState(0);
   const [autoSwipePaused, setAutoSwipePaused] = useState(false);
   const [autoSwipeEnabled, setAutoSwipeEnabled] = useState(false);
+  const [sectionInView, setSectionInView] = useState(false);
   const [isTouchLayout, setIsTouchLayout] = useState(false);
 
   const totalStages = processStages.length;
@@ -537,6 +547,21 @@ export function ProcessSection() {
   }, []);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setSectionInView(entry.isIntersecting);
+      },
+      { rootMargin: "120px 0px", threshold: 0.12 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (isTouchLayout) return;
 
     let animationFrame = 0;
@@ -571,8 +596,6 @@ export function ProcessSection() {
       animationFrame = window.requestAnimationFrame(updateSection);
     };
 
-    updateSection();
-
     const scroller = scrollerRef.current;
     scroller?.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
@@ -588,7 +611,7 @@ export function ProcessSection() {
   }, [isTouchLayout, totalStages]);
 
   useEffect(() => {
-    if (!autoSwipeEnabled || autoSwipePaused || totalStages < 2) return;
+    if (!autoSwipeEnabled || !sectionInView || autoSwipePaused || totalStages < 2) return;
 
     const interval = window.setInterval(() => {
       const next = (active + 1) % totalStages;
@@ -597,7 +620,7 @@ export function ProcessSection() {
     }, 4200);
 
     return () => window.clearInterval(interval);
-  }, [active, autoSwipeEnabled, autoSwipePaused, totalStages]);
+  }, [active, autoSwipeEnabled, autoSwipePaused, sectionInView, totalStages]);
 
   useEffect(() => {
     return () => {
@@ -609,6 +632,7 @@ export function ProcessSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="process"
       className="relative w-full overflow-x-clip bg-[var(--process-bg)] pb-6 pt-8 text-[color:var(--process-text)] sm:pb-8 sm:pt-10 md:pb-10 md:pt-12 lg:pb-12 lg:pt-14"
     >

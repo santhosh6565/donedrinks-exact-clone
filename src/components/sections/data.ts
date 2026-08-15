@@ -6,10 +6,10 @@ import periPeri from "@/assets/products/lotferox-peri-peri-makhana-25gm.webp";
 import rawMakhana from "@/assets/products/lotferox-raw-makhana-25gm.webp";
 import tangyCheese from "@/assets/products/lotferox-tangy-cheese-makhana-25gm.webp";
 import tomatoTango from "@/assets/products/lotferox-tomato-tango-makhana-25gm.webp";
-import benefitBowl from "@/assets/sections/benefit-makhana-bowl.webp";
-import benefitLifestyle from "@/assets/sections/benefit-healthy-snacking-lifestyle.webp";
-import benefitCollection from "@/assets/sections/benefit-makhana-collection.webp";
-import benefitHarvest from "@/assets/sections/benefit-makhana-harvest.webp";
+import benefitBowl from "@/assets/sections/benefit-makhana-bowl-card.webp";
+import benefitLifestyle from "@/assets/sections/benefit-healthy-snacking-lifestyle-card.webp";
+import benefitCollection from "@/assets/sections/benefit-makhana-collection-card.webp";
+import benefitHarvest from "@/assets/sections/benefit-makhana-harvest-card.webp";
 
 export const companyInfo = {
   name: "LotFerox Nuts",

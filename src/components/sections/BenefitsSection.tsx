@@ -94,7 +94,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
             <h3 className="relative z-10 font-display text-[clamp(1.6rem,2.4vw,2.4rem)] font-bold leading-[1.05]">
               {item.title}
             </h3>
-            <p className="relative z-10 max-w-sm text-sm leading-relaxed opacity-80">
+            <p className="relative z-10 max-w-sm text-sm font-medium leading-relaxed opacity-90">
               {item.description}
             </p>
           </div>
@@ -111,6 +111,8 @@ function BenefitCard({ item, index }: BenefitCardProps) {
           alt={item.alt}
           loading="lazy"
           decoding="async"
+          width={460}
+          height={460}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       )}

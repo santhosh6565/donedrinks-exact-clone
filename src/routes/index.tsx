@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import type { ComponentType, RefObject, SVGProps } from "react";
 import { AnimatePresence, motion, useScroll, useTransform, useSpring } from "motion/react";
-import Lenis from "lenis";
 import {
   ArrowUp,
   ArrowRight,
@@ -145,10 +144,7 @@ function BrandButton({
 }
 
 function ThemeToggle({ scrolled }: { scrolled: boolean }) {
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof document === "undefined") return "light";
-    return document.documentElement.classList.contains("dark") ? "dark" : "light";
-  });
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const isDark = theme === "dark";
 
   useEffect(() => {
@@ -681,26 +677,14 @@ function HeroFlavorsShowcase() {
 }
 
 function Story() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [80, -80]), {
-    stiffness: 80,
-    damping: 20,
-  });
-
   return (
     <section
       id="story"
-      ref={ref}
       className="relative overflow-hidden py-20 md:py-28"
       style={{ background: "var(--cream)" }}
     >
-      <motion.div
-        style={{ y }}
-        className="absolute -right-20 top-10 h-64 w-64 rounded-full opacity-30"
-      />
       <div className="mx-auto max-w-5xl px-6 text-center">
-        <span className="inline-block rounded-full bg-coral/20 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-coral-deep">
+        <span className="inline-block rounded-full border border-cocoa/15 bg-white/30 px-4 py-1.5 text-xs font-black uppercase tracking-[0.3em] text-cocoa">
           Our story
         </span>
         <h2 className="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.05] text-cocoa">
@@ -708,7 +692,7 @@ function Story() {
           <br />
           snack-smart.
         </h2>
-        <p className="mx-auto mt-8 max-w-2xl text-lg text-cocoa/70">
+        <p className="mx-auto mt-8 max-w-2xl text-lg font-medium text-cocoa/80">
           LoTFerox Nuts turns roasted fox nuts into light, crunchy and delicious everyday snacks
           across eight smart products, from bold roasted flavours to premium Raw Makhana.
         </p>
@@ -824,7 +808,7 @@ function CTA() {
         <h2 className="font-display text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] italic">
           Ready?
         </h2>
-        <p className="mx-auto mt-6 max-w-lg text-lg text-cream/90">
+        <p className="mx-auto mt-6 max-w-lg text-lg font-medium text-[#fff8ec]">
           Want LoTFerox makhana? Message us on WhatsApp and we'll help you pick from all 8 products,
           including roasted flavours and premium Raw Makhana.
         </p>
@@ -1002,33 +986,6 @@ function BackToHeroButton() {
 }
 
 function Home() {
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-
-    if (prefersReducedMotion || isTouchDevice) {
-      return undefined;
-    }
-
-    const lenis = new Lenis({
-      duration: 0.75,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-    let animationFrameId = 0;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
-
-    animationFrameId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      lenis.destroy();
-    };
-  }, []);
-
   return (
     <div className="relative">
       <StickyNav />
