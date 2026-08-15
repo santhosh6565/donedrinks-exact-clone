@@ -165,16 +165,9 @@ export function FlavorsSection() {
               transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden"
             >
-              <motion.div
-                layout
-                className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
-              >
+              <motion.div layout className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {extraFlavors.map((flavor, i) => (
-                  <FlavorCard
-                    key={flavor.name}
-                    flavor={flavor}
-                    index={INITIAL_PRODUCT_COUNT + i}
-                  />
+                  <FlavorCard key={flavor.name} flavor={flavor} index={INITIAL_PRODUCT_COUNT + i} />
                 ))}
               </motion.div>
             </motion.div>
@@ -195,7 +188,9 @@ export function FlavorsSection() {
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               className="group inline-flex min-h-13 items-center justify-center gap-3 rounded-full border border-[color:var(--hero-secondary-border)] bg-[var(--hero-secondary-bg)] py-2 pl-6 pr-2 text-sm font-black uppercase tracking-[0.13em] text-[color:var(--hero-secondary-text)] shadow-[var(--hero-secondary-shadow)] backdrop-blur-xl transition-all hover:-translate-y-1 hover:border-[color:var(--hero-secondary-border-hover)] hover:bg-[var(--hero-secondary-bg-hover)] hover:text-[color:var(--hero-secondary-text-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--hero-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
             >
-              <span>{showAllProducts ? "Show less" : `Show ${hiddenProductCount} more product`}</span>
+              <span>
+                {showAllProducts ? "Show less" : `Show ${hiddenProductCount} more product`}
+              </span>
               <span className="grid h-9 w-9 place-items-center rounded-full bg-[var(--hero-accent)] text-[color:var(--hero-icon-text)] transition-transform group-hover:translate-x-0.5">
                 <motion.span
                   animate={{ rotate: showAllProducts ? 180 : 0 }}

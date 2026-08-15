@@ -352,31 +352,36 @@ function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePa
       grid: "lg:grid-cols-[0.95fr_1.05fr]",
       visual: "lg:order-1 lg:ml-2 xl:ml-4",
       copy: "lg:order-2 lg:pl-4 xl:pl-6 lg:self-center",
-      heading: "text-[clamp(2rem,6vw,2.6rem)] md:text-[clamp(2.4rem,4vw,3.6rem)] lg:text-[clamp(2.8rem,4.2vw,5rem)]",
+      heading:
+        "text-[clamp(2rem,6vw,2.6rem)] md:text-[clamp(2.4rem,4vw,3.6rem)] lg:text-[clamp(2.8rem,4.2vw,5rem)]",
     },
     heat: {
       grid: "lg:grid-cols-[0.86fr_1.14fr]",
       visual: "order-2 lg:order-2",
       copy: "order-1 lg:order-1 lg:pr-4 xl:pr-6 lg:self-center",
-      heading: "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2rem,4vw,3.2rem)] lg:text-[clamp(2.4rem,3.6vw,4.4rem)]",
+      heading:
+        "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2rem,4vw,3.2rem)] lg:text-[clamp(2.4rem,3.6vw,4.4rem)]",
     },
     pop: {
       grid: "lg:grid-cols-[1.08fr_0.92fr]",
       visual: "lg:order-1 lg:ml-2 xl:ml-4",
       copy: "lg:order-2 lg:self-center lg:pl-4 xl:pl-6",
-      heading: "text-[clamp(2.2rem,6vw,2.8rem)] md:text-[clamp(2.6rem,4.2vw,4rem)] lg:text-[clamp(3rem,4.5vw,5.4rem)]",
+      heading:
+        "text-[clamp(2.2rem,6vw,2.8rem)] md:text-[clamp(2.6rem,4.2vw,4rem)] lg:text-[clamp(3rem,4.5vw,5.4rem)]",
     },
     flavors: {
       grid: "lg:grid-cols-[0.92fr_1.08fr]",
       visual: "order-2 lg:order-2",
       copy: "order-1 lg:order-1 lg:pr-4 xl:pr-6 lg:self-center",
-      heading: "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2.2rem,4vw,3.4rem)] lg:text-[clamp(2.6rem,4vw,4.8rem)]",
+      heading:
+        "text-[clamp(1.65rem,8vw,2.35rem)] md:text-[clamp(2.2rem,4vw,3.4rem)] lg:text-[clamp(2.6rem,4vw,4.8rem)]",
     },
     seal: {
       grid: "lg:grid-cols-[1.12fr_0.88fr]",
       visual: "lg:order-1 lg:ml-2 xl:ml-4",
       copy: "lg:order-2 lg:self-center lg:pl-4 xl:pl-6",
-      heading: "text-[clamp(1.9rem,5vw,2.5rem)] md:text-[clamp(2.2rem,3.8vw,3.4rem)] lg:text-[clamp(2.5rem,3.8vw,4.6rem)]",
+      heading:
+        "text-[clamp(1.9rem,5vw,2.5rem)] md:text-[clamp(2.2rem,3.8vw,3.4rem)] lg:text-[clamp(2.5rem,3.8vw,4.6rem)]",
     },
   }[visual.frame];
 
@@ -388,7 +393,6 @@ function StagePanel({ stage, visual, index, active, fillWidth = false }: StagePa
           : "w-[min(92vw,1180px)] px-4 pb-5 pt-2 sm:px-5 md:w-[min(90vw,1240px)] md:items-center md:justify-center md:px-6 md:pb-6 md:pt-3 lg:w-screen lg:min-h-[min(560px,calc(100dvh-18rem))] lg:items-center lg:justify-center lg:self-stretch lg:px-10 lg:pb-8 lg:pt-4 xl:px-14"
       }`}
       aria-label={`Stage ${stage.number}`}
-      aria-hidden={fillWidth ? true : undefined}
     >
       <div
         className={`mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-4 sm:gap-5 md:gap-6 lg:items-center lg:justify-items-stretch lg:gap-12 xl:gap-16 ${layout.grid}`}
@@ -645,8 +649,7 @@ export function ProcessSection() {
               <div className="grid gap-2">
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="shrink-0 whitespace-nowrap rounded-full border border-[color:var(--process-accent-border)] bg-[var(--process-surface-strong)] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[color:var(--process-accent-soft)] backdrop-blur-xl sm:px-3 sm:text-[10px] md:px-4 md:py-2 md:text-xs md:tracking-[0.24em]">
-                    {String(active + 1).padStart(2, "0")} /{" "}
-                    {String(totalStages).padStart(2, "0")}
+                    {String(active + 1).padStart(2, "0")} / {String(totalStages).padStart(2, "0")}
                   </div>
 
                   <div className="flex min-w-0 flex-1 gap-1 sm:gap-1.5 md:gap-2">
@@ -694,45 +697,48 @@ export function ProcessSection() {
           </div>
         </div>
 
-        {isTouchLayout ? (
-          <div className="mx-auto w-full max-w-7xl px-4 sm:px-5" aria-label="Product making process stages">
-            <motion.div
-              key={processStages[active].number}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <StagePanel
-                stage={processStages[active]}
-                visual={processVisuals[active]}
-                index={active}
-                active
-                fillWidth
-              />
-            </motion.div>
-          </div>
-        ) : (
-          <div
-            ref={scrollerRef}
-            className="relative z-10 flex items-stretch snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain scroll-smooth px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            aria-label="Product making process stages"
-            onMouseEnter={() => setAutoSwipePaused(true)}
-            onMouseLeave={() => setAutoSwipePaused(false)}
-            onFocus={() => setAutoSwipePaused(true)}
-            onBlur={() => setAutoSwipePaused(false)}
-            onPointerDown={pauseAutoSwipeTemporarily}
+        <div
+          className="mx-auto w-full max-w-7xl px-4 sm:px-5 md:hidden"
+          role="region"
+          aria-label="Product making process stages"
+        >
+          <motion.div
+            key={processStages[active].number}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
-            {processStages.map((stage, index) => (
-              <StagePanel
-                key={stage.number}
-                stage={stage}
-                visual={processVisuals[index]}
-                index={index}
-                active={active === index}
-              />
-            ))}
-          </div>
-        )}
+            <StagePanel
+              stage={processStages[active]}
+              visual={processVisuals[active]}
+              index={active}
+              active
+              fillWidth
+            />
+          </motion.div>
+        </div>
+
+        <div
+          ref={scrollerRef}
+          className="relative z-10 hidden items-stretch snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain scroll-smooth px-0 [scrollbar-width:none] md:flex [&::-webkit-scrollbar]:hidden"
+          role="region"
+          aria-label="Product making process stages"
+          onMouseEnter={() => setAutoSwipePaused(true)}
+          onMouseLeave={() => setAutoSwipePaused(false)}
+          onFocus={() => setAutoSwipePaused(true)}
+          onBlur={() => setAutoSwipePaused(false)}
+          onPointerDown={pauseAutoSwipeTemporarily}
+        >
+          {processStages.map((stage, index) => (
+            <StagePanel
+              key={stage.number}
+              stage={stage}
+              visual={processVisuals[index]}
+              index={index}
+              active={active === index}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

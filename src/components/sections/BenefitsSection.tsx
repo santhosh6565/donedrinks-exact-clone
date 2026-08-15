@@ -13,7 +13,16 @@ function BenefitCard({ item, index }: BenefitCardProps) {
   const heightClass = item.tall ? "row-span-2 min-h-[420px]" : "min-h-[260px]";
   const isRoastedCard = item.kind === "text" && item.title.startsWith("Roasted");
   const isFlavourCard = item.kind === "text" && item.title.startsWith("Eight");
-  const flavourDots = ["#5fbf72", "#f0b389", "#b673c2", "#f0a13a", "#ff6b6b", "#ffd166", "#7a3aa0", "#d9364d"];
+  const flavourDots = [
+    "#5fbf72",
+    "#f0b389",
+    "#b673c2",
+    "#f0a13a",
+    "#ff6b6b",
+    "#ffd166",
+    "#7a3aa0",
+    "#d9364d",
+  ];
 
   return (
     <motion.div
@@ -58,9 +67,7 @@ function BenefitCard({ item, index }: BenefitCardProps) {
           )}
 
           <div className="relative z-10 flex items-start justify-between gap-5">
-            <span className="text-[11px] uppercase tracking-[0.3em] opacity-60">
-              0{index + 1}
-            </span>
+            <span className="text-[11px] uppercase tracking-[0.3em] opacity-60">0{index + 1}</span>
             {(isRoastedCard || isFlavourCard) && (
               <span className="rounded-full border border-current/20 bg-white/12 px-3 py-1 text-[9px] font-black uppercase tracking-[0.18em] backdrop-blur-sm">
                 {isRoastedCard ? "Dry roast" : "8 packs"}
@@ -71,15 +78,17 @@ function BenefitCard({ item, index }: BenefitCardProps) {
           <div className="space-y-4">
             {(isRoastedCard || isFlavourCard) && (
               <div className="relative z-10 flex flex-wrap gap-2">
-                {(isRoastedCard ? ["Low oil", "Crisp bite"] : ["8 products", "Raw + roasted"]).map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-current/18 bg-white/12 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] backdrop-blur-sm"
-                  >
-                    <Check className="h-3 w-3" aria-hidden />
-                    {tag}
-                  </span>
-                ))}
+                {(isRoastedCard ? ["Low oil", "Crisp bite"] : ["8 products", "Raw + roasted"]).map(
+                  (tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-current/18 bg-white/12 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] backdrop-blur-sm"
+                    >
+                      <Check className="h-3 w-3" aria-hidden />
+                      {tag}
+                    </span>
+                  ),
+                )}
               </div>
             )}
             <h3 className="relative z-10 font-display text-[clamp(1.6rem,2.4vw,2.4rem)] font-bold leading-[1.05]">

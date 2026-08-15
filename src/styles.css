@@ -131,6 +131,9 @@
 */
 
 :root {
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
   --cream: #D8C7B0;
   --makhana-cream: #E5D7C4;
   --coral: #8A5F3D;
@@ -258,11 +261,11 @@
 
   --process-bg: #D8C7B0;
   --process-text: #2B211B;
-  --process-text-muted: rgba(43,33,27,0.72);
+  --process-text-muted: rgba(43,33,27,0.84);
 
   --process-accent: #8A5F3D;
-  --process-accent-soft: #6D4A31;
-  --process-accent-muted: rgba(109,74,49,0.18);
+  --process-accent-soft: #4D321F;
+  --process-accent-muted: rgba(109,74,49,0.24);
 
   --process-surface:
     rgba(245,236,224,0.52);

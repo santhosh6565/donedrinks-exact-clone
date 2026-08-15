@@ -59,8 +59,7 @@ export const processStages: ProcessStage[] = [
   {
     number: "05",
     title: "Packed Fresh for Everyday Snacking",
-    description:
-      "Every flavour is packed for quick snacking at work, school, travel or home.",
+    description: "Every flavour is packed for quick snacking at work, school, travel or home.",
     accent: "var(--coral-deep)",
   },
 ];
@@ -188,7 +187,7 @@ export const benefits: BenefitItem[] = [
   {
     kind: "text",
     title: "Vegan and gluten free.",
-    description: "A front-of-pack promise for smart snackers looking for simple everyday munching.",
+    description: "A smart, simple snack for everyday munching.",
     bg: "var(--coral)",
     text: "var(--cocoa)",
   },
@@ -213,15 +212,14 @@ export const benefits: BenefitItem[] = [
   {
     kind: "text",
     title: "Eight smart products.",
-    description:
-      "Seasoned makhana flavours plus premium Raw Makhana in handy packs.",
+    description: "Seasoned makhana flavours plus premium Raw Makhana in handy packs.",
     bg: "var(--sage)",
     text: "var(--cocoa)",
     tall: true,
   },
   {
     kind: "image",
-   
+
     src: benefitHarvest,
     alt: "Collection of makhana pouches",
   },

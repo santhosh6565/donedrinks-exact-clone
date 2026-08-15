@@ -21,7 +21,7 @@ import {
   X,
 } from "lucide-react";
 import heroBowl from "@/assets/hero/lotferox-roasted-makhana-bowl.webp";
-import makhanaImg from "@/assets/hero/makhana-floating-piece.png";
+import makhanaImg from "@/assets/hero/makhana-floating-piece.webp";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ProcessSection, FlavorsSection, BenefitsSection } from "@/components/sections";
 import { companyInfo } from "@/components/sections/data";
@@ -125,7 +125,9 @@ function BrandButton({
           ? "border-[#fff2a8]/75 bg-[linear-gradient(135deg,#fff8c7_0%,#ffd95a_48%,#f0b93d_100%)] shadow-[0_22px_52px_rgba(0,0,0,0.36),0_0_0_1px_rgba(255,255,255,0.12),inset_0_1px_0_rgba(255,255,255,0.82)] hover:border-white hover:shadow-[0_28px_68px_rgba(255,217,90,0.2),0_24px_58px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.88)] focus-visible:ring-offset-[var(--coral-deep)]"
           : "border-white/55 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,235,168,0.84)_48%,rgba(255,255,255,0.74))] shadow-[0_20px_48px_rgba(43,33,27,0.16),inset_0_1px_0_rgba(255,255,255,0.86)] hover:border-white hover:shadow-[0_28px_62px_rgba(43,33,27,0.22),inset_0_1px_0_rgba(255,255,255,0.9)] focus-visible:ring-offset-[color:var(--hero-ring-offset)]"
       } ${
-        compact ? "min-h-12 gap-3 py-1.5 pl-5 pr-1.5 text-xs" : "min-h-14 gap-4 py-1.5 pl-6 pr-1.5 text-sm"
+        compact
+          ? "min-h-12 gap-3 py-1.5 pl-5 pr-1.5 text-xs"
+          : "min-h-14 gap-4 py-1.5 pl-6 pr-1.5 text-sm"
       }`}
     >
       <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-white/55 opacity-0 blur-sm transition-all duration-700 group-hover:left-[115%] group-hover:opacity-100" />
@@ -311,7 +313,11 @@ function StickyNav() {
               exit={{ opacity: 0, rotate: 45, scale: 0.8 }}
               transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             >
-              {mobileOpen ? <X className="h-4 w-4" aria-hidden /> : <Menu className="h-4 w-4" aria-hidden />}
+              {mobileOpen ? (
+                <X className="h-4 w-4" aria-hidden />
+              ) : (
+                <Menu className="h-4 w-4" aria-hidden />
+              )}
             </motion.span>
           </AnimatePresence>
         </button>
@@ -424,9 +430,10 @@ function Hero() {
         <motion.img
           src={heroBowl}
           alt="Bowl filled with roasted makhana"
-          width={300}
-          height={300}
+          width={900}
+          height={721}
           loading="eager"
+          fetchPriority="high"
           decoding="async"
           animate={{
             y: [0, -12, 0],
@@ -733,14 +740,9 @@ function PurposeSection() {
   ];
 
   return (
-    <section
-      id="purpose"
-      className="bg-[var(--cream)] pb-5 pt-14 md:pb-8 md:pt-20"
-    >
-
+    <section id="purpose" className="bg-[var(--cream)] pb-5 pt-14 md:pb-8 md:pt-20">
       <div className="mx-auto max-w-7xl px-6 text-cocoa">
         <div className="mx-auto max-w-4xl text-center">
-
           <span className="inline-flex items-center justify-center rounded-full border border-coral/20 px-4 py-1.5 text-xs font-black uppercase tracking-[0.28em] text-coral-deep dark:border-[#d4af37]/28 dark:text-[#f4d675]">
             Purpose
           </span>
@@ -791,16 +793,18 @@ function PurposeSection() {
             { icon: MapPin, label: "Company", value: companyInfo.address },
             { icon: Mail, label: "Email", value: companyInfo.email },
           ].map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center gap-3 px-1 py-2 md:justify-center"
-            >
-              <item.icon className="h-4 w-4 shrink-0 text-coral-deep dark:text-[#f4d675]" aria-hidden />
+            <div key={item.label} className="flex items-center gap-3 px-1 py-2 md:justify-center">
+              <item.icon
+                className="h-4 w-4 shrink-0 text-coral-deep dark:text-[#f4d675]"
+                aria-hidden
+              />
               <div className="min-w-0">
-                <div className="text-[9px] font-black uppercase tracking-[0.2em] text-cocoa/45 dark:text-[#d4af37]/58">
+                <div className="text-[9px] font-black uppercase tracking-[0.2em] text-cocoa/70 dark:text-[#f4d675]/78">
                   {item.label}
                 </div>
-                <div className="truncate text-sm text-cocoa/78 dark:text-[#f5f2ea]/78">{item.value}</div>
+                <div className="truncate text-sm text-cocoa/78 dark:text-[#f5f2ea]/78">
+                  {item.value}
+                </div>
               </div>
             </div>
           ))}
@@ -820,7 +824,7 @@ function CTA() {
         <h2 className="font-display text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] italic">
           Ready?
         </h2>
-        <p className="mx-auto mt-6 max-w-lg text-lg opacity-80">
+        <p className="mx-auto mt-6 max-w-lg text-lg text-cream/90">
           Want LoTFerox makhana? Message us on WhatsApp and we'll help you pick from all 8 products,
           including roasted flavours and premium Raw Makhana.
         </p>
@@ -858,8 +862,8 @@ function Footer() {
         <div>
           <div className="font-display text-3xl font-black text-cream">{companyInfo.name}</div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/75">
-            Premium makhana fox nuts made for smart snacking: vegan, gluten free, roasted not
-            fried, light, crunchy and delicious.
+            Premium makhana fox nuts made for smart snacking: vegan, gluten free, roasted not fried,
+            light, crunchy and delicious.
           </p>
           <div className="mt-6 flex gap-3">
             {footerSocialLinks.map(({ label, href, icon: Icon }) => (
@@ -905,13 +909,19 @@ function Footer() {
           </BrandButton>
           <div className="flex gap-3">
             <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
-            <a href={`mailto:${companyInfo.email}`} className="transition-colors hover:text-[#ffe17a]">
+            <a
+              href={`mailto:${companyInfo.email}`}
+              className="transition-colors hover:text-[#ffe17a]"
+            >
               {companyInfo.email}
             </a>
           </div>
           <div className="flex gap-3">
             <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#ffe17a]" aria-hidden />
-            <a href={`tel:${companyInfo.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-[#ffe17a]">
+            <a
+              href={`tel:${companyInfo.phone.replace(/\s/g, "")}`}
+              className="transition-colors hover:text-[#ffe17a]"
+            >
               {companyInfo.phone}
             </a>
           </div>
@@ -926,7 +936,9 @@ function Footer() {
         </div>
       </div>
       <div className="relative mx-auto mt-10 flex max-w-7xl flex-col justify-between gap-3 border-t border-[#fff2a8]/16 px-6 pt-6 text-xs text-cream/55 md:flex-row">
-        <span>© {new Date().getFullYear()} {companyInfo.name}. Smart snacking for smart people.</span>
+        <span>
+          © {new Date().getFullYear()} {companyInfo.name}. Smart snacking for smart people.
+        </span>
         <span>8 products · Vegan · Gluten free · Roasted not fried</span>
       </div>
     </footer>
